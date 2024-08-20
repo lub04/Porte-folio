@@ -1,0 +1,10 @@
+.header-nav {
+  background-image: url("../../assets/images/pexels-filippo-bergamaschi-202684-986772.jpg");
+  background-position: 0;
+  background-size: cover;
+  border-bottom: 0.01px solid var(--text-color);
+  height: 6rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

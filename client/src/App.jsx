@@ -1,10 +1,15 @@
+import { Outlet } from "react-router-dom";
 import "./App.css";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
-    <main>
-      <h1>yoyyoy</h1>
-    </main>
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </>
   );
 }
 
