@@ -80,7 +80,7 @@ CREATE TABLE message (
 
 CREATE TABLE comment (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  date VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   user_last_name VARCHAR(255),
   user_first_name VARCHAR(255),
   comment LONGTEXT,
