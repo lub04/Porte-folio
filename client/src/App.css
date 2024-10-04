@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "Comforta";
+  src: url(./assets/fonts/Comfortaa-Regular.ttf);
+}
+@font-face {
+  font-family: "IBMPlex";
+  src: url(./assets/fonts/IBMPlexSans-Regular.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* colors */
+  --main-color: #037171;
+  --secondary-color: #fffb46;
+  --background-color: #cdcdcd;
+  --text-color: #2c0703;
+  /* fonts */
+  --title-font: "IBMPlex";
+  --text-font: "Comforta";
+  /* borders */
+  --main-border-radius: 10px;
+  --round-border-radius: 100%;
+}
