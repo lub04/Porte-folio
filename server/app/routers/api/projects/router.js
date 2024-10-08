@@ -3,16 +3,20 @@ const express = require("express");
 const router = express.Router();
 
 /* ************************************************************************* */
-// Import And Use Routers Here
+// Define Your API Routes Here
 /* ************************************************************************* */
 
-const itemsRouter = require("./items/router");
+// Import project-related actions
+const { browse, read, add } = require("../../../controllers/projectActions");
 
-router.use("/items", itemsRouter);
+// Route to get a list of projects
+router.get("/", browse);
 
-const projectsRouter = require("./projects/router");
+// Route to get a specific project by ID
+router.get("/:id", read);
 
-router.use("/projects", projectsRouter);
+// Route to add a new project
+router.post("/", add);
 
 /* ************************************************************************* */
 
