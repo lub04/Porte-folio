@@ -12,7 +12,8 @@
   box-sizing: border-box;
   /* colors */
   --main-color: #037171;
-  --secondary-color: #fffb46;
+  --main-color-opacity: rgba(255, 251, 70, 0.8);
+  --secondary-color: rgb(255, 251, 70);
   --background-color: #dddddd;
   --text-color: #2c0703;
   /* fonts */
@@ -21,4 +22,40 @@
   /* borders */
   --main-border-radius: 10px;
   --round-border-radius: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+h1 {
+  color: var(--background-color);
+  font-family: var(--title-font);
+  font-size: 2rem;
+}
+
+h2 {
+  width: 70%;
+  margin: 2rem auto;
+  text-align: center;
+  color: var(--main-color);
+  font-family: var(--title-font);
+  font-size: 1.7rem;
+}
+
+h3 {
+  color: var(--main-color);
+  font-family: var(--title-font);
+  font-size: 1.2rem;
+}
+
+p {
+  color: var(--text-color);
+  font-family: var(--text-font);
+}
+
+body {
+  background-color: var(--background-color);
+  height: 100vh;
 }
