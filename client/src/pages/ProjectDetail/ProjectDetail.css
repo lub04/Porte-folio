@@ -1,0 +1,25 @@
+.project-demo {
+  display: flex;
+  gap: 2rem;
+  .primary-image {
+    width: 40%;
+    height: 60%;
+  }
+  .technics {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 70%;
+    .badges {
+      border: 1px solid var(--secondary-color);
+      padding: 1rem;
+      background-color: white;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      .badge {
+        width: 45%;
+      }
+    }
+  }
+}

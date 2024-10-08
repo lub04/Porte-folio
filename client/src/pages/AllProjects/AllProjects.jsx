@@ -10,7 +10,7 @@ function AllProjects() {
   return (
     <>
       <h2>Mes projets</h2>
-      <section className="projects-list">
+      <section className="page-display projects-list">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
