@@ -25,6 +25,7 @@
       {
         "assert": "either"
       }
-    ]
+    ],
+    "react/prop-types": "off"
   }
 }
