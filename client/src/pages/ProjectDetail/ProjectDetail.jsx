@@ -23,16 +23,16 @@ function ProjectDetail() {
             <article className="badges">
               <p className="badge">
                 <img src={users} alt="icone groupe" />
-                {project.main_technologies}
+                {project.category}
               </p>
               <p className="badge">
                 <img src={cpu} alt="icone cpu" /> {project.main_technologies}
               </p>
-              <a className="badge" href={project.github_link}>
+              <a className="badge" href={project.github_link} target="blank">
                 <img src={github} alt="icone github" />
                 Github
               </a>
-              <a className="badge" href={project.website_link}>
+              <a className="badge" href={project.website_link} target="blank">
                 <img src={link} alt="icone lien" />
                 Site web
               </a>
