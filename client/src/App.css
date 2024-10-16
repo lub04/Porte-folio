@@ -11,10 +11,11 @@
   padding: 0;
   box-sizing: border-box;
   /* colors */
-  --main-color: #037171;
-  --main-color-opacity: rgba(255, 251, 70, 0.8);
-  --secondary-color: rgb(255, 251, 70);
-  --background-color: #dddddd;
+  --main-color: #89608e;
+  --main-color-opacity: rgba(137, 96, 142, 0.9);
+  --secondary-color: #89608e;
+  --background-color: rgba(229, 239, 248, 0.6);
+  --background-color-opacity: white;
   --text-color: #2c0703;
   /* fonts */
   --title-font: "IBMPlex";
@@ -57,7 +58,9 @@ a {
 }
 
 body {
-  background-color: var(--background-color);
+  background-image: url(./assets/images/scott-webb-OxHPDs4WV8Y-unsplash.jpg);
+  background-size: cover;
+  background-attachment: fixed;
   height: 100vh;
 }
 

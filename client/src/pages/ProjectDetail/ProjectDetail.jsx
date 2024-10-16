@@ -47,16 +47,16 @@ function ProjectDetail() {
             </article>
           </div>
         </section>
-        <section>
-          <article>
+        <section className="project-description-organisation">
+          <article className="project-description">
             <h3>Description de l'application</h3>
             <p>{project.description}</p>
           </article>
-          <article>
+          <article className="project-organisation">
             <h3>L'organisation</h3>
             <p>{project.organization}</p>
           </article>
-          <article>
+          <article className="project-images">
             <img src={project.img2} alt="exemple du site 2" />
             <img src={project.img3} alt="exemple du site 3" />
             <img src={project.img4} alt="exemple du site 4" />

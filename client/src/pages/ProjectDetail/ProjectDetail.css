@@ -3,7 +3,7 @@
   gap: 2rem;
   .primary-image {
     width: 40%;
-    height: 60%;
+    height: 25rem;
   }
   .technics {
     display: flex;
@@ -13,13 +13,24 @@
     .badges {
       border: 1px solid var(--secondary-color);
       padding: 1rem;
-      background-color: white;
+      background-color: var(--background-color);
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       .badge {
         width: 45%;
       }
+    }
+  }
+}
+.project-description-organisation {
+  .project-images {
+    height: 10rem;
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 30%;
+      height: 100%;
     }
   }
 }
