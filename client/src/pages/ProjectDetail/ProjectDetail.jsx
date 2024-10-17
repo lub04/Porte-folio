@@ -81,6 +81,7 @@ function ProjectDetail() {
           </article>
           <article className="project-images">
             <button
+              className={modalIsOpen ? "no-hover" : "button-example-img"}
               type="button"
               onClick={() => openModal(project.img2)}
               tabIndex="0"
@@ -93,6 +94,7 @@ function ProjectDetail() {
               <img src={project.img2} alt="exemple du site 2" />
             </button>
             <button
+              className={modalIsOpen ? "no-hover" : "button-example-img"}
               type="button"
               onClick={() => openModal(project.img3)}
               tabIndex="0"
@@ -105,6 +107,7 @@ function ProjectDetail() {
               <img src={project.img3} alt="exemple du site 3" />
             </button>
             <button
+              className={modalIsOpen ? "no-hover" : "button-example-img"}
               type="button"
               onClick={() => openModal(project.img4)}
               tabIndex="0"
