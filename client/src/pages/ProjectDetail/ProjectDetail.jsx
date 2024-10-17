@@ -81,11 +81,11 @@ function ProjectDetail() {
         <section className="project-description-organisation box">
           <article className="project-description">
             <h3>L'application :</h3>
-            <p>{project.description}</p>
+            <p style={{ whiteSpace: "pre-line" }}>{project.description}</p>
           </article>
           <article className="project-organisation">
             <h3>L'organisation :</h3>
-            <p>{project.organization}</p>
+            <p style={{ whiteSpace: "pre-line" }}>{project.organization}</p>
           </article>
           <article className="project-images">
             <button
