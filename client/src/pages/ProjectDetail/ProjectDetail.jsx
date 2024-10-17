@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import github from "../../assets/images/icons/github.svg";
 import users from "../../assets/images/icons/users.svg";
+import user from "../../assets/images/icons/user.svg";
 import cpu from "../../assets/images/icons/cpu.svg";
 import link from "../../assets/images/icons/link.svg";
 import "./ProjectDetail.css";
@@ -35,7 +36,14 @@ function ProjectDetail() {
           />
           <div className="technics">
             <article className="badges box">
-              <img src={users} alt="icone groupe" />
+              <img
+                src={project.category !== "Projet Perso" ? users : user}
+                alt={
+                  project.category !== "Projet Perso"
+                    ? "icone groupe"
+                    : "icone projet perso"
+                }
+              />
               <p className="badge">{project.category}</p>
               <img src={cpu} alt="icone cpu" />
               <p className="badge">{project.main_technologies}</p>
