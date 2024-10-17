@@ -25,7 +25,7 @@ class ProjectRepository extends AbstractRepository {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific project by its ID
     const [rows] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `select p.*, pc.category from ${this.table} as p inner join project_category as pc on p.project_category_id = pc.id where p.id = ?`,
       [id]
     );
 

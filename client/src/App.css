@@ -11,17 +11,21 @@
   padding: 0;
   box-sizing: border-box;
   /* colors */
-  --main-color: #037171;
-  --main-color-opacity: rgba(255, 251, 70, 0.8);
-  --secondary-color: rgb(255, 251, 70);
-  --background-color: #dddddd;
+  --main-color: #89608e;
+  --main-color-opacity: rgba(137, 96, 142, 0.9);
+  --secondary-color: #89608e;
+  --background-color: rgba(229, 239, 248, 0.6);
+  --background-color-opacity: white;
   --text-color: #2c0703;
   /* fonts */
   --title-font: "IBMPlex";
   --text-font: "Comforta";
   /* borders */
+  --main-border: 1px solid var(--secondary-color);
   --main-border-radius: 10px;
   --round-border-radius: 100%;
+  /* shadows */
+  --box-shadow: 5px 5px 15px -5px #000000;
 }
 
 a {
@@ -41,7 +45,7 @@ h2 {
   text-align: center;
   color: var(--main-color);
   font-family: var(--title-font);
-  font-size: 1.7rem;
+  font-size: 2rem;
 }
 
 h3 {
@@ -50,12 +54,53 @@ h3 {
   font-size: 1.2rem;
 }
 
-p {
+p,
+a {
   color: var(--text-color);
   font-family: var(--text-font);
 }
 
 body {
-  background-color: var(--background-color);
+  background-image: url(./assets/images/scott-webb-OxHPDs4WV8Y-unsplash.jpg);
+  background-size: cover;
+  background-attachment: fixed;
   height: 100vh;
+}
+
+.page-display {
+  width: 70%;
+  margin: auto;
+}
+
+.box {
+  border-radius: var(--main-border-radius);
+  background-color: var(--background-color);
+  box-shadow: var(--box-shadow);
+  padding: 1rem;
+}
+
+.button-close-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  font-family: var(--title-font);
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: var(--round-border-radius);
+  transition:
+    transform 0.5s ease,
+    background-color 3s ease;
+}
+.button-close-modal:hover {
+  transform: rotate(180deg) scale(1.7);
+  border: var(--main-border);
+  background-color: var(--background-color);
 }

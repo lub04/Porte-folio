@@ -3,7 +3,7 @@ import "./ProjectCard.css";
 
 function ProjectCard({ project }) {
   return (
-    <Link to={`projects/${project.id}`} className="project-card">
+    <Link to={`${project.id}`} className="project-card">
       <img src={project.logo_img} alt={project.name} />
       <p>{project.name}</p>
     </Link>
