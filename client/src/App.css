@@ -21,6 +21,7 @@
   --title-font: "IBMPlex";
   --text-font: "Comforta";
   /* borders */
+  --main-border: 1px solid var(--secondary-color);
   --main-border-radius: 10px;
   --round-border-radius: 100%;
   /* shadows */
@@ -69,4 +70,37 @@ body {
 .page-display {
   width: 70%;
   margin: auto;
+}
+
+.box {
+  border-radius: var(--main-border-radius);
+  background-color: var(--background-color);
+  box-shadow: var(--box-shadow);
+  padding: 1rem;
+}
+
+.button-close-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  font-family: var(--title-font);
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: var(--round-border-radius);
+  transition:
+    transform 0.5s ease,
+    background-color 3s ease;
+}
+.button-close-modal:hover {
+  transform: rotate(180deg) scale(1.7);
+  border: var(--main-border);
+  background-color: var(--background-color);
 }
