@@ -25,7 +25,7 @@ class HomePageRepository extends AbstractRepository {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific homePage by its ID
     const [rows] = await this.database.query(
-      `select * from ${this.table} where p.id = ?`,
+      `select * from ${this.table} where id = ?`,
       [id]
     );
 

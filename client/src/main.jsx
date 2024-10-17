@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import AllProjects from "./pages/AllProjects/AllProjects";
 import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
+import Home from "./pages/Home/Home";
 
 import connexion from "./services/connexion";
 
@@ -13,6 +14,18 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "",
+        element: <Home />,
+        loader: async () => {
+          try {
+            const home = await connexion.get("/api/home/1");
+            return home.data;
+          } catch (error) {
+            throw new Error(error);
+          }
+        },
+      },
       {
         path: "projets",
         element: <AllProjects />,

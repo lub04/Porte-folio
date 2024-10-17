@@ -15,6 +15,7 @@
   --main-color-opacity: rgba(137, 96, 142, 0.9);
   --secondary-color: #89608e;
   --background-color: rgba(229, 239, 248, 0.6);
+  --background-color-home: rgba(229, 239, 248, 0.7);
   --background-color-opacity: white;
   --text-color: #2c0703;
   /* fonts */
@@ -34,9 +35,9 @@ a {
 }
 
 h1 {
-  color: var(--background-color);
+  color: var(--main-color);
   font-family: var(--title-font);
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 h2 {
@@ -103,4 +104,8 @@ body {
   transform: rotate(180deg) scale(1.7);
   border: var(--main-border);
   background-color: var(--background-color);
+}
+
+header {
+  box-shadow: var(--box-shadow);
 }
