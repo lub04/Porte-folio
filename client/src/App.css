@@ -23,6 +23,8 @@
   /* borders */
   --main-border-radius: 10px;
   --round-border-radius: 100%;
+  /* shadows */
+  --box-shadow: 5px 5px 15px -5px #000000;
 }
 
 a {
@@ -42,7 +44,7 @@ h2 {
   text-align: center;
   color: var(--main-color);
   font-family: var(--title-font);
-  font-size: 1.7rem;
+  font-size: 2rem;
 }
 
 h3 {

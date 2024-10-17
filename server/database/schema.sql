@@ -265,7 +265,7 @@ Chaque film dispose d'une page de détail, où les utilisateurs peuvent consulte
 Le site est doté d'une navigation claire dans le header, permettant aux utilisateurs de se déplacer aisément entre les différentes pages, tout en affichant le nombre d'éléments présents dans le panier et dans les favoris. En bas de page, un formulaire de contact est à disposition pour permettre aux utilisateurs de nous joindre facilement.",
   "http://localhost:3310/assets/images/FilmParadise/logo.png",
   "http://localhost:3310/assets/images/FilmParadise/allMovies.png",
-  "http://localhost:3310/assets/images/FilmParadise/movieDetails.png",
+  "http://localhost:3310/assets/images/FilmParadise/movieDetail.png",
   "http://localhost:3310/assets/images/FilmParadise/favories.png",
   "http://localhost:3310/assets/images/FilmParadise/cart.png",
     1,
