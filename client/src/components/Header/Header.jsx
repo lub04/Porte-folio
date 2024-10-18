@@ -9,7 +9,7 @@ function Header() {
         <Link to="projets">A propos</Link>
         <Link to="projets">Contact</Link>
       </nav>
-      <h1>L'atelier du développeur</h1>
+      <h1 id="top-page">L'atelier du développeur | Lubin Chauvreau</h1>
     </header>
   );
 }
