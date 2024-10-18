@@ -1,19 +1,6 @@
 .home-header {
   background-color: var(--background-color-home);
   height: 90vh;
-  nav {
-    display: flex;
-    gap: 3rem;
-    padding: 2rem;
-    a {
-      font-size: 1.2rem;
-      color: var(--main-color);
-      transition: transform 0.5s ease;
-    }
-    a:hover {
-      transform: scale(1.2);
-    }
-  }
   h1 {
     height: 60%;
     display: flex;

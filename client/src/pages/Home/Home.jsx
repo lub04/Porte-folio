@@ -7,12 +7,12 @@ function Home() {
 
   return (
     <>
-      <h2>Entrez dans mon univers ...</h2>
+      <h2 className="title-home">Entrez dans mon univers ...</h2>
       <section className="home-welcome page-display">
-        <p className="welcome">{home.welcome}</p>
+        <p className="welcome box">{home.welcome}</p>
         <article className="presentation">
           <img src={home.img} alt="" />
-          <p>{home.presentation}</p>
+          <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
         </article>
       </section>
     </>

@@ -1,0 +1,13 @@
+footer {
+  height: 8rem;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 8px 10px 22px 0px #000000;
+  margin-top: 8rem;
+  p {
+    display: flex;
+    justify-content: center;
+  }
+}
