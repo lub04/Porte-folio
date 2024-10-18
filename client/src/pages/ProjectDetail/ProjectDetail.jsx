@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router-dom";
 import Modal from "react-modal";
 import { useState } from "react";
 
+import ExpandableSection from "../../components/ExpandableSection/ExpandableSection";
+
 import github from "../../assets/images/icons/github.svg";
 import users from "../../assets/images/icons/users.svg";
 import user from "../../assets/images/icons/user.svg";
@@ -79,14 +81,14 @@ function ProjectDetail() {
           </div>
         </section>
         <section className="project-description-organisation box">
-          <article className="project-description">
-            <h3>L'application :</h3>
-            <p style={{ whiteSpace: "pre-line" }}>{project.description}</p>
-          </article>
-          <article className="project-organisation">
-            <h3>L'organisation :</h3>
-            <p style={{ whiteSpace: "pre-line" }}>{project.organization}</p>
-          </article>
+          <ExpandableSection
+            title="L'aplication"
+            content={project.description}
+          />
+          <ExpandableSection
+            title="L'organisation"
+            content={project.organization}
+          />
           <article className="project-images">
             <button
               className={modalIsOpen ? "no-hover" : "button-example-img"}
