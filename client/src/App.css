@@ -42,7 +42,7 @@ h1 {
 
 h2 {
   width: 70%;
-  margin: 6rem auto;
+  margin: 6rem auto 3rem auto;
   text-align: center;
   color: var(--main-color);
   font-family: var(--title-font);
