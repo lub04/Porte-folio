@@ -93,10 +93,10 @@
 
 .Modal {
   position: fixed;
-  top: 8%;
+  top: 12%;
   left: 8%;
   right: 8%;
-  bottom: 8%;
+  bottom: 6%;
   background-color: var(--background-color-opacity);
   padding: 2rem;
   border-radius: var(--main-border-radius);

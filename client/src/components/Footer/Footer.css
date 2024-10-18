@@ -1,0 +1,30 @@
+footer {
+  padding: 2rem;
+  height: 8rem;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  box-shadow: 8px 10px 22px 0px #000000;
+  margin-top: 8rem;
+  section {
+    width: 30%;
+  }
+  p {
+    display: flex;
+    justify-content: center;
+  }
+  .arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .arrow-up-button {
+      font-size: 2rem;
+      transition: transform 0.5s ease;
+    }
+    .arrow-up-button:hover {
+      transform: scale(1.4);
+    }
+  }
+}
