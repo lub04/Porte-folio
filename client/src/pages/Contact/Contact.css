@@ -1,0 +1,30 @@
+.contact-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  .user-name {
+    width: 47%;
+    text-align: center;
+    input {
+      width: 100%;
+      height: 1.5rem;
+    }
+  }
+  .user-mail {
+    width: 100%;
+    text-align: center;
+    input {
+      width: 100%;
+      height: 1.5rem;
+    }
+  }
+  .user-message {
+    width: 100%;
+    text-align: center;
+    .message {
+      width: 100%;
+      height: 8rem;
+    }
+  }
+}

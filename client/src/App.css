@@ -62,7 +62,8 @@ h3 {
 }
 
 p,
-a {
+a,
+label {
   color: var(--text-color);
   font-family: var(--text-font);
 }
@@ -169,4 +170,11 @@ nav {
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+textarea:focus,
+input:focus {
+  border: 1px solid var(--main-color-opacity);
+  outline: 2px solid var(--secondary-color);
+  border-radius: var(--main-border-radius);
 }
