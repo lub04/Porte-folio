@@ -8,13 +8,37 @@
   height: 4rem;
   align-items: center;
   z-index: 10;
+  .return-home {
+    z-index: 1;
+    margin-right: 2%;
+    h1 {
+      font-size: var(--header-title-size);
+      font-weight: 50;
+
+      z-index: 1;
+    }
+  }
+  .navigation {
+    font-size: var(--link-size);
+    z-index: 1;
+  }
+}
+.home-header {
+  height: 80vh;
+  background-color: var(--background-color-home);
   h1 {
-    font-size: 2rem;
-    font-weight: 50;
-    margin-right: 3%;
-    z-index: 1;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: var(--home-header-title-size);
   }
-  a {
-    z-index: 1;
+  .navigation {
+    font-size: var(--link-size);
   }
+}
+
+.none {
+  display: none;
 }

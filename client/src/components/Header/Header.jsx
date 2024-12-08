@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-function Header() {
+function Header({ css, css2 }) {
   return (
-    <header className="header background">
+    <header className={`${css} ${css2}`}>
       <nav>
-        <Link to="projets">Mes projets</Link>
-        <Link to="projets">A propos</Link>
-        <Link to="projets">Contact</Link>
+        <Link className="navigation" to="projets">
+          Mes projets
+        </Link>
+        <Link className="navigation" to="projets">
+          A propos
+        </Link>
+        <Link className="navigation" to="projets">
+          Contact
+        </Link>
       </nav>
-      <h1 id="top-page">L'atelier du développeur | Lubin Chauvreau</h1>
+      <Link className="return-home" to="/">
+        <h1 id="top-page">L'atelier du développeur | Lubin Chauvreau</h1>
+      </Link>
     </header>
   );
 }

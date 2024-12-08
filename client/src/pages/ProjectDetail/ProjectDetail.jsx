@@ -26,6 +26,7 @@ function ProjectDetail() {
     setActiveImage(null);
   };
 
+  const projectSkills = project.categorized_skills.split("|");
   return (
     <>
       <h2>{project.name}</h2>
@@ -75,7 +76,9 @@ function ProjectDetail() {
               </article>
               <article className="skills">
                 <h3>Compétences utilisées :</h3>
-                <p>{project.main_technologies}</p>
+                {projectSkills.map((category) => (
+                  <p key={category}>{category}</p>
+                ))}
               </article>
             </div>
           </div>

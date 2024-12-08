@@ -1,7 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import HomeHeader from "./components/HomeHeader/HomeHeader";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 
@@ -14,7 +13,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
+      const isScrolled = window.scrollY > 120;
       setScrolled(isScrolled);
     };
     window.addEventListener("scroll", handleScroll);
@@ -25,7 +24,11 @@ function App() {
 
   return (
     <div className="container">
-      {isHomePage && !scrolled ? <HomeHeader /> : <Header />}
+      {isHomePage && !scrolled ? (
+        <Header scrolled={scrolled} css="home-header" css2="" />
+      ) : (
+        <Header scrolled={scrolled} css="header" css2="background" />
+      )}
       <main>
         <Outlet />
       </main>

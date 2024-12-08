@@ -29,6 +29,9 @@
       .team,
       .skills {
         margin: 1rem 0;
+        p {
+          margin: 0 0 1rem 0;
+        }
       }
     }
   }

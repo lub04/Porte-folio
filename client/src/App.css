@@ -21,6 +21,11 @@
   /* fonts */
   --title-font: "IBMPlex";
   --text-font: "Comforta";
+  --link-size: clamp(0.6rem, 2vw, 1.5rem);
+  --paragraph-size: clamp(0.5rem, 1.5vw, 1rem);
+  --paragraph-size-big: clamp(0.7rem, 2vw, 1.3rem);
+  --header-title-size: clamp(0.8rem, 2vw, 2rem);
+  --home-header-title-size: clamp(1.2rem, 3vw, 3rem);
   /* borders */
   --main-border: 1px solid var(--secondary-color);
   --main-border-radius: 10px;
@@ -45,7 +50,7 @@ h2 {
   text-align: center;
   color: var(--main-color);
   font-family: var(--title-font);
-  font-size: 2rem;
+  font-size: var(--header-title-size);
 }
 
 h3 {
@@ -58,6 +63,9 @@ p,
 a {
   color: var(--text-color);
   font-family: var(--text-font);
+}
+p {
+  font-size: var(--paragraph-size);
 }
 
 body {
