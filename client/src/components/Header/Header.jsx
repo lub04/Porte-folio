@@ -8,10 +8,10 @@ function Header({ css, css2 }) {
         <Link className="navigation" to="projets">
           Mes projets
         </Link>
-        <Link className="navigation" to="projets">
-          A propos
+        <Link className="navigation" to="lubin">
+          À propos
         </Link>
-        <Link className="navigation" to="projets">
+        <Link className="navigation" to="contact">
           Contact
         </Link>
       </nav>
