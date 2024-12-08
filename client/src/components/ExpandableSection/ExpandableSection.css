@@ -1,0 +1,40 @@
+.roll-organisation {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 3rem;
+  width: 100%;
+  text-align: left;
+  img {
+    width: 1.2rem;
+  }
+  h3 {
+  }
+}
+
+.not-deploy {
+  margin-bottom: 2rem;
+  box-shadow: 6px 8px 15px -7px #000000;
+  border: var(--main-border);
+  transition: 1s ease;
+}
+.not-deploy:hover {
+  transform: scale(1.03);
+}
+.deploy {
+  box-shadow: inset 0px 0px 15px -12px #000000;
+  border-width: 1px 0 0 0; /* haut, droite, bas, gauche */
+  border-style: solid;
+  border-color: var(--main-color);
+}
+.deployed {
+  border-width: 0 1px 1px 1px; /* haut, droite, bas, gauche */
+  border-style: solid;
+  border-color: var(--main-color);
+  box-shadow: 6px 8px 15px -7px #000000;
+  margin-bottom: 2rem;
+  p {
+    padding: 1rem;
+  }
+}

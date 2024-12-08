@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router-dom";
 import Modal from "react-modal";
 import { useState } from "react";
 
+import ExpandableSection from "../../components/ExpandableSection/ExpandableSection";
+
 import github from "../../assets/images/icons/github.svg";
 import users from "../../assets/images/icons/users.svg";
 import user from "../../assets/images/icons/user.svg";
@@ -24,6 +26,7 @@ function ProjectDetail() {
     setActiveImage(null);
   };
 
+  const projectSkills = project.categorized_skills.split("|");
   return (
     <>
       <h2>{project.name}</h2>
@@ -36,35 +39,45 @@ function ProjectDetail() {
           />
           <div className="technics">
             <article className="badges box">
-              <img
-                src={project.category !== "Projet Perso" ? users : user}
-                alt={
-                  project.category !== "Projet Perso"
-                    ? "icone groupe"
-                    : "icone projet perso"
-                }
-              />
-              <p className="badge">{project.category}</p>
-              <img src={cpu} alt="icone cpu" />
-              <p className="badge">{project.main_technologies}</p>
-              <img src={github} alt="icone github" />
-              <a
-                className="badge badge-link"
-                href={project.github_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Github
-              </a>
-              <img src={link} alt="icone lien" />
-              <a
-                className="badge badge-link"
-                href={project.website_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Application déployée
-              </a>
+              <div className="info-badge">
+                <img
+                  src={
+                    project.project_category !== "Projet Perso" ? users : user
+                  }
+                  alt={
+                    project.project_category !== "Projet Perso"
+                      ? "icone groupe"
+                      : "icone projet perso"
+                  }
+                />
+                <p className="badge">{project.project_category}</p>
+              </div>
+              <div className="info-badge">
+                <img src={cpu} alt="icone cpu" />
+                <p className="badge">{project.main_technologies}</p>
+              </div>
+              <div className="info-badge">
+                <img src={github} alt="icone github" />
+                <a
+                  className="badge badge-link"
+                  href={project.github_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Github
+                </a>
+              </div>
+              <div className="info-badge">
+                <img src={link} alt="icone lien" />
+                <a
+                  className="badge badge-link"
+                  href={project.website_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Application déployée
+                </a>
+              </div>
             </article>
             <div className="project-team-skills box">
               <article className="team">
@@ -73,20 +86,22 @@ function ProjectDetail() {
               </article>
               <article className="skills">
                 <h3>Compétences utilisées :</h3>
-                <p>{project.main_technologies}</p>
+                {projectSkills.map((category) => (
+                  <p key={category}>{category}</p>
+                ))}
               </article>
             </div>
           </div>
         </section>
         <section className="project-description-organisation box">
-          <article className="project-description">
-            <h3>L'application :</h3>
-            <p style={{ whiteSpace: "pre-line" }}>{project.description}</p>
-          </article>
-          <article className="project-organisation">
-            <h3>L'organisation :</h3>
-            <p style={{ whiteSpace: "pre-line" }}>{project.organization}</p>
-          </article>
+          <ExpandableSection
+            title="L'aplication"
+            content={project.description}
+          />
+          <ExpandableSection
+            title="L'organisation"
+            content={project.organization}
+          />
           <article className="project-images">
             <button
               className={modalIsOpen ? "no-hover" : "button-example-img"}

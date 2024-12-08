@@ -8,6 +8,8 @@ import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 import Home from "./pages/Home/Home";
 
 import connexion from "./services/connexion";
+import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ const router = createBrowserRouter([
             throw new Error(error);
           }
         },
+      },
+      {
+        path: "lubin",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
     ],
   },

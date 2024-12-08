@@ -25,7 +25,21 @@ class ProjectRepository extends AbstractRepository {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific project by its ID
     const [rows] = await this.database.query(
-      `select p.*, pc.category from ${this.table} as p inner join project_category as pc on p.project_category_id = pc.id where p.id = ?`,
+      `SELECT p.*, pc.category AS project_category,
+  GROUP_CONCAT(
+    DISTINCT CONCAT(sc.category, ': ', GROUPED.skills_per_category) SEPARATOR ' | '
+  ) AS categorized_skills
+FROM
+  project AS p
+INNER JOIN project_category AS pc ON p.project_category_id = pc.id INNER JOIN project_skill AS ps ON p.id = ps.project_id INNER JOIN skill AS s ON ps.skill_id = s.id
+INNER JOIN skill_category AS sc ON s.category_id = sc.id
+LEFT JOIN (
+    SELECT s.category_id, GROUP_CONCAT(DISTINCT s.name ORDER BY s.name SEPARATOR ', ') AS skills_per_category
+    FROM skill AS s
+    GROUP BY s.category_id
+) AS GROUPED ON GROUPED.category_id = sc.id
+WHERE p.id = ?
+GROUP BY p.id LIMIT 100`,
       [id]
     );
 

@@ -21,9 +21,16 @@
   /* fonts */
   --title-font: "IBMPlex";
   --text-font: "Comforta";
+  --link-size: clamp(0.7rem, 1.5vw, 2rem);
+  --title-size: clamp(1rem, 2.3vw, 3rem);
+  --secondary-title-size: clamp(1rem, 2.5vw, 1.8rem);
+  --third-title-size: clamp(0.85rem, 2vw, 1.2rem);
+  --paragraph-size: clamp(0.5rem, 1.5vw, 1rem);
+  --paragraph-size-big: clamp(0.7rem, 2vw, 1.3rem);
+  --home-header-title-size: clamp(1.2rem, 3vw, 3rem);
   /* borders */
   --main-border: 1px solid var(--secondary-color);
-  --main-border-radius: 10px;
+  --main-border-radius: 5px;
   --round-border-radius: 100%;
   /* shadows */
   --box-shadow: inset 2px 2px 20px -20px #000000;
@@ -45,19 +52,22 @@ h2 {
   text-align: center;
   color: var(--main-color);
   font-family: var(--title-font);
-  font-size: 2rem;
+  font-size: var(--secondary-title-size);
 }
 
 h3 {
   color: var(--main-color);
   font-family: var(--title-font);
-  font-size: 1.2rem;
+  font-size: var(--third-title-size);
 }
 
 p,
 a {
   color: var(--text-color);
   font-family: var(--text-font);
+}
+p {
+  font-size: var(--paragraph-size);
 }
 
 body {

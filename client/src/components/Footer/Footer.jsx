@@ -32,10 +32,10 @@ function Footer() {
         <small>{quote.author}</small>
       </section>
       <section>
-        <p>Copyright © 2024</p>
-        <p>Lubin Chauvreau</p>
-        <p>06 . 72 . 14 . 43 . 08</p>
-        <p>lubin-chauvreau@laposte.net</p>
+        <p className="footer-contact">Copyright © 2024</p>
+        <p className="footer-contact">Lubin Chauvreau</p>
+        <p className="footer-contact">06 . 72 . 14 . 43 . 08</p>
+        <p className="footer-contact">lubin-chauvreau@laposte.net</p>
       </section>
       <section className="arrow">
         <button
