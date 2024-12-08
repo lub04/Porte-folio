@@ -12,10 +12,12 @@
     z-index: 1;
     margin-right: 2%;
     h1 {
-      font-size: var(--header-title-size);
+      font-size: var(--title-size);
       font-weight: 50;
-
-      z-index: 1;
+      transition: transform 0.6s ease;
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
   .navigation {

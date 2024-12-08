@@ -39,35 +39,45 @@ function ProjectDetail() {
           />
           <div className="technics">
             <article className="badges box">
-              <img
-                src={project.category !== "Projet Perso" ? users : user}
-                alt={
-                  project.category !== "Projet Perso"
-                    ? "icone groupe"
-                    : "icone projet perso"
-                }
-              />
-              <p className="badge">{project.category}</p>
-              <img src={cpu} alt="icone cpu" />
-              <p className="badge">{project.main_technologies}</p>
-              <img src={github} alt="icone github" />
-              <a
-                className="badge badge-link"
-                href={project.github_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Github
-              </a>
-              <img src={link} alt="icone lien" />
-              <a
-                className="badge badge-link"
-                href={project.website_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Application déployée
-              </a>
+              <div className="info-badge">
+                <img
+                  src={
+                    project.project_category !== "Projet Perso" ? users : user
+                  }
+                  alt={
+                    project.project_category !== "Projet Perso"
+                      ? "icone groupe"
+                      : "icone projet perso"
+                  }
+                />
+                <p className="badge">{project.project_category}</p>
+              </div>
+              <div className="info-badge">
+                <img src={cpu} alt="icone cpu" />
+                <p className="badge">{project.main_technologies}</p>
+              </div>
+              <div className="info-badge">
+                <img src={github} alt="icone github" />
+                <a
+                  className="badge badge-link"
+                  href={project.github_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Github
+                </a>
+              </div>
+              <div className="info-badge">
+                <img src={link} alt="icone lien" />
+                <a
+                  className="badge badge-link"
+                  href={project.website_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Application déployée
+                </a>
+              </div>
             </article>
             <div className="project-team-skills box">
               <article className="team">
