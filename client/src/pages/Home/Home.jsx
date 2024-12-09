@@ -11,7 +11,10 @@ function Home() {
       <section className="home-welcome page-display">
         <p className="welcome box">{home.welcome}</p>
         <article className="presentation">
-          <img src={home.img} alt="" />
+          <img
+            src={`${import.meta.env.VITE_API_URL}/${home.img}`}
+            alt="avatar de Lubin page d'accueil"
+          />
           <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
         </article>
       </section>
