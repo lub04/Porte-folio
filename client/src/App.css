@@ -18,6 +18,10 @@
   --background-color-home: rgba(229, 239, 248, 0.8);
   --background-color-opacity: white;
   --text-color: #2c0703;
+  --toastify-color-success: var(--main-color-opacity) !important;
+  --toastify-color-progress-success: var(--main-color-opacity) !important;
+  --toastify-text-color-light: var(--text-color) !important;
+
   /* fonts */
   --title-font: "IBMPlex";
   --text-font: "Comforta";
@@ -203,5 +207,18 @@ textarea {
     background-color: var(--main-color-opacity);
     border: var(--secondary-border);
     color: var(--background-color-opacity);
+  }
+}
+
+.Toastify__toast-theme--light {
+  background: url(./assets/images/scott-webb-OxHPDs4WV8Y-unsplash.jpg) !important;
+  background-size: cover !important;
+}
+.Toastify__close-button {
+  color: var(--main-color) !important;
+  opacity: 1 !important;
+  transition: transform 0.4s ease;
+  &:hover {
+    transform: scale(1.4);
   }
 }

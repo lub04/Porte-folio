@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
+import successToast from "../../components/Toast/successToas";
 import connexion from "../../services/connexion";
+import "react-toastify/dist/ReactToastify.css";
 import "./Contact.css";
 
 const initialMessage = {
@@ -25,6 +28,7 @@ function Contact() {
     try {
       await connexion.post(`/api/messages`, message);
       setMessage(initialMessage);
+      successToast("Votre message à bien été envoyé");
     } catch (error) {
       console.error(error);
     }
@@ -77,6 +81,7 @@ function Contact() {
           Envoyer !
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 }
