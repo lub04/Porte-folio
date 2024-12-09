@@ -9,8 +9,6 @@
   img {
     width: 1.2rem;
   }
-  h3 {
-  }
 }
 
 .not-deploy {
@@ -18,9 +16,9 @@
   box-shadow: 6px 8px 15px -7px #000000;
   border: var(--main-border);
   transition: 1s ease;
-}
-.not-deploy:hover {
-  transform: scale(1.03);
+  &:hover {
+    transform: scale(1.03);
+  }
 }
 .deploy {
   box-shadow: inset 0px 0px 15px -12px #000000;

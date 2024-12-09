@@ -16,7 +16,7 @@ function Header({ css, css2 }) {
         </Link>
       </nav>
       <Link className="return-home" to="/">
-        <h1 id="top-page">L'atelier du développeur | Lubin Chauvreau</h1>
+        <h1 id="top-page">L'atelier du développeur</h1>
       </Link>
     </header>
   );
