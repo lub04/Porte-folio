@@ -27,4 +27,7 @@
       height: 8rem;
     }
   }
+  button {
+    margin: auto;
+  }
 }

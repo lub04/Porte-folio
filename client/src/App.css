@@ -12,7 +12,7 @@
   box-sizing: border-box;
   /* colors */
   --main-color: #89608e;
-  --main-color-opacity: rgba(137, 96, 142, 0.9);
+  --main-color-opacity: rgba(137, 96, 142, 0.7);
   --secondary-color: #89608e;
   --background-color: rgba(229, 239, 248, 0.6);
   --background-color-home: rgba(229, 239, 248, 0.8);
@@ -30,6 +30,7 @@
   --home-header-title-size: clamp(1.2rem, 3vw, 3rem);
   /* borders */
   --main-border: 1px solid var(--secondary-color);
+  --secondary-border: 1px solid white;
   --main-border-radius: 5px;
   --round-border-radius: 100%;
   /* shadows */
@@ -88,6 +89,11 @@ main {
 
 .page-display {
   width: 70%;
+  margin: auto;
+}
+
+.page-display-form {
+  width: 50%;
   margin: auto;
 }
 
@@ -174,7 +180,27 @@ nav {
 
 textarea:focus,
 input:focus {
-  border: 1px solid var(--main-color-opacity);
-  outline: 2px solid var(--secondary-color);
+  border: none;
+  outline: 1px solid var(--main-color-opacity);
+}
+
+input,
+textarea {
+  border: 0.5px solid lightgray;
+  border-radius: 3px;
+}
+
+.button {
+  height: 1.5rem;
+  width: 10vw;
   border-radius: var(--main-border-radius);
+  border: var(--main-border);
+  background-color: var(--background-color);
+  box-shadow: 2px 2px 10px -5px black;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--main-color-opacity);
+    border: var(--secondary-border);
+    color: var(--background-color-opacity);
+  }
 }

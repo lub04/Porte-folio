@@ -2,7 +2,7 @@ import "./Contact.css";
 
 function Contact() {
   return (
-    <div className="page-display">
+    <div className="page-display-form">
       <h2>Contactez moi !</h2>
       <form className="contact-form box">
         <label className="user-name">
@@ -21,6 +21,9 @@ function Contact() {
           Message :
           <textarea className="message" />
         </label>
+        <button className="button" type="submit">
+          Envoyer !
+        </button>
       </form>
     </div>
   );
