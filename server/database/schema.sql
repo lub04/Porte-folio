@@ -230,11 +230,11 @@ VALUES (
     Candidat connecté : Une fois inscrit et connecté, le candidat bénéficie de fonctionnalités supplémentaires. Il a accès aux offres d'emploi, mais aussi à son profil personnel, qu’il peut modifier à tout moment. Le candidat peut gérer ses candidatures et suivre les offres mises en favoris pour postuler plus tard. Lorsqu'il souhaite postuler à une offre, les informations requises sont automatiquement récupérées depuis son profil, simplifiant ainsi le processus. Pour ce faire, son profil doit être complet et à jour.\n
     Consultant : Le consultant joue un rôle central dans la gestion des offres et des candidatures. Il dispose d’un backoffice dédié, depuis lequel il peut ajouter de nouvelles offres d’emploi et gérer les candidatures reçues pour ses offres. En plus de cela, il a accès à une liste d'entreprises affiliées à son portefeuille, ainsi qu'à une base de candidats, qu’il peut contacter directement pour leur proposer des opportunités. Le consultant a aussi accès à divers outils de gestion pour les éléments à sa disposition (offres, entreprises, candidats).\n
     Administrateur : Le rôle de l’administrateur est le plus complet. L’administrateur a la responsabilité de gérer les consultants (ajouter, modifier ou supprimer un consultant) ainsi que les entreprises partenaires du site. Il est le seul utilisateur à avoir un accès complet à l'intégralité du site, incluant les fonctionnalités de gestion avancée des utilisateurs, entreprises et offres d’emploi.",
-  'http://localhost:3310/assets/images/Externatic/ExternaticLogoNoir.png',
-  'http://localhost:3310/assets/images/Externatic/ExternaticAccueil.png',
-  'http://localhost:3310/assets/images/Externatic/ExternaticOffres.png',
-  'http://localhost:3310/assets/images/Externatic/ExternaticProfil.png',
-  'http://localhost:3310/assets/images/Externatic/ExternaticBackoffice.png',
+  'assets/images/Externatic/ExternaticLogoNoir.png',
+  'assets/images/Externatic/ExternaticAccueil.png',
+  'assets/images/Externatic/ExternaticOffres.png',
+  'assets/images/Externatic/ExternaticProfil.png',
+  'assets/images/Externatic/ExternaticBackoffice.png',
 1,
 2);
 
@@ -253,11 +253,11 @@ L’utilisateur commence par créer son personnage, en choisissant un nom et un 
 À chaque victoire, le joueur peut augmenter l’une de ses statistiques (attaque ou défense) de 5 points, renforçant ainsi son personnage pour les combats futurs. La gestion stratégique de ces points est essentielle pour progresser sans être bloqué dans les niveaux plus difficiles.
 Le jeu est composé de 3 combats par planète, et après chaque deuxième combat, une nouvelle planète est débloquée jusqu’à atteindre la redoutable Étoile de la Mort.\n
 Pour finir l’aventure, l’utilisateur devra choisir entre un duel final contre Leia ou Dark Vador... Et soyons honnêtes, que vous finissiez par épouser l’un ou l’autre, les réunions de famille risquent d'être assez spatiales !",
-  "http://localhost:3310/assets/images/GalacticFight/Logo.png",
-  "http://localhost:3310/assets/images/GalacticFight/avatar.png",
-  "http://localhost:3310/assets/images/GalacticFight/levels.png",
-  "http://localhost:3310/assets/images/GalacticFight/Planet.png",
-  "http://localhost:3310/assets/images/GalacticFight/loseFight.png",
+  "assets/images/GalacticFight/Logo.png",
+  "assets/images/GalacticFight/avatar.png",
+  "assets/images/GalacticFight/levels.png",
+  "assets/images/GalacticFight/Planet.png",
+  "assets/images/GalacticFight/loseFight.png",
   3,
   2
 );
@@ -274,11 +274,11 @@ VALUES (
     "Film Paradise est une plateforme de e-commerce dédiée aux films numériques, offrant aux utilisateurs une expérience de navigation fluide et intuitive.\n
     Les utilisateurs peuvent explorer une liste complète de films, filtrables par catégories ou via une barre de recherche dédiée.\n Chaque film dispose d'une page de détail, où les utilisateurs peuvent consulter des informations supplémentaires et choisir de l'ajouter à leurs favoris pour un achat ultérieur ou directement au panier. La page panier présente une récapitulation des films sélectionnés, affichant les prix individuels ainsi que le montant total de la commande. De plus, un formulaire de commande est disponible sur cette page pour faciliter le processus d'achat.\n
     Le site est doté d'une navigation claire dans le header, permettant aux utilisateurs de se déplacer aisément entre les différentes pages, tout en affichant le nombre d'éléments présents dans le panier et dans les favoris. En bas de page, un formulaire de contact est à disposition pour permettre aux utilisateurs de nous joindre facilement.",
-    "http://localhost:3310/assets/images/FilmParadise/logo.png",
-    "http://localhost:3310/assets/images/FilmParadise/allMovies.png",
-    "http://localhost:3310/assets/images/FilmParadise/movieDetail.png",
-    "http://localhost:3310/assets/images/FilmParadise/favories.png",
-    "http://localhost:3310/assets/images/FilmParadise/cart.png",
+    "assets/images/FilmParadise/logo.png",
+    "assets/images/FilmParadise/allMovies.png",
+    "assets/images/FilmParadise/movieDetail.png",
+    "assets/images/FilmParadise/favories.png",
+    "assets/images/FilmParadise/cart.png",
     1,
     2
 );

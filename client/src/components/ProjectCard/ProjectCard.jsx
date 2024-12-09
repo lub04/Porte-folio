@@ -4,7 +4,10 @@ import "./ProjectCard.css";
 function ProjectCard({ project }) {
   return (
     <Link to={`${project.id}`} className="project-card">
-      <img src={project.logo_img} alt={project.name} />
+      <img
+        src={`${import.meta.env.VITE_API_URL}/${project.logo_img}`}
+        alt={project.name}
+      />
       <p>{project.name}</p>
     </Link>
   );
