@@ -21,6 +21,10 @@ router.use("/home", homeRouter);
 const quoteRouter = require("./quote/router");
 
 router.use("/quote", quoteRouter);
+
+const messagesRouter = require("./messages/router");
+
+router.use("/messages", messagesRouter);
 /* ************************************************************************* */
 
 module.exports = router;

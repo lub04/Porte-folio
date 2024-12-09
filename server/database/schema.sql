@@ -68,13 +68,13 @@ CREATE TABLE project_skill (
 
 CREATE TABLE message (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  date VARCHAR(255),
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP,
   user_last_name VARCHAR(255),
   user_first_name VARCHAR(255),
   user_email VARCHAR(255),
-  user_phone VARCHAR(20),
   message LONGTEXT,
-  user_id INT,
+  is_read BOOL DEFAULT false,
+  user_id INT Default 1,
   FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
