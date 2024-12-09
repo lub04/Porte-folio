@@ -73,6 +73,7 @@ CREATE TABLE message (
   user_first_name VARCHAR(255),
   user_email VARCHAR(255),
   message LONGTEXT,
+  is_read BOOL DEFAULT false,
   user_id INT Default 1,
   FOREIGN KEY (user_id) REFERENCES user(id)
 );
