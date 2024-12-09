@@ -146,9 +146,10 @@ nav {
     font-size: 1.2rem;
     color: var(--main-color);
     transition: transform 0.5s ease;
-  }
-  a:hover {
-    transform: scale(1.2);
+    &:hover,
+    &:focus {
+      transform: scale(1.2);
+    }
   }
 }
 
@@ -203,7 +204,8 @@ textarea {
   box-shadow: 2px 2px 10px -5px black;
   cursor: pointer;
   font-size: clamp(0.8rem, 1.2vw, 1.1rem);
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: var(--main-color-opacity);
     border: var(--secondary-border);
     color: var(--background-color-opacity);
@@ -218,7 +220,8 @@ textarea {
   color: var(--main-color) !important;
   opacity: 1 !important;
   transition: transform 0.4s ease;
-  &:hover {
+  &:hover,
+  &:focus {
     transform: scale(1.4);
   }
 }
