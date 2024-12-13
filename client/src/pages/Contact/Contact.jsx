@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 
-import successToast from "../../components/Toast/successToas";
+import successToast from "../../components/Toast/successToast";
+import errorToast from "../../components/Toast/errorToast";
 import connexion from "../../services/connexion";
 import "react-toastify/dist/ReactToastify.css";
 import "./Contact.css";
@@ -14,6 +15,7 @@ const initialMessage = {
 };
 
 function Contact() {
+  const [cssForm, setCssForm] = useState("");
   const [message, setMessage] = useState(initialMessage);
 
   const handleCreateMessage = (event) => {
@@ -27,9 +29,14 @@ function Contact() {
     event.preventDefault();
     try {
       await connexion.post(`/api/messages`, message);
+      setCssForm("");
       setMessage(initialMessage);
       successToast("Votre message à bien été envoyé");
     } catch (error) {
+      setCssForm("errorForm");
+      errorToast(
+        "Votre message n'a pas pus être envoyer verifiez vos informations pui réessayez !"
+      );
       console.error(error);
     }
   };
@@ -40,6 +47,7 @@ function Contact() {
         <label className="user-name">
           Nom :
           <input
+            className={cssForm}
             type="text"
             name="user_last_name"
             onChange={handleCreateMessage}
@@ -50,6 +58,7 @@ function Contact() {
         <label className="user-name">
           Prénom :
           <input
+            className={cssForm}
             type="text"
             name="user_first_name"
             onChange={handleCreateMessage}
@@ -60,6 +69,7 @@ function Contact() {
         <label className="user-mail">
           Email :
           <input
+            className={cssForm}
             type="email"
             name="user_email"
             onChange={handleCreateMessage}
@@ -70,7 +80,7 @@ function Contact() {
         <label className="user-message">
           Message :
           <textarea
-            className="message"
+            className={`${cssForm} message`}
             name="message"
             onChange={handleCreateMessage}
             value={message.message}

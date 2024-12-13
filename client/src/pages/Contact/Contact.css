@@ -31,3 +31,6 @@
     margin: auto;
   }
 }
+.errorForm {
+  border: 1px solid red;
+}

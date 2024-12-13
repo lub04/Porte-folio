@@ -205,7 +205,7 @@ textarea {
   cursor: pointer;
   font-size: clamp(0.8rem, 1.2vw, 1.1rem);
   &:hover,
-  &:focus {
+  &:active {
     background-color: var(--main-color-opacity);
     border: var(--secondary-border);
     color: var(--background-color-opacity);
