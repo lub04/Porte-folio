@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Import message-related actions
 const { browse, read, add } = require("../../../controllers/messageActions");
+const validateMessage = require("../../../services/validateMessage");
 
 // Route to get a list of messages
 router.get("/", browse);
@@ -16,7 +17,7 @@ router.get("/", browse);
 router.get("/:id", read);
 
 // Route to add a new message
-router.post("/", add);
+router.post("/", validateMessage, add);
 
 /* ************************************************************************* */
 
