@@ -55,6 +55,14 @@ const router = createBrowserRouter([
       {
         path: "lubin",
         element: <About />,
+        loader: async () => {
+          try {
+            const project = await connexion.get("/api/user/1");
+            return project.data;
+          } catch (error) {
+            throw new Error(error);
+          }
+        },
       },
       {
         path: "contact",
