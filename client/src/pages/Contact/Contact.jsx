@@ -35,7 +35,7 @@ function Contact() {
     } catch (error) {
       setCssForm("errorForm");
       errorToast(
-        "Votre message n'a pas pus être envoyer verifiez vos informations pui réessayez !"
+        "Votre message n'a pas pus être envoyer verifiez vos informations puis réessayez !"
       );
       console.error(error);
     }

@@ -4,6 +4,7 @@ const ProjectRepository = require("./models/ProjectRepository");
 const HomePageRepository = require("./models/HomeRepository");
 const QuoteRepository = require("./models/QuoteRepository");
 const MessagesRepository = require("./models/MessagesRepository");
+const UserRepository = require("./models/UserRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -18,6 +19,7 @@ tables.project = new ProjectRepository();
 tables.homePage = new HomePageRepository();
 tables.quote = new QuoteRepository();
 tables.message = new MessagesRepository();
+tables.user = new UserRepository();
 
 /* ************************************************************************* */
 
