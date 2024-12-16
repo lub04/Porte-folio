@@ -6,11 +6,11 @@ footer {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  flex-grow: 1;
   gap: 3rem;
   box-shadow: 8px 10px 22px 0px #000000;
   margin-top: 5rem;
   section {
+    flex-grow: 1;
     flex-basis: 29%;
   }
   .footer-contact {
@@ -37,7 +37,7 @@ footer {
     justify-content: center;
     gap: 0;
     section {
-      flex-basis: 25rem;
+      flex-basis: 28rem;
     }
     .footer-contact {
       display: none;
