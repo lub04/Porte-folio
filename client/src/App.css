@@ -255,13 +255,17 @@ textarea {
 @media (max-width: 576px) {
   .page-display {
     width: 90%;
-    margin: auto;
+  }
+  .page-display-form {
+    width: 80%;
   }
 }
 
 @media (min-width: 577px) and (max-width: 914px) {
   .page-display {
     width: 80%;
-    margin: auto;
+  }
+  .page-display-form {
+    width: 65%;
   }
 }
