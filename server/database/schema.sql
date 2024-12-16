@@ -103,10 +103,16 @@ CREATE TABLE quote (
 
 -- Insert data into user
 INSERT INTO user (avatar, last_name, first_name, phone, email, linkedin, github, description, resume, password)
-VALUES ('assets/images/lubin.jpg','Chauvreau', 'Lubin', '06.72.14.43.08', 'lubin-chauvreau@laposte.net', 'https://www.linkedin.com/in/lubin-chauvreau-2235102b9/', 'https://github.com/lub04', "Après plusieurs saisons à dévaler les pistes enneigées et à gérer des magasins de location de ski, notamment en tant que responsable à Saint-Lary-Soulan, j'ai décidé de troquer mes skis et mon tablier pour un clavier et quelques lignes de code. Mon parcours professionnel varié m'a permis de toucher à plusieurs domaines : la vente, l'animation, la manutention, les travaux agricoles, et même la restauration. Mais c’est dans le développement web que j’ai finalement trouvé ma véritable passion.
+VALUES ('assets/images/lubin.jpg','Chauvreau', 'Lubin', '06.72.14.43.08', 'lubin-chauvreau@laposte.net', 'https://www.linkedin.com/in/lubin-chauvreau-2235102b9/', 'https://github.com/lub04', "Après plusieurs saisons à dévaler les pistes enneigées et à gérer des magasins de location de ski, notamment en tant que responsable à Saint-Lary-Soulan, j'ai décidé de troquer mes skis et mon tablier pour un clavier et quelques lignes de code.
+
+Mon parcours professionnel varié m'a permis de toucher à plusieurs domaines : la vente, l'animation, la manutention, les travaux agricoles, et même la restauration. Mais c’est dans le développement web que j’ai finalement trouvé ma véritable passion.
+
 En septembre dernier, j’ai terminé un bootcamp intensif de 5 mois en développement web Full Stack à la Wild Code School, où j’ai découvert et maîtrisé plusieurs technologies : JavaScript, React, Node.js, et Express.js. Ce fut une aventure intense qui m’a permis d’acquérir rapidement des compétences et de monter en puissance sur des projets concrets. Mon code n’est peut-être pas encore prêt à sauver le monde, mais il pourrait bien donner un coup de pouce à votre entreprise !
-Aujourd'hui, je suis en quête d’une alternance à partir de novembre pour continuer de développer mes compétences, tout en apportant mes connaissances à une équipe dynamique. Apprendre rapidement, c’est un peu ma spécialité : que ce soit pour résoudre un bug de dernière minute ou pour gérer une équipe de vente dans une station de ski bondée, je m’adapte et je fonce.
-Ce qui me motive dans le développement, c’est le plaisir de créer, de voir des idées prendre vie à travers des lignes de code, et de relever sans cesse de nouveaux défis. On peux donc dire que je suis quelqu’un de passionné par le code, capable de monter en compétences à une vitesse fulgurante et qui sait même garder son calme en situation de crise (croyez-moi, un client mécontent à la montagne, ça forge le caractère !).","assets/CV/CV_Lubin Chauvreau_2024_Developpeur web Full Stack Junior-1.pdf", "Crazytek04!");
+
+Apprendre rapidement, c’est un peu ma spécialité : que ce soit pour résoudre un bug de dernière minute ou pour gérer une équipe de vente dans une station de ski bondée, je m’adapte et je fonce.
+
+Ce qui me motive dans le développement, c’est le plaisir de créer, de voir des idées prendre vie à travers des lignes de code, et de relever sans cesse de nouveaux défis.",
+"assets/CV/CV_Lubin Chauvreau_2024_Developpeur web Full Stack Junior-1.pdf", "Crazytek04!");
 
 -- Insert data into skill_category
 INSERT INTO skill_category (category) VALUES

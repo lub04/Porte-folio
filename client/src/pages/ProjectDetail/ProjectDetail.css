@@ -102,25 +102,3 @@
     }
   }
 }
-
-.Modal {
-  position: fixed;
-  top: 12%;
-  left: 8%;
-  right: 8%;
-  bottom: 6%;
-  background-color: var(--background-color-opacity);
-  padding: 2rem;
-  border-radius: var(--main-border-radius);
-  border: var(--main-border);
-  z-index: 1000;
-  box-shadow: var(--box-shadow);
-  .image-modal {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.Modal:focus {
-  outline: none;
-}
