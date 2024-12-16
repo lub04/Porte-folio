@@ -103,7 +103,7 @@ CREATE TABLE quote (
 
 -- Insert data into user
 INSERT INTO user (avatar, last_name, first_name, phone, email, linkedin, github, description, resume, password)
-VALUES ('assets/images/lubin.jpg','Chauvreau', 'Lubin', '06.72.14.43.08', 'lubin-chauvreau@laposte.net', 'https://www.linkedin.com/in/lubin-chauvreau-2235102b9/', 'https://github.com/lub04', "Après plusieurs saisons à dévaler les pistes enneigées et à gérer des magasins de location de ski, notamment en tant que responsable à Saint-Lary-Soulan, j'ai décidé de troquer mes skis et mon tablier pour un clavier et quelques lignes de code.
+VALUES ('assets/images/lubin.jpg','Chauvreau', 'Lubin', '06.72.14.43.08', 'lubin-chauvreau@laposte.net', 'https://www.linkedin.com/in/lubin-chauvreau-2235102b9/', 'https://github.com/lub04', "Après plusieurs saisons à dévaler les pistes enneigées et à gérer des magasins de location de ski, j'ai décidé de troquer mes skis et mon tablier pour un clavier et quelques lignes de code.
 
 Mon parcours professionnel varié m'a permis de toucher à plusieurs domaines : la vente, l'animation, la manutention, les travaux agricoles, et même la restauration. Mais c’est dans le développement web que j’ai finalement trouvé ma véritable passion.
 
