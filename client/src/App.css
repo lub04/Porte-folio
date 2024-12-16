@@ -25,13 +25,13 @@
   /* fonts */
   --title-font: "IBMPlex";
   --text-font: "Comforta";
-  --link-size: clamp(0.7rem, 1.5vw, 2rem);
-  --title-size: clamp(1rem, 2.3vw, 3rem);
-  --secondary-title-size: clamp(1rem, 2.5vw, 1.8rem);
-  --third-title-size: clamp(0.85rem, 2vw, 1.2rem);
-  --paragraph-size: clamp(0.7rem, 1.5vw, 1rem);
-  --paragraph-size-big: clamp(0.7rem, 2vw, 1.3rem);
-  --home-header-title-size: clamp(1.2rem, 3vw, 3rem);
+  --link-size: clamp(0.9rem, 1.5vw, 2rem);
+  --title-size: clamp(1.5rem, 3vw, 2.5rem);
+  --secondary-title-size: clamp(1.25rem, 2vw, 2rem);
+  --third-title-size: clamp(1rem, 1.5vw, 1.5rem);
+  --paragraph-size: clamp(0.85rem, 1vw, 1.2rem);
+  --paragraph-size-big: clamp(0.9rem, 1.25vw, 1.3rem);
+  --home-header-title-size: clamp(2rem, 3vw, 3rem);
   /* borders */
   --main-border: 1px solid var(--secondary-color);
   --secondary-border: 1px solid white;
@@ -147,7 +147,7 @@ nav {
     color: var(--main-color);
     transition: transform 0.5s ease;
     &:hover,
-    &:focus {
+    &:active {
       transform: scale(1.2);
     }
   }
@@ -224,7 +224,7 @@ textarea {
   opacity: 1 !important;
   transition: transform 0.4s ease;
   &:hover,
-  &:focus {
+  &:active {
     transform: scale(1.4);
   }
 }

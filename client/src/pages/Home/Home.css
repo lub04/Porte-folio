@@ -11,7 +11,7 @@
     border-radius: var(--main-border-radius);
     img {
       display: block;
-      width: 20%;
+      width: clamp(10rem, 20%, 15rem);
       height: 100%;
       border-radius: var(--round-border-radius);
       border: var(--main-border);
