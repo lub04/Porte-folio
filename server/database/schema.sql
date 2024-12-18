@@ -112,7 +112,7 @@ En septembre dernier, j’ai terminé un bootcamp intensif de 5 mois en dévelop
 Apprendre rapidement, c’est un peu ma spécialité : que ce soit pour résoudre un bug de dernière minute ou pour gérer une équipe de vente dans une station de ski bondée, je m’adapte et je fonce.
 
 Ce qui me motive dans le développement, c’est le plaisir de créer, de voir des idées prendre vie à travers des lignes de code, et de relever sans cesse de nouveaux défis.",
-"assets/CV/CV_Lubin Chauvreau_2024_Developpeur web Full Stack Junior-1.pdf", "Crazytek04!");
+"assets/CV/CV_Lubin Chauvreau_2024_Developpeur web Full Stack Junior-1.pdf", "$argon2id$v=19$m=19456,t=2,p=1$VTmX1NmE/nPYM3ONafat6g$jnWLgvLNrQIyY/YdMw9OTmpeUjmT7tgDjsbe784WJpA");
 
 -- Insert data into skill_category
 INSERT INTO skill_category (category) VALUES

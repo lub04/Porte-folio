@@ -11,6 +11,7 @@ import Connexion from "./pages/Connexion/Connexion";
 import connexion from "./services/connexion";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
+import { PortefolioProvider } from "./context/PortefolioContext";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <PortefolioProvider>
+      <RouterProvider router={router} />
+    </PortefolioProvider>
   </React.StrictMode>
 );
