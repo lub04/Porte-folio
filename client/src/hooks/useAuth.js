@@ -16,8 +16,8 @@ const useAuth = () => {
       const response = await connexion.post(`/api/user/login`, testedUser);
       if (response.status === 200) {
         const userConnected = response.data;
-        setUser(userConnected);
         handleUser(userConnected);
+        setUser(userConnected);
         return {
           success: true,
           msg: "Connexion réussie",
