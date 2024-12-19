@@ -36,3 +36,14 @@
     padding: 1rem;
   }
 }
+
+.message-not-read {
+  background-color: var(--main-color-opacity);
+  color: white;
+  p {
+    color: white;
+  }
+  h3 {
+    color: white;
+  }
+}

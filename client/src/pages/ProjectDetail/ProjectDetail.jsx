@@ -97,10 +97,14 @@ function ProjectDetail() {
           <ExpandableSection
             title="L'aplication"
             content={project.description}
+            message={false}
+            isRead
           />
           <ExpandableSection
             title="L'organisation"
             content={project.organization}
+            message={false}
+            isRead
           />
           <article className="project-images">
             <button

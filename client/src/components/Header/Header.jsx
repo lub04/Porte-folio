@@ -9,8 +9,8 @@ function Header({ css, css2 }) {
     <header className={`${css} ${css2}`}>
       <nav>
         {logUser ? (
-          <Link className="navigation" to="/">
-            Admin
+          <Link className="navigation" to="messages">
+            Messagerie
           </Link>
         ) : null}
         <Link className="navigation" to="projets">

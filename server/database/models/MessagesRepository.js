@@ -46,6 +46,13 @@ class MessagesRepository extends AbstractRepository {
     return rows;
   }
 
+  async updateMessageStatus(message) {
+    const [result] = await this.database.query(
+      `UPDATE ${this.table} SET is_read = ? WHERE id = ?`,
+      [message.is_read, message.id]
+    );
+    return result.affectedRows;
+  }
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing message
 

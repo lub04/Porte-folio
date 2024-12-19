@@ -7,6 +7,8 @@ import AllProjects from "./pages/AllProjects/AllProjects";
 import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 import Home from "./pages/Home/Home";
 import Connexion from "./pages/Connexion/Connexion";
+import Messagerie from "./pages/Messagerie/Messagerie";
+import ConnectedLayout from "./layout/ConnectedLayout";
 
 import connexion from "./services/connexion";
 import About from "./pages/About/About";
@@ -73,6 +75,24 @@ const router = createBrowserRouter([
       {
         path: "connexion",
         element: <Connexion />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <ConnectedLayout />,
+    children: [
+      {
+        path: "messages",
+        element: <Messagerie />,
+        loader: async () => {
+          try {
+            const project = await connexion.get("/api/messages");
+            return project.data;
+          } catch (error) {
+            throw new Error(error);
+          }
+        },
       },
     ],
   },
