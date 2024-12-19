@@ -1,11 +1,14 @@
-import useAuth from "../../hooks/useAuth";
+import { ToastContainer } from "react-toastify";
 
+import useAuth from "../../hooks/useAuth";
 import errorToast from "../../components/Toast/errorToast";
 import successToast from "../../components/Toast/successToast";
 import "./Connexion.css";
+import { usePortefolio } from "../../context/PortefolioContext";
 
 function Connexion() {
-  const { user, setUser, login } = useAuth();
+  const { user, setUser, login, logout } = useAuth();
+  const { logUser } = usePortefolio();
 
   const handleCheckLog = (event) => {
     const { name, value } = event.target;
@@ -15,12 +18,22 @@ function Connexion() {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleConnect = async (event) => {
     event.preventDefault();
     const response = await login(user);
     if (response.success) {
       setUser({ email: "", password: "" });
-      successToast("yeah boy");
+      successToast(response.msg);
+    } else {
+      errorToast(response.msg);
+    }
+  };
+
+  const handleLogOut = async (event) => {
+    event.preventDefault();
+    const response = await logout();
+    if (response.success) {
+      successToast(response.msg);
     } else {
       errorToast(response.msg);
     }
@@ -29,29 +42,42 @@ function Connexion() {
   return (
     <form
       className="connexion-form page-display-form box"
-      onSubmit={handleSubmit}
+      onSubmit={logUser ? handleLogOut : handleConnect}
     >
-      <label>
-        Identifiant :
-        <input
-          type="email"
-          name="email"
-          value={user.email}
-          onChange={handleCheckLog}
-        />
-      </label>
-      <label>
-        Mot de passe :
-        <input
-          type="password"
-          name="password"
-          value={user.password}
-          onChange={handleCheckLog}
-        />
-      </label>
-      <button className="button" type="submit">
-        Se connecter
-      </button>
+      {logUser ? (
+        <h2>Vous êtes connecté</h2>
+      ) : (
+        <>
+          <label>
+            Identifiant :
+            <input
+              type="email"
+              name="email"
+              value={user.email}
+              onChange={handleCheckLog}
+            />
+          </label>
+          <label>
+            Mot de passe :
+            <input
+              type="password"
+              name="password"
+              value={user.password}
+              onChange={handleCheckLog}
+            />
+          </label>
+        </>
+      )}{" "}
+      {logUser ? (
+        <button className="button" type="submit">
+          Se déconnecter
+        </button>
+      ) : (
+        <button className="button" type="submit">
+          Se connecter
+        </button>
+      )}
+      <ToastContainer />
     </form>
   );
 }

@@ -8,7 +8,6 @@ import {
 } from "react";
 import PropTypes from "prop-types";
 
-// Créer le contexte utilisateur
 const PortefolioContext = createContext();
 
 export function PortefolioProvider({ children }) {
@@ -24,6 +23,26 @@ export function PortefolioProvider({ children }) {
     }
   }, []);
 
+  const checkTokenExpiration = useCallback(() => {
+    const savedUser = localStorage.getItem("LogUser");
+    if (savedUser) {
+      try {
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1];
+
+        if (!token) {
+          localStorage.removeItem("LogUser");
+          setLogUser(null);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la vérification du token :", error);
+        localStorage.removeItem("LogUser");
+        setLogUser(null);
+      }
+    }
+  }, []);
   useEffect(() => {
     const savedUser = localStorage.getItem("LogUser");
     if (savedUser) {
@@ -31,9 +50,12 @@ export function PortefolioProvider({ children }) {
     } else {
       setLogUser(null);
     }
-  }, []);
+  }, [checkTokenExpiration]);
 
-  // Mémorisation de l'objet value pour éviter les rendus inutiles
+  useEffect(() => {
+    const intervalId = setInterval(checkTokenExpiration, 300000);
+    return () => clearInterval(intervalId);
+  }, [checkTokenExpiration]);
   const value = useMemo(() => ({ logUser, handleUser }), [logUser, handleUser]);
 
   return (
@@ -43,7 +65,6 @@ export function PortefolioProvider({ children }) {
   );
 }
 
-// Ajouter la validation des propriétés
 PortefolioProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
+import { usePortefolio } from "../../context/PortefolioContext";
 
 function Header({ css, css2 }) {
+  const { logUser } = usePortefolio();
+
   return (
     <header className={`${css} ${css2}`}>
       <nav>
+        {logUser ? (
+          <Link className="navigation" to="/">
+            Admin
+          </Link>
+        ) : null}
         <Link className="navigation" to="projets">
           Mes projets
         </Link>

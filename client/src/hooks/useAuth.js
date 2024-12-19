@@ -34,9 +34,10 @@ const useAuth = () => {
 
   const logout = async () => {
     try {
-      const response = await connexion.post("/api/logout");
+      const response = await connexion.post("/api/user/logout");
       if (response.status === 200) {
         setUser(initialUser);
+        handleUser(null);
         return {
           success: true,
           msg: "Déconnexion réussie",
@@ -47,6 +48,7 @@ const useAuth = () => {
         msg: "Une erreur est survenue lors de la déconnexion.",
       };
     } catch (err) {
+      console.error("Erreur lors de la déconnexion :", err);
       return {
         success: false,
         msg: "Une erreur est survenue lors de la déconnexion.",
