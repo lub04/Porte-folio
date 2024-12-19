@@ -7,7 +7,7 @@ import "./Connexion.css";
 import { usePortefolio } from "../../context/PortefolioContext";
 
 function Connexion() {
-  const { user, setUser, login, logout } = useAuth();
+  const { user, setUser, login, handleLogOut } = useAuth();
   const { logUser } = usePortefolio();
 
   const handleCheckLog = (event) => {
@@ -23,16 +23,6 @@ function Connexion() {
     const response = await login(user);
     if (response.success) {
       setUser({ email: "", password: "" });
-      successToast(response.msg);
-    } else {
-      errorToast(response.msg);
-    }
-  };
-
-  const handleLogOut = async (event) => {
-    event.preventDefault();
-    const response = await logout();
-    if (response.success) {
       successToast(response.msg);
     } else {
       errorToast(response.msg);
@@ -67,7 +57,7 @@ function Connexion() {
             />
           </label>
         </>
-      )}{" "}
+      )}
       {logUser ? (
         <button className="button" type="submit">
           Se déconnecter

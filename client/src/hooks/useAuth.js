@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 import { usePortefolio } from "../context/PortefolioContext";
+
 import connexion from "../services/connexion";
+import successToast from "../components/Toast/successToast";
+import errorToast from "../components/Toast/errorToast";
 
 const useAuth = () => {
   const initialUser = { email: "", password: "" };
@@ -56,11 +59,20 @@ const useAuth = () => {
     }
   };
 
+  const handleLogOut = async (event) => {
+    event.preventDefault();
+    const response = await logout();
+    if (response.success) {
+      successToast(response.msg);
+    } else {
+      errorToast(response.msg);
+    }
+  };
   return {
     user,
     setUser,
     login,
-    logout,
+    handleLogOut,
   };
 };
 
