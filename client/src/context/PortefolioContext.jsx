@@ -35,15 +35,28 @@ export function PortefolioProvider({ children }) {
 
   const checkTokenExpiration = useCallback(() => {
     const savedUser = localStorage.getItem("LogUser");
-    if (savedUser) {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
 
-      if (!token || isTokenExpired(token)) {
+    if (savedUser) {
+      try {
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1];
+
+        if (token) {
+          if (!isTokenExpired(token)) {
+            // Le token est valide, on ne fait rien
+            return;
+          }
+        }
+
+        // Si le token est inexistant ou expiré, on déconnecte l'utilisateur
         document.cookie =
           "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        localStorage.removeItem("LogUser");
+        setLogUser(null);
+      } catch (error) {
+        console.error("Erreur lors de la vérification du token :", error);
         localStorage.removeItem("LogUser");
         setLogUser(null);
       }

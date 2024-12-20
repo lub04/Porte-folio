@@ -7,17 +7,12 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import homePage-related actions
-const { browse, read, add } = require("../../../controllers/homePageActions");
-
-// Route to get a list of homePages
-router.get("/", browse);
+const { read, edit } = require("../../../controllers/homePageActions");
 
 // Route to get a specific homePage by ID
 router.get("/:id", read);
 
-// Route to add a new homePage
-router.post("/", add);
-
+router.put("/:id", edit);
 /* ************************************************************************* */
 
 module.exports = router;
