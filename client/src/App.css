@@ -246,6 +246,12 @@ textarea {
     width: 100%;
     height: 100%;
   }
+  .modal-textarea {
+    width: 100%;
+    height: 50vh;
+    font-family: var(--text-font);
+    font-size: var(--paragraph-size-big);
+  }
 }
 
 .Modal:focus {

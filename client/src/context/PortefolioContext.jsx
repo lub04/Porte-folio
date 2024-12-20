@@ -8,10 +8,26 @@ import {
 } from "react";
 import PropTypes from "prop-types";
 
+import connexion from "../services/connexion";
+import successToast from "../components/Toast/successToast";
+
 const PortefolioContext = createContext();
 
 export function PortefolioProvider({ children }) {
   const [logUser, setLogUser] = useState(null);
+
+  // Fonction pour vérifier si le token est présent et valide
+  const checkToken = useCallback(async () => {
+    try {
+      await connexion.get("api/messages", {
+        withCredentials: true,
+      });
+      successToast("votre token est valide");
+    } catch (error) {
+      console.error("Token invalide ou expiré:", error);
+      setLogUser(null);
+    }
+  }, []);
 
   const handleUser = useCallback((user) => {
     if (user) {
@@ -23,77 +39,23 @@ export function PortefolioProvider({ children }) {
     }
   }, []);
 
-  const isTokenExpired = (token) => {
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const currentTime = Date.now() / 1000;
-      return payload.exp < currentTime;
-    } catch {
-      return true;
-    }
-  };
-
-  const checkTokenExpiration = useCallback(() => {
-    const savedUser = localStorage.getItem("LogUser");
-
-    if (savedUser) {
-      try {
-        const token = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("token="))
-          ?.split("=")[1];
-
-        if (token) {
-          if (!isTokenExpired(token)) {
-            // Le token est valide, on ne fait rien
-            return;
-          }
-        }
-
-        // Si le token est inexistant ou expiré, on déconnecte l'utilisateur
-        document.cookie =
-          "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        localStorage.removeItem("LogUser");
-        setLogUser(null);
-      } catch (error) {
-        console.error("Erreur lors de la vérification du token :", error);
-        localStorage.removeItem("LogUser");
-        setLogUser(null);
-      }
-    }
-  }, []);
-
   useEffect(() => {
     const savedUser = localStorage.getItem("LogUser");
     if (savedUser) {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
-
-      if (token && !isTokenExpired(token)) {
-        setLogUser(JSON.parse(savedUser));
-      } else {
-        localStorage.removeItem("LogUser");
-        setLogUser(null);
-      }
+      setLogUser(JSON.parse(savedUser));
+    } else {
+      setLogUser(null);
     }
-  }, []);
+    checkToken();
+  }, [checkToken]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
+    const interval = setInterval(() => {
+      checkToken(); // Vérifier le token toutes les 5 minutes, par exemple
+    }, 300000); // 300000 ms = 5 minutes
 
-      if (!(token && !isTokenExpired(token))) {
-        checkTokenExpiration();
-      }
-    }, 300000);
-
-    return () => clearInterval(intervalId);
-  }, [checkTokenExpiration]);
+    return () => clearInterval(interval); // Nettoyer l'intervalle lors de la destruction du composant
+  }, [checkToken]);
 
   const value = useMemo(() => ({ logUser, handleUser }), [logUser, handleUser]);
 

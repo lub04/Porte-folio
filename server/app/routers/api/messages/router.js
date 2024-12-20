@@ -14,17 +14,18 @@ const {
   edit,
 } = require("../../../controllers/messageActions");
 const validateMessage = require("../../../services/validateMessage");
+const { checkCookie } = require("../../../services/verification/cookies");
 
 // Route to get a list of messages
-router.get("/", browse);
+router.get("/", checkCookie, browse);
 
 // Route to get a specific message by ID
-router.get("/:id", read);
+router.get("/:id", checkCookie, read);
 
 // Route to add a new message
 router.post("/", validateMessage, add);
 
-router.put("/:id", edit);
+router.put("/:id", checkCookie, edit);
 /* ************************************************************************* */
 
 module.exports = router;

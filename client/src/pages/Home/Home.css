@@ -3,6 +3,13 @@
     margin: 3rem 0 5rem 0;
     font-size: var(--paragraph-size-big);
   }
+  .welcome-admin {
+    font-size: var(--paragraph-size-big);
+    margin: 1rem 0;
+  }
+  button {
+    margin-left: auto;
+  }
   .presentation {
     padding: 1rem;
     box-shadow: var(--box-shadow);
