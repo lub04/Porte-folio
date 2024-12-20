@@ -9,23 +9,19 @@ import {
 import PropTypes from "prop-types";
 
 import connexion from "../services/connexion";
-import successToast from "../components/Toast/successToast";
 
 const PortefolioContext = createContext();
 
 export function PortefolioProvider({ children }) {
   const [logUser, setLogUser] = useState(null);
 
-  // Fonction pour vérifier si le token est présent et valide
   const checkToken = useCallback(async () => {
     try {
-      await connexion.get("api/messages", {
-        withCredentials: true,
-      });
-      successToast("votre token est valide");
+      await connexion.get("api/messages");
     } catch (error) {
       console.error("Token invalide ou expiré:", error);
       setLogUser(null);
+      localStorage.removeItem("LogUser");
     }
   }, []);
 
@@ -51,10 +47,10 @@ export function PortefolioProvider({ children }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      checkToken(); // Vérifier le token toutes les 5 minutes, par exemple
-    }, 300000); // 300000 ms = 5 minutes
+      checkToken();
+    }, 300000);
 
-    return () => clearInterval(interval); // Nettoyer l'intervalle lors de la destruction du composant
+    return () => clearInterval(interval);
   }, [checkToken]);
 
   const value = useMemo(() => ({ logUser, handleUser }), [logUser, handleUser]);
