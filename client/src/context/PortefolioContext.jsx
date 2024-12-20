@@ -23,39 +23,65 @@ export function PortefolioProvider({ children }) {
     }
   }, []);
 
+  const isTokenExpired = (token) => {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const currentTime = Date.now() / 1000;
+      return payload.exp < currentTime;
+    } catch {
+      return true;
+    }
+  };
+
   const checkTokenExpiration = useCallback(() => {
     const savedUser = localStorage.getItem("LogUser");
     if (savedUser) {
-      try {
-        const token = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("token="))
-          ?.split("=")[1];
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
 
-        if (!token) {
-          localStorage.removeItem("LogUser");
-          setLogUser(null);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la vérification du token :", error);
+      if (!token || isTokenExpired(token)) {
+        document.cookie =
+          "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         localStorage.removeItem("LogUser");
         setLogUser(null);
       }
     }
   }, []);
+
   useEffect(() => {
     const savedUser = localStorage.getItem("LogUser");
     if (savedUser) {
-      setLogUser(JSON.parse(savedUser));
-    } else {
-      setLogUser(null);
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
+
+      if (token && !isTokenExpired(token)) {
+        setLogUser(JSON.parse(savedUser));
+      } else {
+        localStorage.removeItem("LogUser");
+        setLogUser(null);
+      }
     }
-  }, [checkTokenExpiration]);
+  }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(checkTokenExpiration, 300000);
+    const intervalId = setInterval(() => {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
+
+      if (!(token && !isTokenExpired(token))) {
+        checkTokenExpiration();
+      }
+    }, 300000);
+
     return () => clearInterval(intervalId);
   }, [checkTokenExpiration]);
+
   const value = useMemo(() => ({ logUser, handleUser }), [logUser, handleUser]);
 
   return (

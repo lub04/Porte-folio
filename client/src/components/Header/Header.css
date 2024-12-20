@@ -20,10 +20,6 @@
       }
     }
   }
-  .navigation {
-    font-size: var(--link-size);
-    z-index: 1;
-  }
 }
 .home-header {
   height: 80vh;
@@ -43,6 +39,10 @@
 
 .none {
   display: none;
+}
+.navigation {
+  font-size: var(--link-size);
+  z-index: 1;
 }
 
 @media (max-width: 576px) {
