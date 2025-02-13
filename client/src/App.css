@@ -196,8 +196,8 @@ textarea {
 }
 
 .button {
-  height: clamp(1.2rem, 2vw, 1.5rem);
-  width: clamp(5rem, 10vw, 8rem);
+  height: clamp(1.5rem, 2vw, 2rem);
+  width: clamp(10rem, 10vw, 15rem);
   border-radius: var(--main-border-radius);
   border: var(--main-border);
   background-color: var(--background-color);

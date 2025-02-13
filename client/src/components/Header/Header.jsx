@@ -21,7 +21,7 @@ function Header({ css, css2 }) {
         </Link>
       </nav>
       {logUser ? (
-        <nav>
+        <nav className="admin-nav">
           <Link className="navigation" to="messages">
             Messagerie
           </Link>
@@ -30,7 +30,7 @@ function Header({ css, css2 }) {
           </Link>
           <button
             type="button"
-            className="button navigation"
+            className="button navigation deconnect-button"
             onClick={handleLogOut}
           >
             Déconnexion

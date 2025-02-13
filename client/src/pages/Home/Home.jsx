@@ -50,7 +50,11 @@ function Home() {
         {logUser ? (
           <article className="box welcome">
             <p className="welcome-admin">{home.welcome}</p>
-            <button type="button" className="button" onClick={openModalWelcome}>
+            <button
+              type="button"
+              className="button modify-button"
+              onClick={openModalWelcome}
+            >
               Modifier le texte
             </button>
           </article>

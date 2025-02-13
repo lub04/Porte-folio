@@ -12,8 +12,23 @@ class ProjectRepository extends AbstractRepository {
   async create(project) {
     // Execute the SQL INSERT query to add a new project to the "project" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, user_id) values (?, ?)`,
-      [project.title, project.user_id]
+      `insert into ${this.table} (name, github_link, website_link, team, main_technologies, organization, description, logo_img, img1, img2, img3, img4, project_category_id, status_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        project.name,
+        project.github_link,
+        project.website_link,
+        project.team,
+        project.main_technologies,
+        project.organization,
+        project.description,
+        project.logo_img,
+        project.img1,
+        project.img2,
+        project.img3,
+        project.img4,
+        project.project_category_id,
+        project.status_id,
+      ]
     );
 
     // Return the ID of the newly inserted project
