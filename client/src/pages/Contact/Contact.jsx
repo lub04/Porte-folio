@@ -44,7 +44,7 @@ function Contact() {
     <div className="page-display-form">
       <h2>Contactez moi !</h2>
       <form className="contact-form box" onSubmit={handleSubmitMessage}>
-        <label className="user-name">
+        <label className="user-name normal-text-input">
           Nom :
           <input
             className={cssForm}
@@ -55,7 +55,7 @@ function Contact() {
             required
           />
         </label>
-        <label className="user-name">
+        <label className="user-name normal-text-input">
           Prénom :
           <input
             className={cssForm}
@@ -66,7 +66,7 @@ function Contact() {
             required
           />
         </label>
-        <label className="user-mail">
+        <label className="user-mail large-text-input">
           Email :
           <input
             className={cssForm}
