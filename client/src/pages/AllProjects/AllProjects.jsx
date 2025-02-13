@@ -113,6 +113,7 @@ function AllProjects() {
           <label className={firstStepChecked ? "none" : "normal-text-input"}>
             Nom du projet :
             <input
+              required
               onChange={handleCreateProject}
               type="text"
               name="name"
@@ -122,6 +123,7 @@ function AllProjects() {
           <label className={firstStepChecked ? "none" : "normal-text-input"}>
             Lien Github :
             <input
+              required
               onChange={handleCreateProject}
               type="text"
               name="github_link"
@@ -131,6 +133,7 @@ function AllProjects() {
           <label className={firstStepChecked ? "none" : "normal-select"}>
             catégorie du projet :
             <select
+              required
               value={newProject.project_category_id}
               onChange={handleCreateProject}
               name="project_category_id"
@@ -177,6 +180,7 @@ function AllProjects() {
           <label className={firstStepChecked ? "none" : "normal-text-input"}>
             Description du projet :
             <textarea
+              required
               name="description"
               value={newProject.description}
               onChange={handleCreateProject}
@@ -185,6 +189,7 @@ function AllProjects() {
           <label className={firstStepChecked ? "none" : "normal-text-input"}>
             l'organisation :
             <textarea
+              required
               name="organization"
               value={newProject.organization}
               onChange={handleCreateProject}
@@ -192,23 +197,23 @@ function AllProjects() {
           </label>
           <label className={firstStepChecked ? "normal-text-input" : "none"}>
             Logo du projet :
-            <input type="file" />
+            <input required type="file" />
           </label>
           <label className={firstStepChecked ? "normal-text-input" : "none"}>
             Image principale :
-            <input type="file" />
+            <input required type="file" />
           </label>
           <label className={firstStepChecked ? "large-text-input" : "none"}>
             Image 2 :
-            <input type="file" />
+            <input required type="file" />
           </label>
           <label className={firstStepChecked ? "large-text-input" : "none"}>
             Image 3 :
-            <input type="file" />
+            <input required type="file" />
           </label>
           <label className={firstStepChecked ? "large-text-input" : "none"}>
             Image 4 :
-            <input type="file" />
+            <input required type="file" />
           </label>
           {firstStepChecked === false ? (
             <button type="button" className="button" onClick={goToNextStep}>
