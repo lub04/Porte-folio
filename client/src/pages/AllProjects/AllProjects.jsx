@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 
 import { usePortefolio } from "../../context/PortefolioContext";
+import connexion from "../../services/connexion";
 import "./AllProjects.css";
 
 const initialProject = {
@@ -32,18 +33,19 @@ function AllProjects() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isDeployed, setIsDeployed] = useState(false);
   const [firstStepChecked, setFirstStepChecked] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (
-      newProject.project_category_id === "2" ||
-      newProject.project_category_id === "0"
-    ) {
-      setNewProject((prevProject) => ({
-        ...prevProject,
-        team: "",
-      }));
-    }
-  }, [newProject.project_category_id]);
+    const fetchCategories = async () => {
+      try {
+        const response = await connexion.get("/api/category");
+        setCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleCreateProject = (event) => {
     const { name, value } = event.target;
@@ -131,22 +133,24 @@ function AllProjects() {
             />
           </label>
           <label className={firstStepChecked ? "none" : "normal-select"}>
-            catégorie du projet :
+            Catégorie du projet :
             <select
               required
               value={newProject.project_category_id}
               onChange={handleCreateProject}
               name="project_category_id"
             >
-              <option value="0">Choisissez une categorie</option>
-              <option value="1">Projet de groupe</option>
-              <option value="2">Projet perso</option>
-              <option value="3">Hackathon</option>
+              <option value="0">-- Choisissez une categorie --</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.category}
+                </option>
+              ))}
             </select>
             {newProject.project_category_id !== "2" &&
             newProject.project_category_id !== "0" ? (
               <label className="large-text-input">
-                l'équipe :
+                Les membres de l'équipe :
                 <input
                   onChange={handleCreateProject}
                   type="text"

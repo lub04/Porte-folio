@@ -38,39 +38,45 @@ class ProjectRepository extends AbstractRepository {
   // The Rs of CRUD - Read operations
 
   async read(id) {
-    // Execute the SQL SELECT query to retrieve a specific project by its ID
+    // Execute the SQL SELECT query to retrieve a specific project by its ID, including picture and categorized skills
     const [rows] = await this.database.query(
-      `SELECT
-  p.*,
-  pc.category AS project_category,
-  GROUP_CONCAT(
-    DISTINCT CONCAT(sc.category, ': ', GROUPED.skills_per_category) SEPARATOR ' | '
-  ) AS categorized_skills
-FROM
-  project AS p
-INNER JOIN project_category AS pc ON p.project_category_id = pc.id
-INNER JOIN project_skill AS ps ON p.id = ps.project_id
-INNER JOIN skill AS s ON ps.skill_id = s.id
-INNER JOIN skill_category AS sc ON s.category_id = sc.id
-LEFT JOIN (
-    SELECT
-      ps.project_id,
-      s.category_id,
-      GROUP_CONCAT(DISTINCT s.name ORDER BY s.name SEPARATOR ', ') AS skills_per_category
-    FROM
-      project_skill AS ps
-    INNER JOIN skill AS s ON ps.skill_id = s.id
-    GROUP BY ps.project_id, s.category_id
-) AS GROUPED ON GROUPED.project_id = p.id AND GROUPED.category_id = sc.id
-WHERE
-  p.id = ?
-GROUP BY
-  p.id`,
+      `SELECT 
+        p.*, 
+        pc.category AS project_category,
+        GROUP_CONCAT(
+          DISTINCT CONCAT(sc.category, ': ', GROUPED.skills_per_category) SEPARATOR ' | '
+        ) AS categorized_skills,
+        JSON_OBJECT(
+          'logo', (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1),
+          'screenshots', (SELECT JSON_ARRAYAGG(url) FROM picture WHERE project_id = p.id AND type = 'screenshot')
+        ) AS pictures
+      FROM 
+        project AS p
+      INNER JOIN project_category AS pc ON p.project_category_id = pc.id
+      INNER JOIN project_skill AS ps ON p.id = ps.project_id
+      INNER JOIN skill AS s ON ps.skill_id = s.id
+      INNER JOIN skill_category AS sc ON s.category_id = sc.id
+      LEFT JOIN (
+          SELECT
+            ps.project_id,
+            s.category_id,
+            GROUP_CONCAT(DISTINCT s.name ORDER BY s.name SEPARATOR ', ') AS skills_per_category
+          FROM
+            project_skill AS ps
+          INNER JOIN skill AS s ON ps.skill_id = s.id
+          GROUP BY ps.project_id, s.category_id
+      ) AS GROUPED ON GROUPED.project_id = p.id AND GROUPED.category_id = sc.id
+      WHERE p.id = ?
+      GROUP BY p.id`,
       [id]
     );
 
-    // Return the first row of the result, which represents the project
-    return rows[0];
+    // If the project exists, return the first row (the project data)
+    if (rows.length > 0) {
+      return rows[0];
+    }
+    // If no project found with that ID, return null
+    return null;
   }
 
   async readAll() {

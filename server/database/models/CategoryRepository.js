@@ -4,7 +4,7 @@ class CategoryRepository extends AbstractRepository {
   constructor() {
     // Call the constructor of the parent class (AbstractRepository)
     // and pass the table name "category" as configuration
-    super({ table: "category" });
+    super({ table: "project_category" });
   }
 
   // The C of CRUD - Create operation

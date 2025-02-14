@@ -47,17 +47,19 @@ CREATE TABLE project (
   main_technologies LONGTEXT,
   organization LONGTEXT,
   description LONGTEXT,
-  logo_img VARCHAR(255),
-  img1 VARCHAR(255),
-  img2 VARCHAR(255),
-  img3 VARCHAR(255),
-  img4 VARCHAR(255),
   project_category_id INT,
   status_id INT,
   FOREIGN KEY (project_category_id) REFERENCES project_category(id),
   FOREIGN KEY (status_id) REFERENCES status(id)
 );
 
+CREATE TABLE picture (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT,
+    url VARCHAR(255) NOT NULL,
+    type ENUM('logo', 'screenshot') NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
+);
 CREATE TABLE project_skill (
   skill_id INT,
   project_id INT,
@@ -212,7 +214,7 @@ INSERT INTO quote (quote, author) VALUES
 ('"Un bon code est celui que vous n\'avez pas besoin d\'expliquer."', 'Anonyme');
 
 -- Insert project "Externatic"
-INSERT INTO project (name, github_link, website_link, team, main_technologies, organization, description, logo_img, img1, img2, img3, img4, project_category_id, status_id)
+INSERT INTO project (name, github_link, website_link, team, main_technologies, organization, description, project_category_id, status_id)
 VALUES (
   'Externatic',
   'https://github.com/WildCodeSchool-2024-02/JS-RMT-Julien-Externatic-P3',
@@ -236,15 +238,10 @@ VALUES (
     Candidat connecté : Une fois inscrit et connecté, le candidat bénéficie de fonctionnalités supplémentaires. Il a accès aux offres d'emploi, mais aussi à son profil personnel, qu’il peut modifier à tout moment. Le candidat peut gérer ses candidatures et suivre les offres mises en favoris pour postuler plus tard. Lorsqu'il souhaite postuler à une offre, les informations requises sont automatiquement récupérées depuis son profil, simplifiant ainsi le processus. Pour ce faire, son profil doit être complet et à jour.\n
     Consultant : Le consultant joue un rôle central dans la gestion des offres et des candidatures. Il dispose d’un backoffice dédié, depuis lequel il peut ajouter de nouvelles offres d’emploi et gérer les candidatures reçues pour ses offres. En plus de cela, il a accès à une liste d'entreprises affiliées à son portefeuille, ainsi qu'à une base de candidats, qu’il peut contacter directement pour leur proposer des opportunités. Le consultant a aussi accès à divers outils de gestion pour les éléments à sa disposition (offres, entreprises, candidats).\n
     Administrateur : Le rôle de l’administrateur est le plus complet. L’administrateur a la responsabilité de gérer les consultants (ajouter, modifier ou supprimer un consultant) ainsi que les entreprises partenaires du site. Il est le seul utilisateur à avoir un accès complet à l'intégralité du site, incluant les fonctionnalités de gestion avancée des utilisateurs, entreprises et offres d’emploi.",
-  'assets/images/Externatic/ExternaticLogoNoir.png',
-  'assets/images/Externatic/ExternaticAccueil.png',
-  'assets/images/Externatic/ExternaticOffres.png',
-  'assets/images/Externatic/ExternaticProfil.png',
-  'assets/images/Externatic/ExternaticBackoffice.png',
 1,
 2);
 
-INSERT INTO project (name, github_link, website_link, team, main_technologies, organization, description, logo_img, img1, img2, img3, img4, project_category_id, status_id)
+INSERT INTO project (name, github_link, website_link, team, main_technologies, organization, description, project_category_id, status_id)
 VALUES (
   'Galactic Fight',
   'https://github.com/lub04/Galactic-Fight',
@@ -259,15 +256,10 @@ L’utilisateur commence par créer son personnage, en choisissant un nom et un 
 À chaque victoire, le joueur peut augmenter l’une de ses statistiques (attaque ou défense) de 5 points, renforçant ainsi son personnage pour les combats futurs. La gestion stratégique de ces points est essentielle pour progresser sans être bloqué dans les niveaux plus difficiles.
 Le jeu est composé de 3 combats par planète, et après chaque deuxième combat, une nouvelle planète est débloquée jusqu’à atteindre la redoutable Étoile de la Mort.\n
 Pour finir l’aventure, l’utilisateur devra choisir entre un duel final contre Leia ou Dark Vador... Et soyons honnêtes, que vous finissiez par épouser l’un ou l’autre, les réunions de famille risquent d'être assez spatiales !",
-  "assets/images/GalacticFight/Logo.png",
-  "assets/images/GalacticFight/avatar.png",
-  "assets/images/GalacticFight/levels.png",
-  "assets/images/GalacticFight/Planet.png",
-  "assets/images/GalacticFight/loseFight.png",
   3,
   2
 );
-INSERT INTO project (name, github_link, website_link, team, main_technologies, organization, description, logo_img, img1, img2, img3, img4, project_category_id, status_id)
+INSERT INTO project (name, github_link, website_link, team, main_technologies, organization, description, project_category_id, status_id)
 VALUES (
     'Film Paradise',
     'https://github.com/lub04/Film-Paradise',
@@ -280,11 +272,6 @@ VALUES (
     "Film Paradise est une plateforme de e-commerce dédiée aux films numériques, offrant aux utilisateurs une expérience de navigation fluide et intuitive.\n
     Les utilisateurs peuvent explorer une liste complète de films, filtrables par catégories ou via une barre de recherche dédiée.\n Chaque film dispose d'une page de détail, où les utilisateurs peuvent consulter des informations supplémentaires et choisir de l'ajouter à leurs favoris pour un achat ultérieur ou directement au panier. La page panier présente une récapitulation des films sélectionnés, affichant les prix individuels ainsi que le montant total de la commande. De plus, un formulaire de commande est disponible sur cette page pour faciliter le processus d'achat.\n
     Le site est doté d'une navigation claire dans le header, permettant aux utilisateurs de se déplacer aisément entre les différentes pages, tout en affichant le nombre d'éléments présents dans le panier et dans les favoris. En bas de page, un formulaire de contact est à disposition pour permettre aux utilisateurs de nous joindre facilement.",
-    "assets/images/FilmParadise/logo.png",
-    "assets/images/FilmParadise/allMovies.png",
-    "assets/images/FilmParadise/movieDetail.png",
-    "assets/images/FilmParadise/favories.png",
-    "assets/images/FilmParadise/cart.png",
     1,
     2
 );
@@ -341,3 +328,23 @@ INSERT INTO project_skill (project_id, skill_id) VALUES
 (3, 21),
 (3, 27),
 (3, 32);
+
+INSERT INTO picture (project_id, url, type) VALUES
+
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/logo.png', 'logo'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticAccueil.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticOffres.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticProfil.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticBackoffice.png', 'screenshot'),
+
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/logo.png', 'logo'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/avatar.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/levels.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/Planet.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/loseFight.png', 'screenshot'),
+
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/logo.png', 'logo'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/allMovies.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/movieDetail.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/favories.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/cart.png', 'screenshot');
