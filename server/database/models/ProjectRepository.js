@@ -48,6 +48,7 @@ class ProjectRepository extends AbstractRepository {
         ) AS categorized_skills,
         JSON_OBJECT(
           'logo', (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1),
+          'main', (SELECT url FROM picture WHERE project_id = p.id AND type = 'main' LIMIT 1),
           'screenshots', (SELECT JSON_ARRAYAGG(url) FROM picture WHERE project_id = p.id AND type = 'screenshot')
         ) AS pictures
       FROM 
@@ -80,10 +81,16 @@ class ProjectRepository extends AbstractRepository {
   }
 
   async readAll() {
-    // Execute the SQL SELECT query to retrieve all projects from the "project" table
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+    // Execute the SQL SELECT query to retrieve all projects and their logos
+    const [rows] = await this.database.query(`
+      SELECT
+        p.*,
+        (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1) AS logo
+      FROM
+        project AS p;
+    `);
 
-    // Return the array of projects
+    // Return the array of projects with logos
     return rows;
   }
 

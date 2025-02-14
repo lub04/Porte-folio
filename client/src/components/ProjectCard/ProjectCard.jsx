@@ -5,7 +5,7 @@ function ProjectCard({ project }) {
   return (
     <Link to={`${project.id}`} className="project-card">
       <img
-        src={`${import.meta.env.VITE_API_URL}/${project.logo_img}`}
+        src={`${import.meta.env.VITE_API_URL}/${project.logo}`}
         alt={project.name}
       />
       <p>{project.name}</p>

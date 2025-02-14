@@ -57,7 +57,7 @@ CREATE TABLE picture (
     id INT AUTO_INCREMENT PRIMARY KEY,
     project_id INT,
     url VARCHAR(255) NOT NULL,
-    type ENUM('logo', 'screenshot') NOT NULL,
+    type ENUM('logo','main', 'screenshot') NOT NULL,
     FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
 );
 CREATE TABLE project_skill (
@@ -331,20 +331,20 @@ INSERT INTO project_skill (project_id, skill_id) VALUES
 
 INSERT INTO picture (project_id, url, type) VALUES
 
-((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/logo.png', 'logo'),
-((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticAccueil.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticOffres.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticProfil.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/Externatic/ExternaticBackoffice.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/ExternaticLogoNoir.png', 'logo'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/ExternaticAccueil.png', 'main'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/ExternaticOffres.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/ExternaticProfil.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Externatic'), 'assets/images/ExternaticBackoffice.png', 'screenshot'),
 
-((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/logo.png', 'logo'),
-((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/avatar.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/levels.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/Planet.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFight/loseFight.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFightLogo.png', 'logo'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFightAvatar.png', 'main'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFightLevels.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFightPlanet.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Galactic Fight'), 'assets/images/GalacticFightLoseFight.png', 'screenshot'),
 
-((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/logo.png', 'logo'),
-((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/allMovies.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/movieDetail.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/favories.png', 'screenshot'),
-((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadise/cart.png', 'screenshot');
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadiseLogo.png', 'logo'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadiseAllMovies.png', 'main'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadiseMovieDetail.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadiseFavories.png', 'screenshot'),
+((SELECT id FROM project WHERE name = 'Film Paradise'), 'assets/images/FilmParadiseCart.png', 'screenshot');

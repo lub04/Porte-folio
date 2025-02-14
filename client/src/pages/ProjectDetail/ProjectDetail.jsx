@@ -34,7 +34,7 @@ function ProjectDetail() {
         <section className="project-demo">
           <img
             className="primary-image box"
-            src={`${import.meta.env.VITE_API_URL}/${project.img1}`}
+            src={`${import.meta.env.VITE_API_URL}/${project.pictures.main}`}
             alt="exemple du site 1"
           />
           <div className="technics">
@@ -107,60 +107,27 @@ function ProjectDetail() {
             isRead
           />
           <article className="project-images">
-            <button
-              className={modalIsOpen ? "no-hover" : "button-example-img"}
-              type="button"
-              onClick={() =>
-                openModal(`${import.meta.env.VITE_API_URL}/${project.img2}`)
-              }
-              tabIndex="0"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  openModal(`${import.meta.env.VITE_API_URL}/${project.img2}`);
+            {project.pictures.screenshots.map((screenshot) => (
+              <button
+                key={screenshot}
+                className={modalIsOpen ? "no-hover" : "button-example-img"}
+                type="button"
+                onClick={() =>
+                  openModal(`${import.meta.env.VITE_API_URL}/${screenshot}`)
                 }
-              }}
-            >
-              <img
-                src={`${import.meta.env.VITE_API_URL}/${project.img2}`}
-                alt="exemple du site 2"
-              />
-            </button>
-            <button
-              className={modalIsOpen ? "no-hover" : "button-example-img"}
-              type="button"
-              onClick={() =>
-                openModal(`${import.meta.env.VITE_API_URL}/${project.img3}`)
-              }
-              tabIndex="0"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  openModal(`${import.meta.env.VITE_API_URL}/${project.img3}`);
-                }
-              }}
-            >
-              <img
-                src={`${import.meta.env.VITE_API_URL}/${project.img3}`}
-                alt="exemple du site 3"
-              />
-            </button>
-            <button
-              className={modalIsOpen ? "no-hover" : "button-example-img"}
-              type="button"
-              onClick={() =>
-                openModal(`${import.meta.env.VITE_API_URL}/${project.img4}`)
-              }
-              tabIndex="0"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  openModal(`${import.meta.env.VITE_API_URL}/${project.img4}`);
-                }
-              }}
-            >
-              <img
-                src={`${import.meta.env.VITE_API_URL}/${project.img4}`}
-                alt="exemple du site 4"
-              />
-            </button>
+                tabIndex="0"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    openModal(`${import.meta.env.VITE_API_URL}/${screenshot}`);
+                  }
+                }}
+              >
+                <img
+                  src={`${import.meta.env.VITE_API_URL}/${screenshot}`}
+                  alt="exemple du site 2"
+                />
+              </button>
+            ))}
           </article>
         </section>
       </section>
