@@ -138,10 +138,10 @@ function AllProjects() {
               onChange={handleCreateProject}
               name="project_category_id"
             >
-              <option value="0">-------</option>
-              <option value="1">projet de groupe</option>
-              <option value="2">projet perso</option>
-              <option value="3">hackathon</option>
+              <option value="0">Choisissez une categorie</option>
+              <option value="1">Projet de groupe</option>
+              <option value="2">Projet perso</option>
+              <option value="3">Hackathon</option>
             </select>
             {newProject.project_category_id !== "2" &&
             newProject.project_category_id !== "0" ? (

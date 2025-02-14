@@ -5,6 +5,7 @@ const HomePageRepository = require("./models/HomeRepository");
 const QuoteRepository = require("./models/QuoteRepository");
 const MessagesRepository = require("./models/MessagesRepository");
 const UserRepository = require("./models/UserRepository");
+const CategoryRepository = require("./models/CategoryRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -20,6 +21,7 @@ tables.homePage = new HomePageRepository();
 tables.quote = new QuoteRepository();
 tables.message = new MessagesRepository();
 tables.user = new UserRepository();
+tables.category = new CategoryRepository();
 
 /* ************************************************************************* */
 

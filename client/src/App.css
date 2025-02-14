@@ -266,7 +266,7 @@ form {
   font-size: clamp(0.8rem, 1.2vw, 1.1rem);
   transition: transform 0.5s ease;
   display: block;
-  margin: 2rem auto;
+  margin: auto;
   &:hover,
   &:active {
     transform: scale(1.1);

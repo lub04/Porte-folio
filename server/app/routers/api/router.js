@@ -29,6 +29,10 @@ router.use("/messages", messagesRouter);
 const userRouter = require("./user/rooter");
 
 router.use("/user", userRouter);
+
+const categoryRouter = require("./category/rooter");
+
+router.use("/category", categoryRouter);
 /* ************************************************************************* */
 
 module.exports = router;
