@@ -64,7 +64,7 @@ CREATE TABLE project_skill (
   skill_id INT,
   project_id INT,
   FOREIGN KEY (skill_id) REFERENCES skill(id),
-  FOREIGN KEY (project_id) REFERENCES project(id),
+  FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE,
   PRIMARY KEY (skill_id, project_id)
 );
 
