@@ -7,6 +7,7 @@ import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import { usePortefolio } from "../../context/PortefolioContext";
 import connexion from "../../services/connexion";
 import "./AllProjects.css";
+import ImageForm from "../../components/ImageForm/ImageForm";
 
 const initialProject = {
   name: "",
@@ -16,13 +17,8 @@ const initialProject = {
   main_technologies: "",
   organization: "",
   description: "",
-  logo_img: "",
-  img1: "",
-  img2: "",
-  img3: "",
-  img4: "",
   project_category_id: "0",
-  status_id: "",
+  status_id: 1,
 };
 
 function AllProjects() {
@@ -32,8 +28,10 @@ function AllProjects() {
   const [newProject, setNewProject] = useState(initialProject);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isDeployed, setIsDeployed] = useState(false);
-  const [firstStepChecked, setFirstStepChecked] = useState(false);
+  const [isCreated, setIsCreated] = useState(false);
+  const [stepChecked, setStepChecked] = useState(1);
   const [categories, setCategories] = useState([]);
+  // const [idNewProject, setIdNewProject] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -83,9 +81,47 @@ function AllProjects() {
     }
   };
 
-  const goToNextStep = (e) => {
+  const goToNextStep = () => {
+    setStepChecked(stepChecked + 1);
+  };
+
+  const goToPrevStep = (e) => {
     e.preventDefault();
-    setFirstStepChecked(!firstStepChecked);
+    setStepChecked(stepChecked - 1);
+  };
+
+  const handleSubmitProject = async (event) => {
+    event.preventDefault();
+
+    if (!isCreated) {
+      try {
+        // const response =
+        await connexion.post("/api/projects", newProject);
+        setIsCreated(true);
+
+        // const projectId = response.data.insertId;
+        // setIdNewProject(projectId);
+
+        goToNextStep();
+      } catch (error) {
+        console.error("Erreur lors de la création du projet :", error);
+      }
+    } else {
+      goToNextStep();
+    }
+  };
+
+  const titleModal = () => {
+    if (stepChecked === 1) {
+      return <h3 className="modal-title">Votre nouveau projet</h3>;
+    }
+    if (stepChecked === 2) {
+      return <h3 className="modal-title">Ajoutez un logo</h3>;
+    }
+    if (stepChecked === 3) {
+      return <h3 className="modal-title">Ajoutez une image principale</h3>;
+    }
+    return <h3 className="modal-title">Ajoutez des screenshots</h3>;
   };
   return (
     <>
@@ -106,13 +142,12 @@ function AllProjects() {
         contentLabel="Image Modal"
         className="Modal"
       >
-        {firstStepChecked && (
-          <button type="button" className="button" onClick={goToNextStep}>
-            Retour
-          </button>
-        )}
-        <form className="contact-form">
-          <label className={firstStepChecked ? "none" : "normal-text-input"}>
+        {titleModal()}
+        <form
+          className={stepChecked !== 1 ? "none" : ""}
+          onSubmit={handleSubmitProject}
+        >
+          <label className="normal-text-input">
             Nom du projet :
             <input
               required
@@ -122,7 +157,7 @@ function AllProjects() {
               value={newProject.name}
             />
           </label>
-          <label className={firstStepChecked ? "none" : "normal-text-input"}>
+          <label className="normal-text-input">
             Lien Github :
             <input
               required
@@ -132,7 +167,7 @@ function AllProjects() {
               value={newProject.github_link}
             />
           </label>
-          <label className={firstStepChecked ? "none" : "normal-select"}>
+          <label className="normal-select">
             Catégorie du projet :
             <select
               required
@@ -160,9 +195,7 @@ function AllProjects() {
               </label>
             ) : null}
           </label>
-          <label
-            className={firstStepChecked ? "none" : "normal-checkbox-input"}
-          >
+          <label className="normal-checkbox-input">
             Le site est déployé
             <input
               type="checkbox"
@@ -181,7 +214,7 @@ function AllProjects() {
               </label>
             )}
           </label>
-          <label className={firstStepChecked ? "none" : "normal-text-input"}>
+          <label className="normal-text-input">
             Description du projet :
             <textarea
               required
@@ -190,7 +223,7 @@ function AllProjects() {
               onChange={handleCreateProject}
             />
           </label>
-          <label className={firstStepChecked ? "none" : "normal-text-input"}>
+          <label className="normal-text-input">
             l'organisation :
             <textarea
               required
@@ -199,36 +232,34 @@ function AllProjects() {
               onChange={handleCreateProject}
             />
           </label>
-          <label className={firstStepChecked ? "normal-text-input" : "none"}>
-            Logo du projet :
-            <input required type="file" />
-          </label>
-          <label className={firstStepChecked ? "normal-text-input" : "none"}>
-            Image principale :
-            <input required type="file" />
-          </label>
-          <label className={firstStepChecked ? "large-text-input" : "none"}>
-            Image 2 :
-            <input required type="file" />
-          </label>
-          <label className={firstStepChecked ? "large-text-input" : "none"}>
-            Image 3 :
-            <input required type="file" />
-          </label>
-          <label className={firstStepChecked ? "large-text-input" : "none"}>
-            Image 4 :
-            <input required type="file" />
-          </label>
-          {firstStepChecked === false ? (
-            <button type="button" className="button" onClick={goToNextStep}>
-              Prochaine étape
-            </button>
-          ) : (
-            <button type="submit" className="button">
-              Valider
-            </button>
-          )}
+          <button type="submit" className="button">
+            Prochaine étape
+          </button>
         </form>
+        <ImageForm
+          stepChecked={stepChecked}
+          step={2}
+          goToNextStep={goToNextStep}
+          label="Logo du projet :"
+        />
+        <ImageForm
+          stepChecked={stepChecked}
+          step={3}
+          goToNextStep={goToNextStep}
+          label="Image principale du projet :"
+        />
+        <ImageForm
+          stepChecked={stepChecked}
+          step={4}
+          goToNextStep={goToNextStep}
+          label="Screenshots :"
+        />
+
+        {stepChecked !== 1 && (
+          <button type="button" className="button" onClick={goToPrevStep}>
+            Retour
+          </button>
+        )}
         <button
           type="button"
           className="button-close-modal"

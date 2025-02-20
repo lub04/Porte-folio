@@ -314,6 +314,10 @@ form {
     font-family: var(--text-font);
     font-size: var(--paragraph-size-big);
   }
+  .modal-title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 }
 
 .Modal:focus {

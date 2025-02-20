@@ -37,6 +37,10 @@ router.use("/category", categoryRouter);
 const imageRouter = require("./image/rooter");
 
 router.use("/image", imageRouter);
+
+const projectSkillRouter = require("./projectSkill/router");
+
+router.use("/projectSkill", projectSkillRouter);
 /* ************************************************************************* */
 
 module.exports = router;
