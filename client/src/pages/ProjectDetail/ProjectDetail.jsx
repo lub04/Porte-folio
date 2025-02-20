@@ -25,8 +25,6 @@ function ProjectDetail() {
     setModalIsOpen(false);
     setActiveImage(null);
   };
-
-  const projectSkills = project.categorized_skills.split("|");
   return (
     <>
       <h2>{project.name}</h2>
@@ -86,8 +84,11 @@ function ProjectDetail() {
               </article>
               <article className="skills">
                 <h3>Compétences utilisées :</h3>
-                {projectSkills.map((category) => (
-                  <p key={category}>{category}</p>
+
+                {project.categorized_skills.map((skillList) => (
+                  <p key={skillList.skills[0]}>
+                    {skillList.category} : {skillList.skills.join(", ")}
+                  </p>
                 ))}
               </article>
             </div>

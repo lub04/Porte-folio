@@ -43,30 +43,27 @@ class ProjectRepository extends AbstractRepository {
       `SELECT 
         p.*, 
         pc.category AS project_category,
-        GROUP_CONCAT(
-          DISTINCT CONCAT(sc.category, ': ', GROUPED.skills_per_category) SEPARATOR ' | '
-        ) AS categorized_skills,
         JSON_OBJECT(
           'logo', (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1),
           'main', (SELECT url FROM picture WHERE project_id = p.id AND type = 'main' LIMIT 1),
           'screenshots', (SELECT JSON_ARRAYAGG(url) FROM picture WHERE project_id = p.id AND type = 'screenshot')
-        ) AS pictures
+        ) AS pictures,
+        -- Retrieve all skills by category, using GROUP_CONCAT to join skills for each category
+        GROUP_CONCAT(DISTINCT CASE 
+            WHEN s.category_id = 1 THEN CONCAT(s.name) END ORDER BY s.name) AS frontend_skills,
+        GROUP_CONCAT(DISTINCT CASE 
+            WHEN s.category_id = 2 THEN CONCAT(s.name) END ORDER BY s.name) AS backend_skills,
+        GROUP_CONCAT(DISTINCT CASE 
+            WHEN s.category_id = 3 THEN CONCAT(s.name) END ORDER BY s.name) AS discovered_skills,
+        GROUP_CONCAT(DISTINCT CASE 
+            WHEN s.category_id = 4 THEN CONCAT(s.name) END ORDER BY s.name) AS tools_skills,
+        GROUP_CONCAT(DISTINCT CASE 
+            WHEN s.category_id = 5 THEN CONCAT(s.name) END ORDER BY s.name) AS libraries_skills
       FROM 
         project AS p
       INNER JOIN project_category AS pc ON p.project_category_id = pc.id
-      INNER JOIN project_skill AS ps ON p.id = ps.project_id
-      INNER JOIN skill AS s ON ps.skill_id = s.id
-      INNER JOIN skill_category AS sc ON s.category_id = sc.id
-      LEFT JOIN (
-          SELECT
-            ps.project_id,
-            s.category_id,
-            GROUP_CONCAT(DISTINCT s.name ORDER BY s.name SEPARATOR ', ') AS skills_per_category
-          FROM
-            project_skill AS ps
-          INNER JOIN skill AS s ON ps.skill_id = s.id
-          GROUP BY ps.project_id, s.category_id
-      ) AS GROUPED ON GROUPED.project_id = p.id AND GROUPED.category_id = sc.id
+      LEFT JOIN project_skill AS ps ON p.id = ps.project_id
+      LEFT JOIN skill AS s ON ps.skill_id = s.id
       WHERE p.id = ?
       GROUP BY p.id`,
       [id]
@@ -74,8 +71,49 @@ class ProjectRepository extends AbstractRepository {
 
     // If the project exists, return the first row (the project data)
     if (rows.length > 0) {
-      return rows[0];
+      // Transform the concatenated skill strings into arrays
+      const project = rows[0];
+      project.categorized_skills = [
+        {
+          category: "Frontend",
+          skills: project.frontend_skills
+            ? project.frontend_skills.split(",")
+            : [],
+        },
+        {
+          category: "Backend",
+          skills: project.backend_skills
+            ? project.backend_skills.split(",")
+            : [],
+        },
+        {
+          category: "Découvertes",
+          skills: project.discovered_skills
+            ? project.discovered_skills.split(",")
+            : [],
+        },
+        {
+          category: "Outils",
+          skills: project.tools_skills ? project.tools_skills.split(",") : [],
+        },
+        {
+          category: "Librairies",
+          skills: project.libraries_skills
+            ? project.libraries_skills.split(",")
+            : [],
+        },
+      ];
+
+      // Clean up the result by removing unnecessary fields
+      delete project.frontend_skills;
+      delete project.backend_skills;
+      delete project.discovered_skills;
+      delete project.tools_skills;
+      delete project.libraries_skills;
+
+      return project;
     }
+
     // If no project found with that ID, return null
     return null;
   }

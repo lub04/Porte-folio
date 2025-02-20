@@ -33,6 +33,10 @@ router.use("/user", userRouter);
 const categoryRouter = require("./category/rooter");
 
 router.use("/category", categoryRouter);
+
+const imageRouter = require("./image/rooter");
+
+router.use("/image", imageRouter);
 /* ************************************************************************* */
 
 module.exports = router;
