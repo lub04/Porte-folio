@@ -9,6 +9,7 @@ import connexion from "../../services/connexion";
 import "./AllProjects.css";
 import ImageForm from "../../components/ImageForm/ImageForm";
 import FormProject from "../../components/FormProject/FormProject";
+import SkillForm from "../../components/SkillForm/SkillForm";
 
 const initialProject = {
   name: "",
@@ -33,8 +34,11 @@ function AllProjects() {
   const [newProject, setNewProject] = useState(initialProject);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
+  const [isLogoChoosen, setIsLogoChoosen] = useState(false);
+  const [isMainPictureChoosen, setIsMainPictureChoosen] = useState(false);
   const [stepChecked, setStepChecked] = useState(1);
   const [idNewProject, setIdNewProject] = useState(null);
+  const [render, setRender] = useState(false);
 
   const openModalAddProject = () => {
     setModalIsOpen(true);
@@ -74,35 +78,39 @@ function AllProjects() {
   const handleSubmitImage = async (event) => {
     event.preventDefault();
 
-    if (!inputRefScreenshots.current || !inputRefScreenshots.current.files[0]) {
-      console.error("Aucun Screenshots sélectionnée !");
-      return;
-    }
     if (stepChecked === 2) {
-      try {
-        const formData = new FormData();
-        formData.append("image", inputRefLogo.current.files[0]);
-        formData.append("project_id", idNewProject);
-        formData.append("type", "logo");
-        await connexion.post(`/api/image`, formData);
-        goToNextStep();
-        navigate(".", { replace: true });
-      } catch (error) {
-        console.error(error);
+      if (!isLogoChoosen) {
+        try {
+          const formData = new FormData();
+          formData.append("image", inputRefLogo.current.files[0]);
+          formData.append("project_id", idNewProject);
+          formData.append("type", "logo");
+          await connexion.post(`/api/image`, formData);
+          setIsLogoChoosen(true);
+          goToNextStep();
+          navigate(".", { replace: true });
+        } catch (error) {
+          console.error(error);
+        }
       }
+      goToNextStep();
     }
     if (stepChecked === 3) {
-      try {
-        const formData = new FormData();
-        formData.append("image", inputRefMainImage.current.files[0]);
-        formData.append("project_id", idNewProject);
-        formData.append("type", "main");
-        await connexion.post(`/api/image`, formData);
-        goToNextStep();
-        navigate(".", { replace: true });
-      } catch (error) {
-        console.error(error);
+      if (!isMainPictureChoosen) {
+        try {
+          const formData = new FormData();
+          formData.append("image", inputRefMainImage.current.files[0]);
+          formData.append("project_id", idNewProject);
+          formData.append("type", "main");
+          await connexion.post(`/api/image`, formData);
+          setIsMainPictureChoosen(true);
+          goToNextStep();
+          navigate(".", { replace: true });
+        } catch (error) {
+          console.error(error);
+        }
       }
+      goToNextStep();
     }
     if (stepChecked === 4) {
       try {
@@ -111,6 +119,7 @@ function AllProjects() {
         formData.append("project_id", idNewProject);
         formData.append("type", "screenshot");
         await connexion.post(`/api/image`, formData);
+        setRender(!render);
         navigate(".", { replace: true });
       } catch (error) {
         console.error(error);
@@ -128,7 +137,10 @@ function AllProjects() {
     if (stepChecked === 3) {
       return <h3 className="modal-title">Ajoutez une image principale</h3>;
     }
-    return <h3 className="modal-title">Ajoutez des screenshots</h3>;
+    if (stepChecked === 4) {
+      return <h3 className="modal-title">Ajoutez des screenshots</h3>;
+    }
+    return <h3 className="modal-title">Ajoutez des compétences</h3>;
   };
   return (
     <>
@@ -163,6 +175,8 @@ function AllProjects() {
           handleSubmit={handleSubmitImage}
           inputRef={inputRefLogo}
           label="Logo du projet :"
+          projectId={idNewProject}
+          render={null}
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -170,6 +184,8 @@ function AllProjects() {
           handleSubmit={handleSubmitImage}
           inputRef={inputRefMainImage}
           label="Image principale du projet :"
+          projectId={idNewProject}
+          render={null}
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -177,7 +193,20 @@ function AllProjects() {
           handleSubmit={handleSubmitImage}
           inputRef={inputRefScreenshots}
           label="Screenshots :"
+          projectId={idNewProject}
+          render={render}
         />
+        <SkillForm
+          stepChecked={stepChecked}
+          step={5}
+          projectId={idNewProject}
+        />
+
+        {stepChecked === 4 && (
+          <button type="button" className="button" onClick={goToNextStep}>
+            Prochaine étape
+          </button>
+        )}
 
         {stepChecked !== 1 && (
           <button type="button" className="button" onClick={goToPrevStep}>

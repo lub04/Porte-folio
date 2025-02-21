@@ -14,12 +14,12 @@ CREATE TABLE user (
 
 CREATE TABLE skill_category (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  category VARCHAR(255)
+  category VARCHAR(255) UNIQUE
 );
 
 CREATE TABLE skill (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(255),
+  name VARCHAR(255) UNIQUE,
   category_id INT,
   user_id INT,
   FOREIGN KEY (category_id) REFERENCES skill_category(id),
