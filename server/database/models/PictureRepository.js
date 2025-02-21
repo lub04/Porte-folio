@@ -10,14 +10,16 @@ class PictureRepository extends AbstractRepository {
   // The C of CRUD - Create operation
 
   async create(picture) {
-    // Execute the SQL INSERT query to add a new picture to the "picture" table
-    const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (project_id, url, type) VALUES ((SELECT id FROM project WHERE name = ?), ?, ?)`,
-      [picture.project_name, picture.url, picture.type]
-    );
-
-    // Return the ID of the newly inserted picture
-    return result.insertId;
+    try {
+      const [result] = await this.database.query(
+        `INSERT INTO ${this.table} (project_id, url, type) VALUES (?, ?, ?)`,
+        [picture.project_id, picture.url, picture.type]
+      );
+      return result;
+    } catch (err) {
+      console.error("Erreur dans la création de l'image :", err);
+      throw err;
+    }
   }
 
   // The Rs of CRUD - Read operations

@@ -1,5 +1,5 @@
-import { useLoaderData } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 import Modal from "react-modal";
 
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
@@ -8,6 +8,7 @@ import { usePortefolio } from "../../context/PortefolioContext";
 import connexion from "../../services/connexion";
 import "./AllProjects.css";
 import ImageForm from "../../components/ImageForm/ImageForm";
+import FormProject from "../../components/FormProject/FormProject";
 
 const initialProject = {
   name: "",
@@ -24,43 +25,16 @@ const initialProject = {
 function AllProjects() {
   const projects = useLoaderData();
   const { logUser } = usePortefolio();
+  const inputRefLogo = useRef();
+  const inputRefMainImage = useRef();
+  const inputRefScreenshots = useRef();
+  const navigate = useNavigate();
 
   const [newProject, setNewProject] = useState(initialProject);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isDeployed, setIsDeployed] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
   const [stepChecked, setStepChecked] = useState(1);
-  const [categories, setCategories] = useState([]);
-  // const [idNewProject, setIdNewProject] = useState(null);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await connexion.get("/api/category");
-        setCategories(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCategories();
-  }, []);
-
-  const handleCreateProject = (event) => {
-    const { name, value } = event.target;
-    setNewProject((prevProject) => ({
-      ...prevProject,
-      [name]: value,
-    }));
-    if (
-      newProject.project_category_id === "2" ||
-      newProject.project_category_id === "0"
-    ) {
-      setNewProject((prevProject) => ({
-        ...prevProject,
-        team: "",
-      }));
-    }
-  };
+  const [idNewProject, setIdNewProject] = useState(null);
 
   const openModalAddProject = () => {
     setModalIsOpen(true);
@@ -69,16 +43,6 @@ function AllProjects() {
   const closeModal = () => {
     setNewProject(initialProject);
     setModalIsOpen(false);
-  };
-
-  const checkProjectDeployed = () => {
-    setIsDeployed(!isDeployed);
-    if (isDeployed === false) {
-      setNewProject((prevProject) => ({
-        ...prevProject,
-        website_link: "",
-      }));
-    }
   };
 
   const goToNextStep = () => {
@@ -92,22 +56,65 @@ function AllProjects() {
 
   const handleSubmitProject = async (event) => {
     event.preventDefault();
-
     if (!isCreated) {
       try {
-        // const response =
-        await connexion.post("/api/projects", newProject);
+        const response = await connexion.post("/api/projects", newProject);
         setIsCreated(true);
-
-        // const projectId = response.data.insertId;
-        // setIdNewProject(projectId);
-
+        const projectId = response.data.insertId;
+        setIdNewProject(projectId);
         goToNextStep();
       } catch (error) {
         console.error("Erreur lors de la création du projet :", error);
       }
     } else {
       goToNextStep();
+    }
+  };
+
+  const handleSubmitImage = async (event) => {
+    event.preventDefault();
+
+    if (!inputRefScreenshots.current || !inputRefScreenshots.current.files[0]) {
+      console.error("Aucun Screenshots sélectionnée !");
+      return;
+    }
+    if (stepChecked === 2) {
+      try {
+        const formData = new FormData();
+        formData.append("image", inputRefLogo.current.files[0]);
+        formData.append("project_id", idNewProject);
+        formData.append("type", "logo");
+        await connexion.post(`/api/image`, formData);
+        goToNextStep();
+        navigate(".", { replace: true });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (stepChecked === 3) {
+      try {
+        const formData = new FormData();
+        formData.append("image", inputRefMainImage.current.files[0]);
+        formData.append("project_id", idNewProject);
+        formData.append("type", "main");
+        await connexion.post(`/api/image`, formData);
+        goToNextStep();
+        navigate(".", { replace: true });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (stepChecked === 4) {
+      try {
+        const formData = new FormData();
+        formData.append("image", inputRefScreenshots.current.files[0]);
+        formData.append("project_id", idNewProject);
+        formData.append("type", "screenshot");
+        await connexion.post(`/api/image`, formData);
+        navigate(".", { replace: true });
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -143,115 +150,32 @@ function AllProjects() {
         className="Modal"
       >
         {titleModal()}
-        <form
-          className={stepChecked !== 1 ? "none" : ""}
-          onSubmit={handleSubmitProject}
-        >
-          <label className="normal-text-input">
-            Nom du projet :
-            <input
-              required
-              onChange={handleCreateProject}
-              type="text"
-              name="name"
-              value={newProject.name}
-            />
-          </label>
-          <label className="normal-text-input">
-            Lien Github :
-            <input
-              required
-              onChange={handleCreateProject}
-              type="text"
-              name="github_link"
-              value={newProject.github_link}
-            />
-          </label>
-          <label className="normal-select">
-            Catégorie du projet :
-            <select
-              required
-              value={newProject.project_category_id}
-              onChange={handleCreateProject}
-              name="project_category_id"
-            >
-              <option value="0">-- Choisissez une categorie --</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.category}
-                </option>
-              ))}
-            </select>
-            {newProject.project_category_id !== "2" &&
-            newProject.project_category_id !== "0" ? (
-              <label className="large-text-input">
-                Les membres de l'équipe :
-                <input
-                  onChange={handleCreateProject}
-                  type="text"
-                  name="team"
-                  value={newProject.team}
-                />
-              </label>
-            ) : null}
-          </label>
-          <label className="normal-checkbox-input">
-            Le site est déployé
-            <input
-              type="checkbox"
-              onChange={checkProjectDeployed}
-              className="checkbox"
-            />
-            {isDeployed && (
-              <label className="large-text-input">
-                Lien du site :
-                <input
-                  onChange={handleCreateProject}
-                  type="text"
-                  name="website_link"
-                  value={newProject.website_link}
-                />
-              </label>
-            )}
-          </label>
-          <label className="normal-text-input">
-            Description du projet :
-            <textarea
-              required
-              name="description"
-              value={newProject.description}
-              onChange={handleCreateProject}
-            />
-          </label>
-          <label className="normal-text-input">
-            l'organisation :
-            <textarea
-              required
-              name="organization"
-              value={newProject.organization}
-              onChange={handleCreateProject}
-            />
-          </label>
-          <button type="submit" className="button">
-            Prochaine étape
-          </button>
-        </form>
+        <FormProject
+          handleSubmitProject={handleSubmitProject}
+          stepChecked={stepChecked}
+          step={1}
+          newProject={newProject}
+          setNewProject={setNewProject}
+        />
         <ImageForm
           stepChecked={stepChecked}
           step={2}
-          goToNextStep={goToNextStep}
+          handleSubmit={handleSubmitImage}
+          inputRef={inputRefLogo}
           label="Logo du projet :"
         />
         <ImageForm
           stepChecked={stepChecked}
           step={3}
-          goToNextStep={goToNextStep}
+          handleSubmit={handleSubmitImage}
+          inputRef={inputRefMainImage}
           label="Image principale du projet :"
         />
         <ImageForm
           stepChecked={stepChecked}
           step={4}
-          goToNextStep={goToNextStep}
+          handleSubmit={handleSubmitImage}
+          inputRef={inputRefScreenshots}
           label="Screenshots :"
         />
 

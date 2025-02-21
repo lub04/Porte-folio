@@ -39,23 +39,24 @@ const read = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  // Extract the picture data from the request body
-  const pictureUrl = `assets/images/${req.file.filename}`;
-
   try {
+    // Vérification de la présence du fichier
+    if (!req.file) {
+      return res.status(400).json({ error: "Aucun fichier envoyé." });
+    }
+
+    const pictureUrl = `assets/images/${req.file.filename}`;
+
     const result = await tables.picture.create({
-      project_name: req.body.project_name,
+      project_id: req.body.project_id,
       url: pictureUrl,
       type: req.body.type,
     });
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "picture non trouvé." });
-    }
-
-    return res.sendStatus(204);
+    return res.status(201).json({ insertId: result.insertId, url: pictureUrl });
   } catch (err) {
-    return next(err);
+    console.error("Erreur dans l'ajout de l'image :", err);
+    return next(err); // Passer l'erreur au middleware pour qu'elle soit gérée
   }
 };
 
