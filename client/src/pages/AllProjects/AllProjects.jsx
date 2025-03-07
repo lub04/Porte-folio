@@ -20,7 +20,7 @@ const initialProject = {
   organization: "",
   description: "",
   project_category_id: "0",
-  status_id: 1,
+  status_id: "",
 };
 
 function AllProjects() {
@@ -39,6 +39,12 @@ function AllProjects() {
   const [stepChecked, setStepChecked] = useState(1);
   const [idNewProject, setIdNewProject] = useState(null);
   const [render, setRender] = useState(false);
+  const [fileName, setFileName] = useState("");
+
+  const [projectSkill, setProjectSkill] = useState({
+    project_id: idNewProject,
+    skill_id: null,
+  });
 
   const openModalAddProject = () => {
     setModalIsOpen(true);
@@ -93,6 +99,7 @@ function AllProjects() {
           console.error(error);
         }
       }
+      setFileName("");
       goToNextStep();
     }
     if (stepChecked === 3) {
@@ -110,6 +117,7 @@ function AllProjects() {
           console.error(error);
         }
       }
+      setFileName("");
       goToNextStep();
     }
     if (stepChecked === 4) {
@@ -120,10 +128,22 @@ function AllProjects() {
         formData.append("type", "screenshot");
         await connexion.post(`/api/image`, formData);
         setRender(!render);
+        setFileName("");
         navigate(".", { replace: true });
       } catch (error) {
         console.error(error);
       }
+    }
+  };
+
+  const handleSubmitSkill = async (event) => {
+    event.preventDefault();
+    try {
+      await connexion.post("api/projectSkill", projectSkill);
+      setRender(!render);
+      navigate(".", { replace: true });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -161,6 +181,11 @@ function AllProjects() {
         contentLabel="Image Modal"
         className="Modal"
       >
+        {stepChecked !== 1 && (
+          <button type="button" className="button" onClick={goToPrevStep}>
+            Retour
+          </button>
+        )}
         {titleModal()}
         <FormProject
           handleSubmitProject={handleSubmitProject}
@@ -174,32 +199,48 @@ function AllProjects() {
           step={2}
           handleSubmit={handleSubmitImage}
           inputRef={inputRefLogo}
-          label="Logo du projet :"
+          label="Ajoutez un logo !"
           projectId={idNewProject}
           render={null}
+          isLogoChoosen={isLogoChoosen}
+          isMainPictureChoosen={isMainPictureChoosen}
+          goToNextStep={goToNextStep}
+          setFileName={setFileName}
+          fileName={fileName}
         />
         <ImageForm
           stepChecked={stepChecked}
           step={3}
           handleSubmit={handleSubmitImage}
           inputRef={inputRefMainImage}
-          label="Image principale du projet :"
+          label=" Ajoutez l'image principale du projet !"
           projectId={idNewProject}
           render={null}
+          goToNextStep={goToNextStep}
+          isLogoChoosen={isLogoChoosen}
+          isMainPictureChoosen={isMainPictureChoosen}
+          setFileName={setFileName}
+          fileName={fileName}
         />
         <ImageForm
           stepChecked={stepChecked}
           step={4}
           handleSubmit={handleSubmitImage}
           inputRef={inputRefScreenshots}
-          label="Screenshots :"
+          label="Screenshots !"
           projectId={idNewProject}
           render={render}
+          setFileName={setFileName}
+          fileName={fileName}
         />
         <SkillForm
           stepChecked={stepChecked}
           step={5}
           projectId={idNewProject}
+          handleSubmit={handleSubmitSkill}
+          setProjectSkill={setProjectSkill}
+          render={render}
+          setRender={setRender}
         />
 
         {stepChecked === 4 && (
@@ -207,12 +248,12 @@ function AllProjects() {
             Prochaine étape
           </button>
         )}
-
-        {stepChecked !== 1 && (
-          <button type="button" className="button" onClick={goToPrevStep}>
-            Retour
+        {stepChecked === 5 && (
+          <button type="button" className="button" onClick={goToNextStep}>
+            Validez et fermez !
           </button>
         )}
+
         <button
           type="button"
           className="button-close-modal"

@@ -46,9 +46,21 @@ class PictureRepository extends AbstractRepository {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing picture
 
-  // async update(picture) {
-  //   ...
-  // }
+  async updateLogo(picture) {
+    const [result] = await this.database.query(
+      `UPDATE ${this.table} SET url= ? WHERE project_id = ? and type = "logo" `,
+      [picture.url, picture.project_id]
+    );
+    return result.affectedRows;
+  }
+
+  async updateMainPicture(picture) {
+    const [result] = await this.database.query(
+      `UPDATE ${this.table} SET url= ? WHERE project_id = ? and type = "main" `,
+      [picture.url, picture.project_id]
+    );
+    return result.affectedRows;
+  }
 
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an picture by its ID

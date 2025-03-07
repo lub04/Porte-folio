@@ -12,8 +12,8 @@ class ProjectSkillRepository extends AbstractRepository {
   async create(projectSkill) {
     // Execute the SQL INSERT query to add a new projectSkill to the "projectSkill" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, user_id) values (?, ?)`,
-      [projectSkill.title, projectSkill.user_id]
+      `insert into ${this.table} (project_id, skill_id) values (?, ?)`,
+      [projectSkill.project_id, projectSkill.skill_id]
     );
 
     // Return the ID of the newly inserted projectSkill
@@ -25,12 +25,17 @@ class ProjectSkillRepository extends AbstractRepository {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific projectSkill by its ID
     const [rows] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `SELECT s.id AS skill_id, s.name AS skill_name, sc.category
+FROM project_skill ps
+JOIN skill s ON ps.skill_id = s.id
+JOIN skill_category sc ON s.category_id = sc.id
+WHERE ps.project_id = ?
+ORDER BY sc.category`,
       [id]
     );
 
     // Return the first row of the result, which represents the projectSkill
-    return rows[0];
+    return rows;
   }
 
   async readAll() {

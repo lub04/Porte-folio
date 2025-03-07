@@ -4,7 +4,15 @@ import connexion from "../../services/connexion";
 import "./SkillForm.css";
 import ContentFormModal from "../ContentFormModal/ContentFormModal";
 
-function SkillForm({ stepChecked, step, projectId }) {
+function SkillForm({
+  stepChecked,
+  step,
+  projectId,
+  handleSubmit,
+  setProjectSkill,
+  render,
+  setRender,
+}) {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
@@ -17,22 +25,37 @@ function SkillForm({ stepChecked, step, projectId }) {
       }
     };
     fetchSkills();
-  }, []);
+  }, [render]);
+
+  const handleAddSkill = (event) => {
+    const { name, value } = event.target;
+    setProjectSkill({
+      project_id: projectId,
+      [name]: value,
+    });
+  };
 
   if (stepChecked !== step) return null;
 
   return (
     <>
-      <ContentFormModal stepChecked={stepChecked} projectId={projectId} />
-      <form action="">
-        <label className="normal-select">
+      <ContentFormModal
+        stepChecked={stepChecked}
+        projectId={projectId}
+        render={render}
+        setRender={setRender}
+      />
+      <form onSubmit={handleSubmit} className="skill-form">
+        <label className="large-select">
           Ajouter une compétence :
-          <select name="" id="">
+          <select name="skill_id" onChange={handleAddSkill}>
             <option value="">
               ---- Selectionnez les compétences utilisés sur ce projet ----
             </option>
             {skills.map((skill) => (
-              <option key={skill.id}>{skill.name}</option>
+              <option value={skill.id} key={skill.id}>
+                {skill.name}
+              </option>
             ))}
           </select>
         </label>

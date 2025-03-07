@@ -45,6 +45,10 @@ router.use("/projectSkill", projectSkillRouter);
 const skillRouter = require("./skill/router");
 
 router.use("/skill", skillRouter);
+
+const statusRouter = require("./status/router");
+
+router.use("/status", statusRouter);
 /* ************************************************************************* */
 
 module.exports = router;

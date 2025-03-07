@@ -12,6 +12,7 @@ function FormProject({
 }) {
   const [isDeployed, setIsDeployed] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [status, setStatus] = useState([]);
 
   const checkProjectDeployed = () => {
     setIsDeployed(!isDeployed);
@@ -32,6 +33,15 @@ function FormProject({
         console.error(error);
       }
     };
+    const fetchStatus = async () => {
+      try {
+        const response = await connexion.get("/api/status");
+        setStatus(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchStatus();
     fetchCategories();
   }, []);
 
@@ -123,6 +133,31 @@ function FormProject({
           </label>
         )}
       </label>
+      <label className="normal-select">
+        Statut du projet :
+        <select
+          name="status_id"
+          value={newProject.status_id}
+          onChange={handleCreateProject}
+        >
+          <option value="">--- Choisissez un statut ---</option>
+          {status.map((state) => (
+            <option key={state.id} value={state.id}>
+              {state.status}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="normal-text-input">
+        Les trois principales technologies utilisées :
+        <input
+          required
+          onChange={handleCreateProject}
+          type="text"
+          name="main_technologies"
+          value={newProject.main_technologies}
+        />
+      </label>
       <label className="normal-text-input">
         Description du projet :
         <textarea
@@ -133,7 +168,7 @@ function FormProject({
         />
       </label>
       <label className="normal-text-input">
-        l'organisation :
+        L'organisation :
         <textarea
           required
           name="organization"

@@ -1,0 +1,7 @@
+.image-form {
+  padding: 1rem;
+  border-radius: var(--main-border-radius);
+  border: var(--main-border);
+  margin: 0 auto 1rem auto;
+  width: calc(60% + 2rem);
+}

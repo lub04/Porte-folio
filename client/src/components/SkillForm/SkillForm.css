@@ -1,0 +1,8 @@
+.skill-form {
+  margin: auto;
+  width: calc(60% + 2rem);
+  padding: 1rem;
+  border: var(--main-border);
+  border-radius: var(--main-border-radius);
+  margin-bottom: 1rem;
+}

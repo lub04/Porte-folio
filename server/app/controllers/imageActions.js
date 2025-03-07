@@ -36,6 +36,25 @@ const read = async (req, res, next) => {
 
 // The E of BREAD - Edit (Update) operation
 // This operation is not yet implemented
+const edit = async (req, res, next) => {
+  const { query } = req;
+  const picture = {
+    url: `assets/images/${req.file.filename}`,
+    project_id: req.params.id,
+  };
+  try {
+    if (query.type === "logo") {
+      await tables.picture.updateLogo(picture);
+      res.sendStatus(204);
+    }
+    if (query.type === "main") {
+      await tables.picture.updateMainPicture(picture);
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
@@ -67,7 +86,7 @@ const add = async (req, res, next) => {
 module.exports = {
   browse,
   read,
-  // edit,
+  edit,
   add,
   // destroy,
 };

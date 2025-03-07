@@ -6,25 +6,18 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-// Import image-related actions
-const {
-  browse,
-  read,
-  add,
-  edit,
-} = require("../../../controllers/imageActions");
-const upload = require("../../../services/upload");
+// Import status-related actions
+const { browse, read, add } = require("../../../controllers/statusActions");
 
-// Route to get a list of images
+// Route to get a list of status
 router.get("/", browse);
 
-// Route to get a specific image by ID
+// Route to get a specific status by ID
 router.get("/:id", read);
 
-// Route to add a new image
-router.post("/", upload.single("image"), add);
+// Route to add a new status
+router.post("/", add);
 
-router.put("/:id", upload.single("image"), edit);
 /* ************************************************************************* */
 
 module.exports = router;
