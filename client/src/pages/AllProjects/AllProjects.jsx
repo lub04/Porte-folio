@@ -1,15 +1,18 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
 
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 
 import { usePortefolio } from "../../context/PortefolioContext";
 import connexion from "../../services/connexion";
+import successToast from "../../components/Toast/successToast";
 import "./AllProjects.css";
 import ImageForm from "../../components/ImageForm/ImageForm";
 import FormProject from "../../components/FormProject/FormProject";
 import SkillForm from "../../components/SkillForm/SkillForm";
+import ContentFormModal from "../../components/ContentFormModal/ContentFormModal";
 
 const initialProject = {
   name: "",
@@ -203,7 +206,23 @@ function AllProjects() {
     if (stepChecked === 4) {
       return <h3 className="modal-title">Ajoutez des screenshots</h3>;
     }
-    return <h3 className="modal-title">Ajoutez des compétences</h3>;
+    if (stepChecked === 5) {
+      return <h3 className="modal-title">Ajoutez des compétences</h3>;
+    }
+    return <h3 className="modal-title">Récapitulatif de mon projet :</h3>;
+  };
+
+  const handleValidateProject = () => {
+    successToast(
+      `Votre nouveau projet '${newProject.name}' à bien été ajouté à la base de données`
+    );
+    setIsCreated(false);
+    setIdNewProject(null);
+    setIsLogoChoosen(false);
+    setIsMainPictureChoosen(false);
+    setNewProject(initialProject);
+    setStepChecked(1);
+    closeModal();
   };
   return (
     <>
@@ -250,6 +269,7 @@ function AllProjects() {
           setFileName={setFileName}
           fileName={fileName}
           handleSubmitModifyPicture={handleSubmitModifyPicture}
+          setRender={setRender}
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -268,6 +288,7 @@ function AllProjects() {
           setFileName={setFileName}
           fileName={fileName}
           handleSubmitModifyPicture={handleSubmitModifyPicture}
+          setRender={setRender}
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -279,6 +300,7 @@ function AllProjects() {
           render={render}
           setFileName={setFileName}
           fileName={fileName}
+          setRender={setRender}
         />
         <SkillForm
           stepChecked={stepChecked}
@@ -300,7 +322,23 @@ function AllProjects() {
             Validez et fermez !
           </button>
         )}
-
+        {stepChecked === 6 && (
+          <section>
+            <ContentFormModal
+              stepChecked={stepChecked}
+              projectId={idNewProject}
+              render={render}
+              setRender={setRender}
+            />
+            <button
+              type="button"
+              className="button"
+              onClick={handleValidateProject}
+            >
+              Validez et fermez !
+            </button>
+          </section>
+        )}
         <button
           type="button"
           className="button-close-modal"
@@ -309,6 +347,7 @@ function AllProjects() {
           X
         </button>
       </Modal>
+      <ToastContainer />
     </>
   );
 }

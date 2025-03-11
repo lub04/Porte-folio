@@ -12,6 +12,7 @@ const {
   read,
   add,
   edit,
+  destroy,
 } = require("../../../controllers/imageActions");
 const upload = require("../../../services/upload");
 
@@ -25,6 +26,8 @@ router.get("/:id", read);
 router.post("/", upload.single("image"), add);
 
 router.put("/:id", upload.single("image"), edit);
+
+router.delete("/:id", destroy);
 /* ************************************************************************* */
 
 module.exports = router;

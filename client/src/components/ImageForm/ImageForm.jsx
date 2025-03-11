@@ -10,6 +10,7 @@ function ImageForm({
   inputRef,
   projectId,
   render,
+  setRender,
   isLogoChoosen,
   isMainPictureChoosen,
   setFileName,
@@ -99,6 +100,7 @@ function ImageForm({
         stepChecked={stepChecked}
         projectId={projectId}
         render={render}
+        setRender={setRender}
       />
       {formImage()}
     </>

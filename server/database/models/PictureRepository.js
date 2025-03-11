@@ -83,9 +83,16 @@ class PictureRepository extends AbstractRepository {
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an picture by its ID
 
-  // async delete(id) {
-  //   ...
-  // }
+  async delete(picture) {
+    // Execute the SQL DELETE query to delete a specific user
+    const [result] = await this.database.query(
+      `delete from ${this.table} where id = ?`,
+      [picture]
+    );
+
+    // Return how many rows were affected
+    return result.affectedRows;
+  }
 }
 
 module.exports = PictureRepository;

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+
 import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
 
 function ContentFormModal({ stepChecked, projectId, render, setRender }) {
   const [project, setProject] = useState(null);
   const [projectSkills, setProjectSkills] = useState(null);
+  const [pictures, setPictures] = useState(null);
 
   const handleDeleteSkill = async (skillId) => {
     try {
@@ -15,27 +17,38 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
     }
   };
 
-  useEffect(() => {
-    const fetchProject = async () => {
-      try {
-        const response = await connexion.get(`/api/Projects/${projectId}`);
-        setProject(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération du projet", error);
-      }
-    };
-    const fetchSkills = async () => {
-      try {
-        const response = await connexion.get(`/api/projectSkill/${projectId}`);
-        setProjectSkills(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des skills", error);
-      }
-    };
-    if (projectId) {
-      fetchProject();
-      fetchSkills();
+  const handleDeleteImage = async (imageId) => {
+    try {
+      await connexion.delete(`api/image/${imageId}`);
+      setRender(!render);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  const fetchData = async () => {
+    try {
+      const [projectRes, skillsRes, picturesRes] = await Promise.all([
+        connexion.get(`/api/Projects/${projectId}`),
+        connexion.get(`/api/projectSkill/${projectId}`),
+        connexion.get(`/api/image?project=${projectId}`),
+      ]);
+      setProject(projectRes.data);
+      setProjectSkills(skillsRes.data);
+      setPictures(picturesRes.data);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des données du projet",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (projectId) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId, render]);
 
   if (!project) {
@@ -45,39 +58,46 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
   if (stepChecked === 2 || stepChecked === 3 || stepChecked === 4) {
     return (
       <section className="picture-form-content">
-        {project.pictures.logo && (
+        {pictures.logo && (
           <article className="logo-main-image content-box">
             <h3>Logo :</h3>
             <img
-              src={`${import.meta.env.VITE_API_URL}/${project.pictures.logo}`}
+              src={`${import.meta.env.VITE_API_URL}/${pictures.logo.url}`}
               alt="logo du projet"
             />
           </article>
         )}
-        {project.pictures.main && (
+        {pictures.main && (
           <article className="logo-main-image content-box">
             <h3>Image principale :</h3>
             <img
-              src={`${import.meta.env.VITE_API_URL}/${project.pictures.main}`}
+              src={`${import.meta.env.VITE_API_URL}/${pictures.main.url}`}
               alt="exemple principal du projet"
             />
           </article>
         )}
-        {project.pictures.screenshots &&
-          project.pictures.screenshots.length > 0 && (
-            <article className="screenshot-image content-box">
-              <h3>Screenshots :</h3>
-              <div className="screenshots">
-                {project.pictures.screenshots.map((screenshot, index) => (
+        {pictures.screenshots && pictures.screenshots.length > 0 && (
+          <article className="screenshot-image content-box">
+            <h3>Screenshots :</h3>
+            <div className="screenshots">
+              {pictures.screenshots.map((screenshot, index) => (
+                <button
+                  className="no-button button-image"
+                  type="button"
+                  key={screenshot.id}
+                  onClick={() => handleDeleteImage(screenshot.id)}
+                  title="Supprimer l'image"
+                >
                   <img
-                    key={screenshot}
-                    src={`${import.meta.env.VITE_API_URL}/${screenshot}`}
+                    src={`${import.meta.env.VITE_API_URL}/${screenshot.url}`}
                     alt={`Exemple du projet ${index + 1}`}
                   />
-                ))}
-              </div>
-            </article>
-          )}
+                  <div className="delete-hover">X</div>
+                </button>
+              ))}
+            </div>
+          </article>
+        )}
       </section>
     );
   }
@@ -116,6 +136,65 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
       </section>
     );
   }
+
+  if (stepChecked === 6) {
+    return (
+      <>
+        <section className="recap-project-display">
+          <p>Titre du projet : {project.name}</p>
+          <p>Liens github : {project.github_link}</p>
+          <p>
+            Lien du site :{" "}
+            {project.website_link
+              ? project.website_link
+              : "Le site n'est pas déployé"}
+          </p>
+          <p>L'équipe : {project.team ? project.team : "Lubin Chauvreau"}</p>
+          <p>Les technos principales du projet : {project.main_technologies}</p>
+          <p>L'organisation : {project.organization}</p>
+          <p>Description du projet : {project.description}</p>
+          <p>Categorie du projet : {project.project_category}</p>
+        </section>
+        <section className="picture-form-content">
+          <article className="logo-main-image content-box">
+            <h4>Logo :</h4>
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${project.pictures.logo}`}
+              alt="logo du projet"
+            />
+          </article>
+          <article className="logo-main-image content-box">
+            <h4>Image principale : </h4>
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${project.pictures.main}`}
+              alt="exemple principal du projet"
+            />
+          </article>
+          <article className="screenshot-image content-box">
+            <h4>Screenshots</h4>
+            <div className="screenshots">
+              {project.pictures.screenshots.map((screenshot, index) => (
+                <img
+                  className="recap-image"
+                  key={screenshot}
+                  src={`${import.meta.env.VITE_API_URL}/${screenshot}`}
+                  alt={`exemple ${index + 1} du projet`}
+                />
+              ))}
+            </div>
+          </article>
+        </section>
+        <section className="recap-project-display">
+          {project.categorized_skills.map((skillList) => (
+            <p key={skillList.skills[0]}>
+              {skillList.category} : {skillList.skills.join(", ")}
+            </p>
+          ))}
+        </section>
+      </>
+    );
+  }
+
   return null;
 }
 export default ContentFormModal;
