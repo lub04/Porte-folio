@@ -25,6 +25,7 @@ const initialProject = {
   project_category_id: "0",
   status_id: "",
 };
+const stepUi = [1, 2, 3, 4, 5, 6];
 
 function AllProjects() {
   const projects = useLoaderData();
@@ -66,21 +67,34 @@ function AllProjects() {
     e.preventDefault();
     setStepChecked(stepChecked - 1);
   };
+  const handleModifyProject = async () => {
+    try {
+      await connexion.put(`/api/projects/${idNewProject}`, newProject);
+      successToast("Modification enregistrée");
+      goToNextStep();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const handleSubmitProject = async (event) => {
+  const handleSubmitProject = async () => {
+    try {
+      const response = await connexion.post("/api/projects", newProject);
+      setIsCreated(true);
+      const projectId = response.data.insertId;
+      setIdNewProject(projectId);
+      successToast("Votre projet à bien été créé !");
+      goToNextStep();
+    } catch (error) {
+      console.error("Erreur lors de la création du projet :", error);
+    }
+  };
+  const handleProject = async (event) => {
     event.preventDefault();
     if (!isCreated) {
-      try {
-        const response = await connexion.post("/api/projects", newProject);
-        setIsCreated(true);
-        const projectId = response.data.insertId;
-        setIdNewProject(projectId);
-        goToNextStep();
-      } catch (error) {
-        console.error("Erreur lors de la création du projet :", error);
-      }
+      handleSubmitProject();
     } else {
-      goToNextStep();
+      handleModifyProject();
     }
   };
 
@@ -185,12 +199,16 @@ function AllProjects() {
 
   const titleModal = () => {
     if (stepChecked === 1) {
-      return <h3 className="modal-title">Votre nouveau projet</h3>;
+      return (
+        <h3 className="modal-title">
+          {!isCreated ? "Créer un projet :" : "Modifier le projet :"}
+        </h3>
+      );
     }
     if (stepChecked === 2) {
       return (
         <h3 className="modal-title">
-          {!isLogoChoosen ? "Ajoutez un logo" : "Modifiez le logo"}
+          {!isLogoChoosen ? "Ajouter un logo :" : "Modifier le logo :"}
         </h3>
       );
     }
@@ -198,16 +216,20 @@ function AllProjects() {
       return (
         <h3 className="modal-title">
           {!isMainPictureChoosen
-            ? "Ajoutez une image principale"
-            : "Modifiez l'image principale"}
+            ? "Ajouter une image principale :"
+            : "Modifier l'image principale :"}
         </h3>
       );
     }
     if (stepChecked === 4) {
-      return <h3 className="modal-title">Ajoutez des screenshots</h3>;
+      return (
+        <h3 className="modal-title">Ajouter ou supprimer des screenshots :</h3>
+      );
     }
     if (stepChecked === 5) {
-      return <h3 className="modal-title">Ajoutez des compétences</h3>;
+      return (
+        <h3 className="modal-title">Ajouter ou supprimer des compétences :</h3>
+      );
     }
     return <h3 className="modal-title">Récapitulatif de mon projet :</h3>;
   };
@@ -243,18 +265,32 @@ function AllProjects() {
         contentLabel="Image Modal"
         className="Modal"
       >
+        <section className="step-ui">
+          {stepUi.map((onestep) => (
+            <div
+              key={onestep}
+              className={
+                onestep === stepChecked
+                  ? "full-step-ui step-ui-border"
+                  : "step-ui-border"
+              }
+            />
+          ))}
+        </section>
         {stepChecked !== 1 && (
           <button type="button" className="button" onClick={goToPrevStep}>
             Retour
           </button>
         )}
+
         {titleModal()}
         <FormProject
-          handleSubmitProject={handleSubmitProject}
+          handleSubmitProject={handleProject}
           stepChecked={stepChecked}
           step={1}
           newProject={newProject}
           setNewProject={setNewProject}
+          isCreated={isCreated}
         />
         <ImageForm
           stepChecked={stepChecked}

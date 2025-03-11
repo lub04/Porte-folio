@@ -130,9 +130,37 @@ class ProjectRepository extends AbstractRepository {
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing project
 
-  // async update(project) {
-  //   ...
-  // }
+  async update(project) {
+    const [result] = await this.database.query(
+      `UPDATE ${this.table}
+SET
+  name = ?,
+  github_link = ?,
+  website_link = ?,
+  team = ?,
+  main_technologies = ?,
+  organization = ?,
+  description = ?,
+  project_category_id = ?,
+  status_id = ?,
+  updated_at = CURRENT_TIMESTAMP
+WHERE id = ?;
+`,
+      [
+        project.name,
+        project.github_link,
+        project.website_link,
+        project.team,
+        project.main_technologies,
+        project.organization,
+        project.description,
+        project.project_category_id,
+        project.status_id,
+        project.id,
+      ]
+    );
+    return result.affectedRows;
+  }
 
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an project by its ID

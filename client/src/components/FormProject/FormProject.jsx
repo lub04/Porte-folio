@@ -9,6 +9,7 @@ function FormProject({
   step,
   newProject,
   setNewProject,
+  isCreated,
 }) {
   const [isDeployed, setIsDeployed] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -177,7 +178,7 @@ function FormProject({
         />
       </label>
       <button type="submit" className="button">
-        Prochaine étape
+        {isCreated ? "Valider !" : "Créer le projet"}
       </button>
     </form>
   );

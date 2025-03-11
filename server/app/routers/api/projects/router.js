@@ -12,6 +12,7 @@ const {
   read,
   add,
   destroy,
+  edit,
 } = require("../../../controllers/projectActions");
 
 // Route to get a list of projects
@@ -24,6 +25,8 @@ router.get("/:id", read);
 router.post("/", add);
 
 router.delete("/:id", destroy);
+
+router.put("/:id", edit);
 /* ************************************************************************* */
 
 module.exports = router;

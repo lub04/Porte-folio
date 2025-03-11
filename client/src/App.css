@@ -310,7 +310,8 @@ form {
 }
 
 .button {
-  height: clamp(1.5rem, 2vw, 2rem);
+  padding: 0.2rem;
+  min-height: clamp(1.5rem, 2vw, 2rem);
   width: clamp(10rem, 10vw, 15rem);
   border-radius: var(--main-border-radius);
   border: var(--main-border);

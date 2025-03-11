@@ -5,3 +5,17 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
+.step-ui {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem auto;
+  .step-ui-border {
+    border-radius: var(--round-border-radius);
+    border: var(--main-border);
+    padding: 0.2rem;
+  }
+  .full-step-ui {
+    background-color: var(--main-color);
+  }
+}
