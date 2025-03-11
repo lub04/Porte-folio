@@ -35,14 +35,6 @@ const router = createBrowserRouter([
       {
         path: "projets",
         element: <AllProjects />,
-        loader: async () => {
-          try {
-            const projects = await connexion.get("/api/projects");
-            return projects.data;
-          } catch (error) {
-            throw new Error(error);
-          }
-        },
       },
       {
         path: "projets/:id",

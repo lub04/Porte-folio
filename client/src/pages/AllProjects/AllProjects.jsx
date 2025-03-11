@@ -1,5 +1,5 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
 
@@ -13,30 +13,25 @@ import ImageForm from "../../components/ImageForm/ImageForm";
 import FormProject from "../../components/FormProject/FormProject";
 import SkillForm from "../../components/SkillForm/SkillForm";
 import ContentFormModal from "../../components/ContentFormModal/ContentFormModal";
+import ValidationModal from "../../components/ValidationModal/ValidationModal";
 
-const initialProject = {
-  name: "",
-  github_link: "",
-  website_link: "",
-  team: "",
-  main_technologies: "",
-  organization: "",
-  description: "",
-  project_category_id: "0",
-  status_id: "",
-};
 const stepUi = [1, 2, 3, 4, 5, 6];
 
 function AllProjects() {
-  const projects = useLoaderData();
-  const { logUser } = usePortefolio();
+  const {
+    logUser,
+    newProject,
+    setNewProject,
+    handleModifyProject,
+    initialProject,
+  } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
   const inputRefScreenshots = useRef();
   const navigate = useNavigate();
 
-  const [newProject, setNewProject] = useState(initialProject);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [validationModalIsOpen, setValidationModalIsOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
   const [isLogoChoosen, setIsLogoChoosen] = useState(false);
   const [isMainPictureChoosen, setIsMainPictureChoosen] = useState(false);
@@ -44,11 +39,33 @@ function AllProjects() {
   const [idNewProject, setIdNewProject] = useState(null);
   const [render, setRender] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [projectsList, setProjectsList] = useState([]);
+
+  const reinitializeState = () => {
+    setIsCreated(false);
+    setIdNewProject(null);
+    setIsLogoChoosen(false);
+    setIsMainPictureChoosen(false);
+    setNewProject(initialProject);
+    setStepChecked(1);
+  };
+
+  const fetchProject = async () => {
+    const response = await connexion.get("/api/projects");
+    setProjectsList(response.data);
+  };
+
+  useEffect(() => {
+    fetchProject();
+  }, [render]);
 
   const [projectSkill, setProjectSkill] = useState({
     project_id: idNewProject,
     skill_id: null,
   });
+  const openValidationModal = () => {
+    setValidationModalIsOpen(true);
+  };
 
   const openModalAddProject = () => {
     setModalIsOpen(true);
@@ -67,15 +84,6 @@ function AllProjects() {
     e.preventDefault();
     setStepChecked(stepChecked - 1);
   };
-  const handleModifyProject = async () => {
-    try {
-      await connexion.put(`/api/projects/${idNewProject}`, newProject);
-      successToast("Modification enregistrée");
-      goToNextStep();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleSubmitProject = async () => {
     try {
@@ -84,7 +92,6 @@ function AllProjects() {
       const projectId = response.data.insertId;
       setIdNewProject(projectId);
       successToast("Votre projet à bien été créé !");
-      goToNextStep();
     } catch (error) {
       console.error("Erreur lors de la création du projet :", error);
     }
@@ -93,8 +100,14 @@ function AllProjects() {
     event.preventDefault();
     if (!isCreated) {
       handleSubmitProject();
+      await fetchProject();
+      setRender(!render);
+      goToNextStep();
     } else {
-      handleModifyProject();
+      handleModifyProject(idNewProject);
+      await fetchProject();
+      setRender(!render);
+      goToNextStep();
     }
   };
 
@@ -238,14 +251,10 @@ function AllProjects() {
     successToast(
       `Votre nouveau projet '${newProject.name}' à bien été ajouté à la base de données`
     );
-    setIsCreated(false);
-    setIdNewProject(null);
-    setIsLogoChoosen(false);
-    setIsMainPictureChoosen(false);
-    setNewProject(initialProject);
-    setStepChecked(1);
+    reinitializeState();
     closeModal();
   };
+
   return (
     <>
       <h2>Mes projets</h2>
@@ -255,13 +264,13 @@ function AllProjects() {
         </button>
       ) : null}
       <section className="page-display projects-list">
-        {projects.map((project) => (
+        {projectsList.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
       </section>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={isCreated ? openValidationModal : closeModal}
         contentLabel="Image Modal"
         className="Modal"
       >
@@ -378,11 +387,21 @@ function AllProjects() {
         <button
           type="button"
           className="button-close-modal"
-          onClick={closeModal}
+          onClick={isCreated ? openValidationModal : closeModal}
         >
           X
         </button>
       </Modal>
+      <ValidationModal
+        validationModalIsOpen={validationModalIsOpen}
+        setValidationModalIsOpen={setValidationModalIsOpen}
+        id={idNewProject}
+        reinitializeState={reinitializeState}
+        closeModal={closeModal}
+        fetchProject={fetchProject}
+        setRender={setRender}
+        render={render}
+      />
       <ToastContainer />
     </>
   );

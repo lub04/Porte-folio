@@ -9,11 +9,47 @@ import {
 import PropTypes from "prop-types";
 
 import connexion from "../services/connexion";
+import successToast from "../components/Toast/successToast";
 
 const PortefolioContext = createContext();
 
 export function PortefolioProvider({ children }) {
+  const initialProject = useMemo(
+    () => ({
+      name: "",
+      github_link: "",
+      website_link: "",
+      team: "",
+      main_technologies: "",
+      organization: "",
+      description: "",
+      project_category_id: "0",
+      status_id: "",
+    }),
+    []
+  );
+
   const [logUser, setLogUser] = useState(null);
+  const [newProject, setNewProject] = useState(initialProject);
+
+  const handleModifyProject = useCallback(
+    async (id) => {
+      try {
+        await connexion.put(`/api/projects/${id}`, newProject);
+        successToast("Modification enregistrée");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [newProject]
+  );
+  const handleDeleteProject = useCallback(async (id) => {
+    try {
+      await connexion.delete(`/api/projects/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const checkToken = useCallback(async () => {
     try {
@@ -53,7 +89,26 @@ export function PortefolioProvider({ children }) {
     return () => clearInterval(interval);
   }, [checkToken]);
 
-  const value = useMemo(() => ({ logUser, handleUser }), [logUser, handleUser]);
+  const value = useMemo(
+    () => ({
+      logUser,
+      handleUser,
+      newProject,
+      setNewProject,
+      handleModifyProject,
+      initialProject,
+      handleDeleteProject,
+    }),
+    [
+      logUser,
+      handleUser,
+      newProject,
+      setNewProject,
+      handleModifyProject,
+      initialProject,
+      handleDeleteProject,
+    ]
+  );
 
   return (
     <PortefolioContext.Provider value={value}>

@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 
+import { usePortefolio } from "../../context/PortefolioContext";
 import connexion from "../../services/connexion";
 import "./FormProject.css";
 
-function FormProject({
-  handleSubmitProject,
-  stepChecked,
-  step,
-  newProject,
-  setNewProject,
-  isCreated,
-}) {
+function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
+  const { newProject, setNewProject } = usePortefolio();
   const [isDeployed, setIsDeployed] = useState(false);
   const [categories, setCategories] = useState([]);
   const [status, setStatus] = useState([]);

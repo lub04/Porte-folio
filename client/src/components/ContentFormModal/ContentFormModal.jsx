@@ -49,7 +49,7 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId, render]);
+  }, [render]);
 
   if (!project) {
     return <p>Chargement du projet...</p>;
