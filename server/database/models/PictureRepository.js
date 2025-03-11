@@ -35,12 +35,30 @@ class PictureRepository extends AbstractRepository {
     return rows[0];
   }
 
-  async readAll() {
+  async readAllByProject(project) {
     // Execute the SQL SELECT query to retrieve all pictures from the "picture" table
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+    const [rows] = await this.database.query(
+      `select * from ${this.table} where project_id = ?`,
+      [project]
+    );
 
-    // Return the array of pictures
-    return rows;
+    const formattedData = {
+      screenshots: [],
+      others: [],
+    };
+
+    rows.forEach((item) => {
+      if (item.type === "screenshot") {
+        formattedData.screenshots.push(item);
+      } else {
+        formattedData.others.push(item);
+      }
+    });
+
+    return {
+      ...Object.fromEntries(formattedData.others.map((obj) => [obj.type, obj])),
+      screenshots: formattedData.screenshots,
+    };
   }
 
   // The U of CRUD - Update operation

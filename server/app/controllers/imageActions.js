@@ -5,7 +5,7 @@ const tables = require("../../database/tables");
 const browse = async (req, res, next) => {
   try {
     // Fetch all pictures from the database
-    const pictures = await tables.picture.readAll();
+    const pictures = await tables.picture.readAllByProject(req.query.project);
 
     // Respond with the pictures in JSON format
     res.json(pictures);
