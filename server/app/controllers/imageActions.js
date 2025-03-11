@@ -42,6 +42,7 @@ const edit = async (req, res, next) => {
     url: `assets/images/${req.file.filename}`,
     project_id: req.params.id,
   };
+
   try {
     if (query.type === "logo") {
       await tables.picture.updateLogo(picture);

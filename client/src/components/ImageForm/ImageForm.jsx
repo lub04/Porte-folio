@@ -11,10 +11,10 @@ function ImageForm({
   projectId,
   render,
   isLogoChoosen,
-  goToNextStep,
   isMainPictureChoosen,
   setFileName,
   fileName,
+  handleSubmitModifyPicture,
 }) {
   if (stepChecked !== step) return null;
   const handleFileChange = (event) => {
@@ -28,16 +28,46 @@ function ImageForm({
   const formImage = () => {
     if (isLogoChoosen && stepChecked === 2) {
       return (
-        <button type="button" className="button" onClick={goToNextStep}>
-          Prochaine étape
-        </button>
+        <form onSubmit={handleSubmitModifyPicture} className="image-form">
+          <label className="upload-input">
+            {label}
+            <input
+              required
+              type="file"
+              ref={inputRef}
+              aria-hidden="true"
+              onChange={handleFileChange}
+            />
+            <span className="file-name">
+              {fileName || "Aucun fichier sélectionné"}
+            </span>
+          </label>
+          <button type="submit" className="button">
+            Modifier le logo
+          </button>
+        </form>
       );
     }
     if (isMainPictureChoosen && stepChecked === 3) {
       return (
-        <button type="button" className="button" onClick={goToNextStep}>
-          Prochaine étape
-        </button>
+        <form onSubmit={handleSubmitModifyPicture} className="image-form">
+          <label className="upload-input">
+            {label}
+            <input
+              required
+              type="file"
+              ref={inputRef}
+              aria-hidden="true"
+              onChange={handleFileChange}
+            />
+            <span className="file-name">
+              {fileName || "Aucun fichier sélectionné"}
+            </span>
+          </label>
+          <button type="submit" className="button">
+            Modifier l'mage principale'
+          </button>
+        </form>
       );
     }
     return (

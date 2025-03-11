@@ -135,6 +135,39 @@ function AllProjects() {
       }
     }
   };
+  const handleSubmitModifyPicture = async (event) => {
+    event.preventDefault();
+    if (stepChecked === 2) {
+      if (isLogoChoosen) {
+        try {
+          const formData = new FormData();
+          formData.append("image", inputRefLogo.current.files[0]);
+          await connexion.put(`/api/image/${idNewProject}?type=logo`, formData);
+          setRender(!render);
+          setFileName("");
+          navigate(".", { replace: true });
+          goToNextStep();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    if (stepChecked === 3) {
+      if (isMainPictureChoosen) {
+        try {
+          const formData = new FormData();
+          formData.append("image", inputRefMainImage.current.files[0]);
+          await connexion.put(`/api/image/${idNewProject}?type=main`, formData);
+          setRender(!render);
+          setFileName("");
+          navigate(".", { replace: true });
+          goToNextStep();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+  };
 
   const handleSubmitSkill = async (event) => {
     event.preventDefault();
@@ -152,10 +185,20 @@ function AllProjects() {
       return <h3 className="modal-title">Votre nouveau projet</h3>;
     }
     if (stepChecked === 2) {
-      return <h3 className="modal-title">Ajoutez un logo</h3>;
+      return (
+        <h3 className="modal-title">
+          {!isLogoChoosen ? "Ajoutez un logo" : "Modifiez le logo"}
+        </h3>
+      );
     }
     if (stepChecked === 3) {
-      return <h3 className="modal-title">Ajoutez une image principale</h3>;
+      return (
+        <h3 className="modal-title">
+          {!isMainPictureChoosen
+            ? "Ajoutez une image principale"
+            : "Modifiez l'image principale"}
+        </h3>
+      );
     }
     if (stepChecked === 4) {
       return <h3 className="modal-title">Ajoutez des screenshots</h3>;
@@ -199,28 +242,32 @@ function AllProjects() {
           step={2}
           handleSubmit={handleSubmitImage}
           inputRef={inputRefLogo}
-          label="Ajoutez un logo !"
+          label={!isLogoChoosen ? "Ajoutez un logo !" : "Modifiez le logo !"}
           projectId={idNewProject}
           render={null}
           isLogoChoosen={isLogoChoosen}
           isMainPictureChoosen={isMainPictureChoosen}
-          goToNextStep={goToNextStep}
           setFileName={setFileName}
           fileName={fileName}
+          handleSubmitModifyPicture={handleSubmitModifyPicture}
         />
         <ImageForm
           stepChecked={stepChecked}
           step={3}
           handleSubmit={handleSubmitImage}
           inputRef={inputRefMainImage}
-          label=" Ajoutez l'image principale du projet !"
+          label={
+            !isMainPictureChoosen
+              ? "Ajoutez l'image principale du projet !"
+              : "Modifiez l'image principale du projet !"
+          }
           projectId={idNewProject}
           render={null}
-          goToNextStep={goToNextStep}
           isLogoChoosen={isLogoChoosen}
           isMainPictureChoosen={isMainPictureChoosen}
           setFileName={setFileName}
           fileName={fileName}
+          handleSubmitModifyPicture={handleSubmitModifyPicture}
         />
         <ImageForm
           stepChecked={stepChecked}
