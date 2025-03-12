@@ -31,6 +31,7 @@ export function PortefolioProvider({ children }) {
 
   const [logUser, setLogUser] = useState(null);
   const [newProject, setNewProject] = useState(initialProject);
+  const [render, setRender] = useState(false);
 
   const handleModifyProject = useCallback(
     async (id) => {
@@ -43,13 +44,17 @@ export function PortefolioProvider({ children }) {
     },
     [newProject]
   );
-  const handleDeleteProject = useCallback(async (id) => {
-    try {
-      await connexion.delete(`/api/projects/${id}`);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+  const handleDeleteProject = useCallback(
+    async (id) => {
+      try {
+        await connexion.delete(`/api/projects/${id}`);
+        setRender(!render);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [render]
+  );
 
   const checkToken = useCallback(async () => {
     try {
@@ -98,6 +103,8 @@ export function PortefolioProvider({ children }) {
       handleModifyProject,
       initialProject,
       handleDeleteProject,
+      render,
+      setRender,
     }),
     [
       logUser,
@@ -107,6 +114,8 @@ export function PortefolioProvider({ children }) {
       handleModifyProject,
       initialProject,
       handleDeleteProject,
+      render,
+      setRender,
     ]
   );
 

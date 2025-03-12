@@ -25,6 +25,8 @@ function AllProjects() {
     setNewProject,
     handleModifyProject,
     initialProject,
+    render,
+    setRender,
   } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
@@ -38,7 +40,6 @@ function AllProjects() {
   const [isMainPictureChoosen, setIsMainPictureChoosen] = useState(false);
   const [stepChecked, setStepChecked] = useState(1);
   const [idNewProject, setIdNewProject] = useState(null);
-  const [render, setRender] = useState(false);
   const [fileName, setFileName] = useState("");
   const [projectsList, setProjectsList] = useState([]);
   const [success, setSuccess] = useState(true);
@@ -133,14 +134,19 @@ function AllProjects() {
           formData.append("type", "logo");
           await connexion.post(`/api/image`, formData);
           setIsLogoChoosen(true);
+          setSuccess(true);
           goToNextStep();
-          navigate(".", { replace: true });
         } catch (error) {
+          setSuccess(false);
           console.error(error);
+          errorToast(
+            "Problème lors de l'upload de l'image, vérifiez que vous chargez bien une image dans un format correct !"
+          );
+          return;
         }
+        setFileName("");
+        goToNextStep();
       }
-      setFileName("");
-      goToNextStep();
     }
     if (stepChecked === 3) {
       if (!isMainPictureChoosen) {
@@ -152,13 +158,16 @@ function AllProjects() {
           await connexion.post(`/api/image`, formData);
           setIsMainPictureChoosen(true);
           goToNextStep();
-          navigate(".", { replace: true });
         } catch (error) {
           console.error(error);
+          errorToast(
+            "Problème lors de l'upload de l'image, vérifiez que vous chargez bien une image dans un format correct !"
+          );
+          return;
         }
+        setFileName("");
+        goToNextStep();
       }
-      setFileName("");
-      goToNextStep();
     }
     if (stepChecked === 4) {
       try {
@@ -171,6 +180,9 @@ function AllProjects() {
         setFileName("");
         navigate(".", { replace: true });
       } catch (error) {
+        errorToast(
+          "Problème lors de l'upload de l'image, vérifiez que vous chargez bien une image dans un format correct !"
+        );
         console.error(error);
       }
     }
@@ -337,13 +349,11 @@ function AllProjects() {
               : "Modifiez l'image principale du projet !"
           }
           projectId={idNewProject}
-          render={null}
           isLogoChoosen={isLogoChoosen}
           isMainPictureChoosen={isMainPictureChoosen}
           setFileName={setFileName}
           fileName={fileName}
           handleSubmitModifyPicture={handleSubmitModifyPicture}
-          setRender={setRender}
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -352,10 +362,8 @@ function AllProjects() {
           inputRef={inputRefScreenshots}
           label="Screenshots !"
           projectId={idNewProject}
-          render={render}
           setFileName={setFileName}
           fileName={fileName}
-          setRender={setRender}
         />
         <SkillForm
           stepChecked={stepChecked}

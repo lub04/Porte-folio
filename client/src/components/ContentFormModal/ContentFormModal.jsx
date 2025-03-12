@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 
 import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
+import { usePortefolio } from "../../context/PortefolioContext";
 
-function ContentFormModal({ stepChecked, projectId, render, setRender }) {
+function ContentFormModal({ stepChecked, projectId }) {
+  const { render, setRender } = usePortefolio();
   const [project, setProject] = useState(null);
   const [projectSkills, setProjectSkills] = useState(null);
   const [pictures, setPictures] = useState(null);
@@ -36,7 +38,6 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
       setProject(projectRes.data);
       setProjectSkills(skillsRes.data);
       setPictures(picturesRes.data);
-      setRender(!render);
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des données du projet",

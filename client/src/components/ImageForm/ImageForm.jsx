@@ -9,8 +9,6 @@ function ImageForm({
   label,
   inputRef,
   projectId,
-  render,
-  setRender,
   isLogoChoosen,
   isMainPictureChoosen,
   setFileName,
@@ -96,12 +94,7 @@ function ImageForm({
   };
   return (
     <>
-      <ContentFormModal
-        stepChecked={stepChecked}
-        projectId={projectId}
-        render={render}
-        setRender={setRender}
-      />
+      <ContentFormModal stepChecked={stepChecked} projectId={projectId} />
       {formImage()}
     </>
   );

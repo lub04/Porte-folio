@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import connexion from "../../services/connexion";
 import "./SkillForm.css";
 import ContentFormModal from "../ContentFormModal/ContentFormModal";
+import { usePortefolio } from "../../context/PortefolioContext";
 
 function SkillForm({
   stepChecked,
@@ -10,9 +11,8 @@ function SkillForm({
   projectId,
   handleSubmit,
   setProjectSkill,
-  render,
-  setRender,
 }) {
+  const { render } = usePortefolio();
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
@@ -39,12 +39,7 @@ function SkillForm({
 
   return (
     <>
-      <ContentFormModal
-        stepChecked={stepChecked}
-        projectId={projectId}
-        render={render}
-        setRender={setRender}
-      />
+      <ContentFormModal stepChecked={stepChecked} projectId={projectId} />
       <form onSubmit={handleSubmit} className="skill-form">
         <label className="large-select">
           Ajouter une compétence :
