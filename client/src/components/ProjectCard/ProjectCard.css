@@ -4,6 +4,7 @@
   border-radius: 5px;
   background-color: white;
   border: 1px solid var(--secondary-color);
+  margin-bottom: 1rem;
   transition:
     transform 1s ease,
     opacity 1s ease,
@@ -26,6 +27,14 @@
     transition: opacity 1s ease;
     border-radius: 0 0 5px 5px;
     color: var(--background-color-opacity);
+  }
+  .delete-button {
+    opacity: 0;
+  }
+  &:hover {
+    .delete-button {
+      opacity: 1;
+    }
   }
 }
 
@@ -52,7 +61,9 @@
   flex-grow: 1;
   flex-basis: 15rem;
 }
-
+.delete-display {
+  margin-bottom: 2rem;
+}
 @media (max-width: 576px) {
   .pair-width {
     width: 100%;

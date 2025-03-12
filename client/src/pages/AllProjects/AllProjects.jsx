@@ -206,6 +206,7 @@ function AllProjects() {
           formData.append("image", inputRefMainImage.current.files[0]);
           await connexion.put(`/api/image/${idNewProject}?type=main`, formData);
           setRender(!render);
+          setFileName("");
           goToNextStep();
         } catch (error) {
           console.error(error);
@@ -289,6 +290,7 @@ function AllProjects() {
                 ? "project-card pair-width"
                 : "project-card impair-width"
             }
+            projectListLength={projectsList.length}
           />
         ))}
       </section>
