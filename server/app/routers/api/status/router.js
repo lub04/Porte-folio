@@ -8,15 +8,16 @@ const router = express.Router();
 
 // Import status-related actions
 const { browse, read, add } = require("../../../controllers/statusActions");
+const { checkUser } = require("../../../services/verification/cookies");
 
 // Route to get a list of status
-router.get("/", browse);
+router.get("/", checkUser, browse);
 
 // Route to get a specific status by ID
-router.get("/:id", read);
+router.get("/:id", checkUser, read);
 
 // Route to add a new status
-router.post("/", add);
+router.post("/", checkUser, add);
 
 /* ************************************************************************* */
 

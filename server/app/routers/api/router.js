@@ -2,9 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 
+const { optionalAuth } = require("../../services/verification/cookies");
 /* ************************************************************************* */
 // Import And Use Routers Here
 /* ************************************************************************* */
+router.use(optionalAuth);
 
 const itemsRouter = require("./items/router");
 

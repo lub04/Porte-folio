@@ -95,7 +95,9 @@ function ProjectDetail() {
 
                 {project.categorized_skills.map((skillList) => (
                   <p key={skillList.skills[0]}>
-                    {skillList.category} : {skillList.skills.join(", ")}
+                    {skillList.skills.length !== 0
+                      ? `${skillList.category}: ${skillList.skills.join(", ")}`
+                      : ""}
                   </p>
                 ))}
               </article>

@@ -15,6 +15,7 @@ const {
   edit,
 } = require("../../../controllers/projectActions");
 const validateProject = require("../../../services/validateProject");
+const { checkUser } = require("../../../services/verification/cookies");
 
 // Route to get a list of projects
 router.get("/", browse);
@@ -23,11 +24,11 @@ router.get("/", browse);
 router.get("/:id", read);
 
 // Route to add a new project
-router.post("/", validateProject, add);
+router.post("/", validateProject, checkUser, add);
 
-router.delete("/:id", destroy);
+router.delete("/:id", checkUser, destroy);
 
-router.put("/:id", validateProject, edit);
+router.put("/:id", validateProject, checkUser, edit);
 /* ************************************************************************* */
 
 module.exports = router;
