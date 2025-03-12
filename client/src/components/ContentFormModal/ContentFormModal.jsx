@@ -156,6 +156,7 @@ function ContentFormModal({ stepChecked, projectId }) {
           <p>L'organisation : {project.organization}</p>
           <p>Description du projet : {project.description}</p>
           <p>Categorie du projet : {project.project_category}</p>
+          <p>Statut du projet : {project.project_status}</p>
         </section>
         <section className="picture-form-content">
           <article className="logo-main-image content-box">

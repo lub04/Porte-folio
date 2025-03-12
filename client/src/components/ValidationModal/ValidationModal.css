@@ -19,3 +19,12 @@
     gap: 1rem;
   }
 }
+@media (max-width: 1210px) {
+  .validation-modal {
+    left: 20%;
+    right: 20%;
+    article {
+      flex-direction: column;
+    }
+  }
+}

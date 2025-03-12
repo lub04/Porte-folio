@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
@@ -31,7 +30,6 @@ function AllProjects() {
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
   const inputRefScreenshots = useRef();
-  const navigate = useNavigate();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [validationModalIsOpen, setValidationModalIsOpen] = useState(false);
@@ -177,8 +175,6 @@ function AllProjects() {
         formData.append("type", "screenshot");
         await connexion.post(`/api/image`, formData);
         setRender(!render);
-        setFileName("");
-        navigate(".", { replace: true });
       } catch (error) {
         errorToast(
           "Problème lors de l'upload de l'image, vérifiez que vous chargez bien une image dans un format correct !"
@@ -197,7 +193,6 @@ function AllProjects() {
           await connexion.put(`/api/image/${idNewProject}?type=logo`, formData);
           setRender(!render);
           setFileName("");
-          navigate(".", { replace: true });
           goToNextStep();
         } catch (error) {
           console.error(error);
@@ -211,8 +206,6 @@ function AllProjects() {
           formData.append("image", inputRefMainImage.current.files[0]);
           await connexion.put(`/api/image/${idNewProject}?type=main`, formData);
           setRender(!render);
-          setFileName("");
-          navigate(".", { replace: true });
           goToNextStep();
         } catch (error) {
           console.error(error);
@@ -226,8 +219,9 @@ function AllProjects() {
     try {
       await connexion.post("api/projectSkill", projectSkill);
       setRender(!render);
-      navigate(".", { replace: true });
+      successToast("Compétence ajoutée avec succès !");
     } catch (error) {
+      errorToast("Vous ne pouvez pas ajouter deux fois la même compétence !");
       console.error(error);
     }
   };
@@ -287,7 +281,15 @@ function AllProjects() {
       ) : null}
       <section className="page-display projects-list">
         {projectsList.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard
+            key={project.id}
+            project={project}
+            css={
+              projectsList.length % 2 === 0
+                ? "project-card pair-width"
+                : "project-card impair-width"
+            }
+          />
         ))}
       </section>
       <Modal

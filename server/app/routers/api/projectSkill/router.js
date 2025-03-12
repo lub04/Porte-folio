@@ -13,6 +13,7 @@ const {
   add,
   destroy,
 } = require("../../../controllers/projectSkillActions");
+const validateSkill = require("../../../services/validateProjectSkill");
 
 // Route to get a list of projectSkills
 router.get("/", browse);
@@ -21,7 +22,7 @@ router.get("/", browse);
 router.get("/:id", read);
 
 // Route to add a new projectSkill
-router.post("/", add);
+router.post("/", validateSkill, add);
 
 router.delete("/:project_id/skill/:skill_id", destroy);
 

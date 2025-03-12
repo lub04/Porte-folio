@@ -4,8 +4,10 @@
   border-radius: 5px;
   background-color: white;
   border: 1px solid var(--secondary-color);
-  flex-grow: 1;
-  flex-basis: 15rem;
+  transition:
+    transform 1s ease,
+    opacity 1s ease,
+    box-shadow 1s ease;
   img {
     width: 100%;
     height: 100%;
@@ -26,10 +28,12 @@
     color: var(--background-color-opacity);
   }
 }
+
 :has(.project-card:hover) > .project-card:not(:hover) {
   transform: scale(0.95);
   opacity: 0.85;
 }
+
 .project-card:hover {
   transform: scale(1.1);
   opacity: 1;
@@ -40,10 +44,16 @@
     opacity: 1;
   }
 }
+.pair-width {
+  width: 45%;
+}
+.impair-width {
+  flex-grow: 1;
+  flex-basis: 15rem;
+}
 
-.project-card {
-  transition:
-    transform 1s ease,
-    opacity 1s ease,
-    box-shadow 1s ease;
+@media (max-width: 576px) {
+  .pair-width {
+    width: 100%;
+  }
 }
