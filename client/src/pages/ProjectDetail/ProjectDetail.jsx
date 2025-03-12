@@ -148,6 +148,7 @@ function ProjectDetail() {
         onRequestClose={closeModal}
         contentLabel="Image Modal"
         className="Modal"
+        appElement={document.getElementById("root")}
       >
         {activeImage && (
           <img

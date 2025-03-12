@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./ProjectCard.css";
+
+import ValidationModal from "../ValidationModal/ValidationModal";
+
 import { usePortefolio } from "../../context/PortefolioContext";
+import "./ProjectCard.css";
 
 function ProjectCard({ project, css, projectListLength }) {
-  const { logUser, handleDeleteProject } = usePortefolio();
-
+  const { logUser } = usePortefolio();
+  const [validationDeleteModal, setValidationDeleteModal] = useState(false);
   return (
     <div
       className={
@@ -22,11 +26,20 @@ function ProjectCard({ project, css, projectListLength }) {
         <button
           type="button"
           className="button delete-button"
-          onClick={() => handleDeleteProject(project.id)}
+          onClick={() => setValidationDeleteModal(true)}
         >
           Supprimer
         </button>
       )}
+      <ValidationModal
+        validationModalIsOpen={validationDeleteModal}
+        setValidationModalIsOpen={setValidationDeleteModal}
+        id={project.id}
+        reinitializeState={null}
+        closeModal={null}
+        text1="Êtes-vous sûre de vouloir supprimer ce projet ?"
+        text2="Toute suppression de la base de donnée est définitive !"
+      />
     </div>
   );
 }

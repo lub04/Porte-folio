@@ -8,18 +8,22 @@ function ValidationModal({
   id,
   reinitializeState,
   closeModal,
-  setRender,
-  render,
+  text1,
+  text2,
 }) {
-  const { handleDeleteProject } = usePortefolio();
+  const { handleDeleteProject, setRender, render } = usePortefolio();
   const closeValidationModal = () => {
     setValidationModalIsOpen(false);
   };
   const handleValidate = async () => {
-    reinitializeState();
+    if (reinitializeState) {
+      reinitializeState();
+    }
     await handleDeleteProject(id);
     closeValidationModal();
-    closeModal();
+    if (closeModal) {
+      closeModal();
+    }
     setRender(!render);
   };
   return (
@@ -28,9 +32,10 @@ function ValidationModal({
       onRequestClose={closeValidationModal}
       contentLabel="Validation Modal"
       className="validation-modal"
+      appElement={document.getElementById("root")}
     >
-      <p>Êtes-vous sûre de vouloir quitter ?</p>
-      <p>Attention, les données ne seront pas sauvegardées !</p>
+      <p>{text1}</p>
+      <p>{text2}</p>
       <article>
         <button type="button" className="button" onClick={handleValidate}>
           Oui

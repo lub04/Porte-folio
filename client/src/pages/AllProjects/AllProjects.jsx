@@ -299,6 +299,7 @@ function AllProjects() {
         onRequestClose={isCreated ? openValidationModal : closeModal}
         contentLabel="Image Modal"
         className="Modal"
+        appElement={document.getElementById("root")}
       >
         <section className="step-ui">
           {stepUi.map((onestep) => (
@@ -420,9 +421,10 @@ function AllProjects() {
         id={idNewProject}
         reinitializeState={reinitializeState}
         closeModal={closeModal}
-        fetchProject={fetchProject}
         setRender={setRender}
         render={render}
+        text1="Êtes-vous sûre de vouloir quitter ?"
+        text2="Attention, les données ne seront pas sauvegardées !"
       />
       <ToastContainer />
     </>
