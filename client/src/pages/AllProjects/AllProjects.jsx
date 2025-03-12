@@ -14,6 +14,7 @@ import FormProject from "../../components/FormProject/FormProject";
 import SkillForm from "../../components/SkillForm/SkillForm";
 import ContentFormModal from "../../components/ContentFormModal/ContentFormModal";
 import ValidationModal from "../../components/ValidationModal/ValidationModal";
+import errorToast from "../../components/Toast/errorToast";
 
 const stepUi = [1, 2, 3, 4, 5, 6];
 
@@ -40,6 +41,7 @@ function AllProjects() {
   const [render, setRender] = useState(false);
   const [fileName, setFileName] = useState("");
   const [projectsList, setProjectsList] = useState([]);
+  const [success, setSuccess] = useState(true);
 
   const reinitializeState = () => {
     setIsCreated(false);
@@ -48,6 +50,7 @@ function AllProjects() {
     setIsMainPictureChoosen(false);
     setNewProject(initialProject);
     setStepChecked(1);
+    setSuccess(true);
   };
 
   const fetchProject = async () => {
@@ -88,12 +91,15 @@ function AllProjects() {
   const handleSubmitProject = async () => {
     try {
       const response = await connexion.post("/api/projects", newProject);
+      setSuccess(true);
       setIsCreated(true);
       const projectId = response.data.insertId;
       setIdNewProject(projectId);
       successToast("Votre projet à bien été créé !");
     } catch (error) {
+      setSuccess(false);
       console.error("Erreur lors de la création du projet :", error);
+      errorToast("Il y a eu une erreur lors de la création du projet !");
     }
   };
   const handleProject = async (event) => {
@@ -102,12 +108,16 @@ function AllProjects() {
       handleSubmitProject();
       await fetchProject();
       setRender(!render);
-      goToNextStep();
+      if (success) {
+        goToNextStep();
+      }
     } else {
       handleModifyProject(idNewProject);
       await fetchProject();
       setRender(!render);
-      goToNextStep();
+      if (success) {
+        goToNextStep();
+      }
     }
   };
 

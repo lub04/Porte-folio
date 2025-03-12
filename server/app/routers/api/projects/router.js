@@ -14,6 +14,7 @@ const {
   destroy,
   edit,
 } = require("../../../controllers/projectActions");
+const validateProject = require("../../../services/validateProject");
 
 // Route to get a list of projects
 router.get("/", browse);
@@ -22,11 +23,11 @@ router.get("/", browse);
 router.get("/:id", read);
 
 // Route to add a new project
-router.post("/", add);
+router.post("/", validateProject, add);
 
 router.delete("/:id", destroy);
 
-router.put("/:id", edit);
+router.put("/:id", validateProject, edit);
 /* ************************************************************************* */
 
 module.exports = router;

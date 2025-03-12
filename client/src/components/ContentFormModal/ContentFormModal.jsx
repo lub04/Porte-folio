@@ -36,6 +36,7 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
       setProject(projectRes.data);
       setProjectSkills(skillsRes.data);
       setPictures(picturesRes.data);
+      setRender(!render);
     } catch (error) {
       console.error(
         "Erreur lors de la récupération des données du projet",
@@ -49,7 +50,7 @@ function ContentFormModal({ stepChecked, projectId, render, setRender }) {
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [render]);
+  }, [projectId, render]);
 
   if (!project) {
     return <p>Chargement du projet...</p>;
