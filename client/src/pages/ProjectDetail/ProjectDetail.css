@@ -34,8 +34,7 @@
       }
     }
     .project-team-skills {
-      .team,
-      .skills {
+      article {
         margin: 0 0 1rem 0;
         p {
           margin: 0 0 0.8rem 0;

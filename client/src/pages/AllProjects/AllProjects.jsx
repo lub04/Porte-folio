@@ -282,7 +282,7 @@ function AllProjects() {
       <h2>Mes projets</h2>
       {logUser ? (
         <button className="button" type="button" onClick={openModalAddProject}>
-          Ajouter un projet
+          Nouveau projet +
         </button>
       ) : null}
       <section className="page-display projects-list">

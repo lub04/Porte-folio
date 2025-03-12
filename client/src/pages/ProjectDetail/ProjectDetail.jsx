@@ -35,8 +35,8 @@ function ProjectDetail() {
             src={`${import.meta.env.VITE_API_URL}/${project.pictures.main}`}
             alt="exemple du site 1"
           />
-          <div className="technics">
-            <article className="badges box">
+          <article className="technics">
+            <section className="badges box">
               <div className="info-badge">
                 <img
                   src={
@@ -67,22 +67,30 @@ function ProjectDetail() {
               </div>
               <div className="info-badge">
                 <img src={link} alt="icone lien" />
-                <a
-                  className="badge badge-link"
-                  href={project.website_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Application déployée
-                </a>
+                {project.website_link ? (
+                  <a
+                    className="badge badge-link"
+                    href={project.website_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Application déployée
+                  </a>
+                ) : (
+                  <p>Le site n'est pas déployé</p>
+                )}
               </div>
-            </article>
-            <div className="project-team-skills box">
-              <article className="team">
-                <h3>L'équipe :</h3>
-                <p>{project.team}</p>
+            </section>
+            <section className="project-team-skills box">
+              <article>
+                <h3>Statut du projet : </h3>
+                <p>{project.project_status}</p>
               </article>
-              <article className="skills">
+              <article>
+                <h3>L'équipe :</h3>
+                {project.team ? <p>{project.team}</p> : <p>Lubin Chauvreau</p>}
+              </article>
+              <article>
                 <h3>Compétences utilisées :</h3>
 
                 {project.categorized_skills.map((skillList) => (
@@ -91,8 +99,8 @@ function ProjectDetail() {
                   </p>
                 ))}
               </article>
-            </div>
-          </div>
+            </section>
+          </article>
         </section>
         <section className="project-description-organisation box">
           <ExpandableSection

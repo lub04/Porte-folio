@@ -322,6 +322,7 @@ form {
   transition: transform 0.5s ease;
   display: block;
   margin: auto;
+  color: var(--text-color);
   &:hover,
   &:active {
     transform: scale(1.1);

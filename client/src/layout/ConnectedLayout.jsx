@@ -10,7 +10,7 @@ function ConnectedLayout() {
   if (logUser) {
     return (
       <div className="container">
-        <Header />
+        <Header css="header" css2="background" />
         <main>
           <Outlet />
         </main>

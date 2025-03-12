@@ -176,7 +176,7 @@ INSERT INTO skill (name, category_id, user_id) VALUES
 INSERT INTO status (status) VALUES
 ('En cours'),
 ('Terminé'),
-('Experimental');
+('Expérimental');
 
 -- Insert data into project_category
 INSERT INTO project_category (category) VALUES

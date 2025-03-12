@@ -35,28 +35,30 @@ class ProjectRepository extends AbstractRepository {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific project by its ID, including picture and categorized skills
     const [rows] = await this.database.query(
-      `SELECT 
-        p.*, 
+      `SELECT
+        p.*,
         pc.category AS project_category,
+        st.status AS project_status,
         JSON_OBJECT(
           'logo', (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1),
           'main', (SELECT url FROM picture WHERE project_id = p.id AND type = 'main' LIMIT 1),
           'screenshots', (SELECT JSON_ARRAYAGG(url) FROM picture WHERE project_id = p.id AND type = 'screenshot')
         ) AS pictures,
         -- Retrieve all skills by category, using GROUP_CONCAT to join skills for each category
-        GROUP_CONCAT(DISTINCT CASE 
+        GROUP_CONCAT(DISTINCT CASE
             WHEN s.category_id = 1 THEN CONCAT(s.name) END ORDER BY s.name) AS frontend_skills,
-        GROUP_CONCAT(DISTINCT CASE 
+        GROUP_CONCAT(DISTINCT CASE
             WHEN s.category_id = 2 THEN CONCAT(s.name) END ORDER BY s.name) AS backend_skills,
-        GROUP_CONCAT(DISTINCT CASE 
+        GROUP_CONCAT(DISTINCT CASE
             WHEN s.category_id = 3 THEN CONCAT(s.name) END ORDER BY s.name) AS discovered_skills,
-        GROUP_CONCAT(DISTINCT CASE 
+        GROUP_CONCAT(DISTINCT CASE
             WHEN s.category_id = 4 THEN CONCAT(s.name) END ORDER BY s.name) AS tools_skills,
-        GROUP_CONCAT(DISTINCT CASE 
+        GROUP_CONCAT(DISTINCT CASE
             WHEN s.category_id = 5 THEN CONCAT(s.name) END ORDER BY s.name) AS libraries_skills
-      FROM 
+      FROM
         project AS p
       INNER JOIN project_category AS pc ON p.project_category_id = pc.id
+      LEFT JOIN status AS st ON p.status_id = st.id
       LEFT JOIN project_skill AS ps ON p.id = ps.project_id
       LEFT JOIN skill AS s ON ps.skill_id = s.id
       WHERE p.id = ?
