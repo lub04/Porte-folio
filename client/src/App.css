@@ -29,8 +29,8 @@
   --title-size: clamp(1.5rem, 3vw, 2.5rem);
   --secondary-title-size: clamp(1.25rem, 2vw, 2rem);
   --third-title-size: clamp(1rem, 1.5vw, 1.5rem);
-  --paragraph-size: clamp(0.85rem, 1vw, 1.2rem);
-  --paragraph-size-big: clamp(0.9rem, 1.25vw, 1.3rem);
+  --paragraph-size: clamp(0.7rem, 1vw, 1.2rem);
+  --paragraph-size-big: clamp(0.8rem, 1.25vw, 1.3rem);
   --home-header-title-size: clamp(2rem, 3vw, 3rem);
   /* borders */
   --main-border: 1px solid var(--secondary-color);
@@ -106,6 +106,12 @@ main {
   background-color: var(--background-color);
   box-shadow: var(--box-shadow);
   padding: 1rem;
+}
+
+.box-without-padding {
+  border-radius: var(--main-border-radius);
+  background-color: var(--background-color);
+  box-shadow: var(--box-shadow);
 }
 
 .button-close-modal {

@@ -73,12 +73,30 @@ function Home() {
         ) : (
           <p className="welcome box">{home.welcome}</p>
         )}
-        <article className="presentation">
+        <article className="presentation box-without-padding">
           <img
             src={`${import.meta.env.VITE_API_URL}/${home.img}`}
             alt="avatar de Lubin page d'accueil"
           />
-          <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
+          <div className="presentation-personal-information">
+            <h3 className="presentation-title">
+              Lubin chauvreau - Développeur web fullstack
+            </h3>
+            <p>
+              Dans mon atelier, vous trouverez une variété de projets, du
+              développement backend (CRUD, sécurité avec argon2 et JWT, Multer)
+              au frontend avec React et Sass. J'explore aussi des outils comme
+              Git, Figma, Docker, et des méthodologies Agile et Scrum. Toujours
+              en quête de nouveaux défis, je suis passionné par l'amélioration
+              continue de mes compétences.
+            </p>
+          </div>
+          <button type="button" className="presentation-button">
+            En savoir plus !
+          </button>
+          <p className="presentation-text" style={{ whiteSpace: "pre-line" }}>
+            {home.presentation}
+          </p>
         </article>
       </section>
       <Swiper
