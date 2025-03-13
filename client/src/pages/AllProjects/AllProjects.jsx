@@ -26,6 +26,8 @@ function AllProjects() {
     initialProject,
     render,
     setRender,
+    fetchProject,
+    projectsList,
   } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
@@ -39,7 +41,6 @@ function AllProjects() {
   const [stepChecked, setStepChecked] = useState(1);
   const [idNewProject, setIdNewProject] = useState(null);
   const [fileName, setFileName] = useState("");
-  const [projectsList, setProjectsList] = useState([]);
   const [success, setSuccess] = useState(true);
 
   const reinitializeState = () => {
@@ -52,13 +53,9 @@ function AllProjects() {
     setSuccess(true);
   };
 
-  const fetchProject = async () => {
-    const response = await connexion.get("/api/projects");
-    setProjectsList(response.data);
-  };
-
   useEffect(() => {
     fetchProject();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [render]);
 
   const [projectSkill, setProjectSkill] = useState({
@@ -291,6 +288,7 @@ function AllProjects() {
                 : "project-card impair-width"
             }
             projectListLength={projectsList.length}
+            carousel={false}
           />
         ))}
       </section>

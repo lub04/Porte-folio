@@ -1,17 +1,26 @@
+/* eslint-disable import/no-unresolved */
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, EffectCreative } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/effect-creative";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 import connexion from "../../services/connexion";
 import { usePortefolio } from "../../context/PortefolioContext";
 import "./Home.css";
 import successToast from "../../components/Toast/successToast";
 import errorToast from "../../components/Toast/errorToast";
+import ProjectCard from "../../components/ProjectCard/ProjectCard";
 
 function Home() {
   const home = useLoaderData();
-  const { logUser } = usePortefolio();
+  const { logUser, projectsList, fetchProject } = usePortefolio();
   const navigate = useNavigate();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -19,6 +28,9 @@ function Home() {
   const openModalWelcome = () => {
     setModalIsOpen(true);
   };
+  useEffect(() => {
+    fetchProject();
+  }, [fetchProject]);
 
   const closeModal = () => {
     setModalIsOpen(false);
@@ -69,6 +81,36 @@ function Home() {
           <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
         </article>
       </section>
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={1}
+        effect="creative"
+        creativeEffect={{
+          prev: {
+            translate: [0, 0, -400],
+          },
+          next: {
+            translate: ["100%", 0, 0],
+          },
+        }}
+        mousewheel={{ forceToAxis: true }}
+        pagination
+        navigation
+        loop
+        modules={[EffectCreative, Pagination, Navigation]}
+        className="swiper page-display"
+      >
+        {projectsList.map((project) => (
+          <SwiperSlide key={project.id}>
+            <ProjectCard
+              project={project}
+              css="project-card impair-width swiper-card"
+              projectListLength={0}
+              carousel
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

@@ -174,7 +174,7 @@ INSERT INTO skill (name, category_id, user_id) VALUES
 
 -- Insert data into status
 INSERT INTO status (status) VALUES
-('En cours'),
+('En cours de développement'),
 ('Terminé'),
 ('Expérimental');
 

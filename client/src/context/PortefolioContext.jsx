@@ -32,6 +32,12 @@ export function PortefolioProvider({ children }) {
   const [logUser, setLogUser] = useState(null);
   const [newProject, setNewProject] = useState(initialProject);
   const [render, setRender] = useState(false);
+  const [projectsList, setProjectsList] = useState([]);
+
+  const fetchProject = useCallback(async () => {
+    const response = await connexion.get("/api/projects");
+    setProjectsList(response.data);
+  }, []);
 
   const handleModifyProject = useCallback(
     async (id) => {
@@ -105,6 +111,8 @@ export function PortefolioProvider({ children }) {
       handleDeleteProject,
       render,
       setRender,
+      fetchProject,
+      projectsList,
     }),
     [
       logUser,
@@ -116,6 +124,8 @@ export function PortefolioProvider({ children }) {
       handleDeleteProject,
       render,
       setRender,
+      fetchProject,
+      projectsList,
     ]
   );
 

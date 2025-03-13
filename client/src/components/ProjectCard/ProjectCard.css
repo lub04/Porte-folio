@@ -63,8 +63,15 @@
 .delete-display {
   margin-bottom: 2rem;
 }
+.swiper-card {
+  width: 50%;
+  margin: 3rem auto;
+}
 @media (max-width: 576px) {
   .pair-width {
     width: 100%;
+  }
+  .swiper-card {
+    width: 80%;
   }
 }

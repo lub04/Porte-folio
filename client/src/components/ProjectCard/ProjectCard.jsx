@@ -6,7 +6,7 @@ import ValidationModal from "../ValidationModal/ValidationModal";
 import { usePortefolio } from "../../context/PortefolioContext";
 import "./ProjectCard.css";
 
-function ProjectCard({ project, css, projectListLength }) {
+function ProjectCard({ project, css, projectListLength, carousel }) {
   const { logUser } = usePortefolio();
   const [validationDeleteModal, setValidationDeleteModal] = useState(false);
   return (
@@ -15,7 +15,7 @@ function ProjectCard({ project, css, projectListLength }) {
         logUser && projectListLength > 1 ? `delete-display ${css}` : css
       }
     >
-      <Link to={`${project.id}`}>
+      <Link to={carousel ? `projets/${project.id}` : `${project.id}`}>
         <img
           src={`${import.meta.env.VITE_API_URL}/${project.logo}`}
           alt={project.name}

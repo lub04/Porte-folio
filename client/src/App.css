@@ -396,6 +396,15 @@ form {
   outline: none;
 }
 
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--main-color) !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: var(--main-color) !important;
+}
+
 .none {
   display: none;
 }
@@ -406,6 +415,10 @@ form {
   }
   .page-display-form {
     width: 80%;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
   }
 }
 
