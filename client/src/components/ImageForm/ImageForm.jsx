@@ -1,5 +1,6 @@
 import ContentFormModal from "../ContentFormModal/ContentFormModal";
 
+import { usePortefolio } from "../../context/PortefolioContext";
 import "./ImageForm.css";
 
 function ImageForm({
@@ -11,11 +12,14 @@ function ImageForm({
   projectId,
   isLogoChoosen,
   isMainPictureChoosen,
-  setFileName,
-  fileName,
   handleSubmitModifyPicture,
+  isProject,
+  avatar,
 }) {
-  if (stepChecked !== step) return null;
+  const { fileName, setFileName } = usePortefolio();
+  if (isProject) {
+    if (stepChecked !== step) return null;
+  }
   const handleFileChange = (event) => {
     if (event.target.files.length > 0) {
       setFileName(event.target.files[0].name);
@@ -94,7 +98,12 @@ function ImageForm({
   };
   return (
     <>
-      <ContentFormModal stepChecked={stepChecked} projectId={projectId} />
+      <ContentFormModal
+        stepChecked={isProject ? stepChecked : "modify-avatar"}
+        projectId={projectId}
+        isProject={isProject}
+        avatar={avatar}
+      />
       {formImage()}
     </>
   );

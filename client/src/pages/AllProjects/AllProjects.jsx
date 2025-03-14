@@ -28,6 +28,7 @@ function AllProjects() {
     setRender,
     fetchProject,
     projectsList,
+    setFileName,
   } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
@@ -40,7 +41,7 @@ function AllProjects() {
   const [isMainPictureChoosen, setIsMainPictureChoosen] = useState(false);
   const [stepChecked, setStepChecked] = useState(1);
   const [idNewProject, setIdNewProject] = useState(null);
-  const [fileName, setFileName] = useState("");
+
   const [success, setSuccess] = useState(true);
 
   const reinitializeState = () => {
@@ -336,10 +337,9 @@ function AllProjects() {
           render={null}
           isLogoChoosen={isLogoChoosen}
           isMainPictureChoosen={isMainPictureChoosen}
-          setFileName={setFileName}
-          fileName={fileName}
           handleSubmitModifyPicture={handleSubmitModifyPicture}
           setRender={setRender}
+          isProject
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -354,9 +354,8 @@ function AllProjects() {
           projectId={idNewProject}
           isLogoChoosen={isLogoChoosen}
           isMainPictureChoosen={isMainPictureChoosen}
-          setFileName={setFileName}
-          fileName={fileName}
           handleSubmitModifyPicture={handleSubmitModifyPicture}
+          isProject
         />
         <ImageForm
           stepChecked={stepChecked}
@@ -365,8 +364,7 @@ function AllProjects() {
           inputRef={inputRefScreenshots}
           label="Screenshots !"
           projectId={idNewProject}
-          setFileName={setFileName}
-          fileName={fileName}
+          isProject
         />
         <SkillForm
           stepChecked={stepChecked}

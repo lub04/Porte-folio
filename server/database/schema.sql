@@ -105,7 +105,7 @@ CREATE TABLE quote (
 
 -- Insert data into user
 INSERT INTO user (avatar, last_name, first_name, phone, email, linkedin, github, description, resume, password)
-VALUES ('assets/images/lubin.jpg','Chauvreau', 'Lubin', '06.72.14.43.08', 'lubin-chauvreau@laposte.net', 'https://www.linkedin.com/in/lubin-chauvreau-2235102b9/', 'https://github.com/lub04', "Après plusieurs saisons à dévaler les pistes enneigées et à gérer des magasins de location de ski, j'ai décidé de troquer mes skis et mon tablier pour un clavier et quelques lignes de code.
+VALUES ('assets/images/avatar/lubin.jpg','Chauvreau', 'Lubin', '06.72.14.43.08', 'lubin-chauvreau@laposte.net', 'https://www.linkedin.com/in/lubin-chauvreau-2235102b9/', 'https://github.com/lub04', "Après plusieurs saisons à dévaler les pistes enneigées et à gérer des magasins de location de ski, j'ai décidé de troquer mes skis et mon tablier pour un clavier et quelques lignes de code.
 
 Mon parcours professionnel varié m'a permis de toucher à plusieurs domaines : la vente, l'animation, la manutention, les travaux agricoles, et même la restauration. Mais c’est dans le développement web que j’ai finalement trouvé ma véritable passion.
 
@@ -188,11 +188,9 @@ INSERT INTO project_category (category) VALUES
 INSERT INTO homepage (welcome, presentation, img) VALUES
 (
     'Bienvenue sur ce portfolio, conçu par mes soins, où vous découvrirez l’ensemble de mes projets. Vous aurez également l\'occasion d’en apprendre un peu plus sur moi et mon monde. Et si l’envie vous prend – que dis-je, quand l’envie vous prendra – vous y trouverez toutes les informations nécessaires pour me contacter.', 
-    'Dans mon atelier, vous trouverez mes projets, qu\'ils soient en cours, terminés, ou encore à l\'état d\'expérimentation. Du projet personnel au hackathon, sans oublier les projets de groupe, j\'ai eu l\'occasion de travailler sur des applications concrètes qui m\'ont permis de plonger dans les défis du développement web.\n
-    Côté backend, j\'ai intégré des fonctionnalités indispensables comme le CRUD, sécurisé les utilisateurs grâce à argon2 et JWT, et géré des uploads de fichiers avec Multer.\n Sur la partie frontend, je me suis amusé à manipuler le DOM comme un vrai magicien du code, à construire des interfaces fluides et réactives avec React, et à styliser le tout avec Sass et Scss pour un rendu élégant.\n
-    Toujours curieux d’explorer de nouveaux horizons, j\'ai plongé dans des domaines variés, allant des tests unitaires avec Jest à la mise en place de pipelines de déploiement en CI/CD via GitHub. Mon atelier est en constante évolution, mes compétences s\'affinent jour après jour, que ce soit sur des outils incontournables comme Git, Figma, ou encore Docker, ou à travers l\'adoption de méthodologies solides comme Scrum et Agile.\n
-    Alors, si vous souhaitez en savoir plus sur mes réalisations, discuter de technologies, ou même simplement échanger sur l’importance d’une bonne organisation, n\'hésitez pas à explorer mes projets et à me contacter.',
-    'assets/images/lubin.jpg'
+    "Dans mon atelier, j'expérimente et je construis. Du backend (CRUD, sécurité, Multer, etc.) au frontend (React, Sass, etc.), chaque projet est un défi. Je navigue dans l’univers de Git, Figma, ou Docker, et j’adopte les méthodologies Agile et Scrum, en quête de toujours plus d’efficacité. 
+    Mon objectif ? Évoluer sans cesse, apprendre, et créer des solutions toujours plus performantes et innovantes.",
+    'assets/images/avatar/lubin.jpg'
 );
 
 -- Insert data into quote

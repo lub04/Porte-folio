@@ -29,6 +29,14 @@ class HomePageRepository extends AbstractRepository {
     return result.affectedRows;
   }
 
+  async updateAvatar(homepage) {
+    const [result] = await this.database.query(
+      `UPDATE ${this.table} SET img = ? WHERE id = ?`,
+      [homepage.img, homepage.id]
+    );
+    return result.affectedRows;
+  }
+
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an homePage by its ID
 

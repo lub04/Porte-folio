@@ -402,6 +402,9 @@ form {
   outline: none;
 }
 
+.swiper {
+  z-index: 0 !important;
+}
 .swiper-button-next,
 .swiper-button-prev {
   color: var(--main-color) !important;

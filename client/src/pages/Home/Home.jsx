@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectCreative } from "swiper/modules";
@@ -17,17 +17,22 @@ import "./Home.css";
 import successToast from "../../components/Toast/successToast";
 import errorToast from "../../components/Toast/errorToast";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
+import TextAreaForm from "../../components/TextAreaForm/TextAreaForm";
+import ImageForm from "../../components/ImageForm/ImageForm";
 
 function Home() {
   const home = useLoaderData();
+  const inputRefAvatar = useRef();
+
   const { logUser, projectsList, fetchProject } = usePortefolio();
   const navigate = useNavigate();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalType, setModalType] = useState(null);
+  const [modalTitle, setModalTitle] = useState("");
   const [welcome, setWelcome] = useState(home.welcome);
-  const openModalWelcome = () => {
-    setModalIsOpen(true);
-  };
+  const [presentation, setPresentation] = useState(home.presentation);
+
   useEffect(() => {
     fetchProject();
   }, [fetchProject]);
@@ -36,23 +41,46 @@ function Home() {
     setModalIsOpen(false);
   };
 
-  const handleModifyWelcome = (event) => {
+  const handleModifyHomePageText = (event) => {
     const { value } = event.target;
-    setWelcome(value);
+    if (modalType === "welcome") {
+      setWelcome(value);
+    }
+    if (modalType === "presentation") {
+      setPresentation(value);
+    }
   };
-  const handleSubmitModifyWelcome = async (event) => {
+  const handleSubmitModifyHomePageText = async (event) => {
     event.preventDefault();
     try {
-      await connexion.put("api/home/1?selector=welcome", { welcome });
+      if (modalType === "welcome") {
+        await connexion.put("api/home/1?selector=welcome", { welcome });
+      }
+      closeModal();
+      if (modalType === "presentation") {
+        await connexion.put("api/home/1?selector=presentation", {
+          presentation,
+        });
+        closeModal();
+      }
+      if (modalType === "avatar") {
+        const formData = new FormData();
+        formData.append("avatar", inputRefAvatar.current.files[0]);
+        await connexion.put("api/home/1?selector=avatar", formData);
+      }
       navigate(".", { replace: true });
       successToast("Modification réalisée avec succès !");
-      closeModal();
     } catch (error) {
       errorToast(
         "Une erreur est survenue lors de la modification du message de bienvenue !"
       );
       console.error(error);
     }
+  };
+  const openModal = (title, content) => {
+    setModalTitle(title);
+    setModalType(content);
+    setModalIsOpen(true);
   };
 
   return (
@@ -65,7 +93,9 @@ function Home() {
             <button
               type="button"
               className="button modify-button"
-              onClick={openModalWelcome}
+              onClick={() =>
+                openModal("Modifier le texte de bienvenue :", "welcome")
+              }
             >
               Modifier le texte
             </button>
@@ -74,29 +104,49 @@ function Home() {
           <p className="welcome box">{home.welcome}</p>
         )}
         <article className="presentation box-without-padding">
-          <img
-            src={`${import.meta.env.VITE_API_URL}/${home.img}`}
-            alt="avatar de Lubin page d'accueil"
-          />
+          {logUser ? (
+            <div className="home-avatar-admin">
+              <img
+                src={`${import.meta.env.VITE_API_URL}/${home.img}`}
+                alt="avatar de Lubin page d'accueil"
+              />
+              <button
+                type="button"
+                className="button modify-button"
+                onClick={() => openModal("Modifier l'avatar :", "avatar")}
+              >
+                Modifier l'image
+              </button>
+            </div>
+          ) : (
+            <img
+              src={`${import.meta.env.VITE_API_URL}/${home.img}`}
+              alt="avatar de Lubin page d'accueil"
+            />
+          )}
           <div className="presentation-personal-information">
             <h3 className="presentation-title">
               Lubin chauvreau - Développeur web fullstack
             </h3>
-            <p>
-              Dans mon atelier, vous trouverez une variété de projets, du
-              développement backend (CRUD, sécurité avec argon2 et JWT, Multer)
-              au frontend avec React et Sass. J'explore aussi des outils comme
-              Git, Figma, Docker, et des méthodologies Agile et Scrum. Toujours
-              en quête de nouveaux défis, je suis passionné par l'amélioration
-              continue de mes compétences.
-            </p>
+            <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
+            {logUser && (
+              <button
+                type="button"
+                className="button modify-button"
+                onClick={() =>
+                  openModal(
+                    "Modifier le texte de présentation :",
+                    "presentation"
+                  )
+                }
+              >
+                Modifier le texte
+              </button>
+            )}
           </div>
           <button type="button" className="presentation-button">
             En savoir plus !
           </button>
-          <p className="presentation-text" style={{ whiteSpace: "pre-line" }}>
-            {home.presentation}
-          </p>
         </article>
       </section>
       <Swiper
@@ -111,12 +161,11 @@ function Home() {
             translate: ["100%", 0, 0],
           },
         }}
-        mousewheel={{ forceToAxis: true }}
         pagination
         navigation
-        loop
+        loop={projectsList.length > 1}
         modules={[EffectCreative, Pagination, Navigation]}
-        className="swiper page-display"
+        className="swiper page-display-form"
       >
         {projectsList.map((project) => (
           <SwiperSlide key={project.id}>
@@ -134,22 +183,35 @@ function Home() {
         onRequestClose={closeModal}
         contentLabel="Image Modal"
         className="Modal"
+        appElement={document.getElementById("root")}
       >
-        <form onSubmit={handleSubmitModifyWelcome}>
-          <label htmlFor="">
-            Texte de bienvenue
-            <textarea
-              className="modal-textarea"
-              value={welcome}
-              name="welcome"
-              onChange={handleModifyWelcome}
-              required
-            />
-          </label>
-          <button type="submit" className="button">
-            Valider
-          </button>
-        </form>
+        <h3>{modalTitle}</h3>
+        {modalType === "welcome" && (
+          <TextAreaForm
+            handleSubmit={handleSubmitModifyHomePageText}
+            handleModify={handleModifyHomePageText}
+            name="welcome"
+            value={welcome}
+          />
+        )}
+        {modalType === "presentation" && (
+          <TextAreaForm
+            handleSubmit={handleSubmitModifyHomePageText}
+            handleModify={handleModifyHomePageText}
+            name="presentation"
+            value={presentation}
+          />
+        )}
+        {modalType === "avatar" && (
+          <ImageForm
+            inputRef={inputRefAvatar}
+            isProject={false}
+            label="Modifier l'avatar"
+            step={null}
+            handleSubmit={handleSubmitModifyHomePageText}
+            avatar={home.img}
+          />
+        )}
         <button
           type="button"
           className="button-close-modal"

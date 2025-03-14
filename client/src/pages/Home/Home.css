@@ -16,56 +16,97 @@
     display: flex;
     align-items: center;
     gap: 2rem;
-    min-height: clamp(12rem, 16vw, 17rem);
+    min-height: clamp(12rem, 20vw, 17rem);
     box-shadow: var(--box-shadow);
     margin: 2rem 0;
     border-radius: var(--main-border-radius);
+    position: relative;
     img {
       display: block;
-      width: clamp(10rem, 20%, 15rem);
-      height: 100%;
+      width: 12rem;
+      height: 12rem;
       border-radius: var(--round-border-radius);
       border: var(--main-border);
       box-shadow: 8px -2px 37px -17px #000000;
       float: left;
       shape-outside: circle(50%);
-      z-index: 100;
-      margin: 1rem;
+      margin: 0 1rem;
       outline: 2px solid var(--background-color);
     }
     .presentation-title {
       font-size: var(--secondary-title-size);
     }
     .presentation-button {
-      background: url(../../assets/images/scott-webb-OxHPDs4WV8Y-unsplash.jpg);
+      background: var(--main-color-opacity);
       background-size: cover;
-      border: 1px solid var(--background-color);
-      border-radius: 150% 5px 5px 150% / 100% 5px 5px 100%;
-      height: clamp(12rem, 16vw, 17rem);
-      width: 60%;
+      border: none;
+      border-radius: var(--main-border-radius);
+      height: clamp(13rem, 20vw, 17rem);
+      position: relative;
+      width: 10%;
       margin: 0;
-      color: var(--text-color);
+      color: rgba(137, 96, 142, 0);
       cursor: pointer;
-      -webkit-box-shadow: -7px 5px 15px 5px #000000;
-      box-shadow: -7px 0px 7px -2px #000000;
+      box-shadow: -7px 0px 7px -2px rgba(0, 0, 0, 0.68);
       text-decoration: underline;
-      transition: all 0.3s ease;
+      transition: all 1s ease;
       font-size: var(--paragraph-size);
-      &:hover {
-        width: 70%;
-        background-color: var(--background-color);
-        border-radius: 5px;
+      &:hover,
+      &:active {
+        width: 30%;
         position: absolute;
-        right: 15%;
+        background-color: var(--main-color);
+        right: 0;
         font-size: var(--paragraph-size-big);
+        color: var(--background-color-opacity);
+        box-shadow: -7px 0px 7px -2px rgba(0, 0, 0, 0.68);
       }
-    }
-
-    .presentation-text {
-      display: none;
     }
   }
   .title-home {
     margin: 20rem auto 2rem auto;
   }
+}
+
+@media (max-width: 576px) {
+  .home-welcome {
+    .presentation {
+      flex-direction: column;
+      position: relative;
+      height: 30rem;
+      img {
+        margin: 1rem 0 0 0;
+      }
+      .presentation-personal-information {
+        margin: 1rem;
+      }
+      .presentation-button {
+        height: 4rem;
+        width: 100%;
+        border-radius: var(--main-border-radius);
+        box-shadow: -1px -3px 5px 0px rgba(0, 0, 0, 0.68);
+        transition: all 0.3s ease;
+        color: var(--background-color-opacity);
+        &:hover,
+        &:active {
+          width: 100%;
+          background-color: var(--main-color);
+          border-radius: var(--main-border-radius);
+          position: absolute;
+          height: 6rem;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          box-shadow: -1px -3px 5px 0px rgba(0, 0, 0, 0.68);
+        }
+      }
+    }
+  }
+}
+.home-avatar-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 50%;
 }

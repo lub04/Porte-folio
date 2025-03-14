@@ -6,6 +6,8 @@ const storage = multer.diskStorage({
     if (file.fieldname === "image") {
       // Sauvegarde dans le dossier images si c'est une image
       cb(null, "public/assets/images");
+    } else if (file.fieldname === "avatar") {
+      cb(null, "public/assets/images/avatar");
     } else {
       // Sauvegarde dans le dossier public pour d'autres fichiers
       cb(null, "public/");

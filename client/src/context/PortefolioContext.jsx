@@ -33,6 +33,7 @@ export function PortefolioProvider({ children }) {
   const [newProject, setNewProject] = useState(initialProject);
   const [render, setRender] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
+  const [fileName, setFileName] = useState("");
 
   const fetchProject = useCallback(async () => {
     const response = await connexion.get("/api/projects");
@@ -113,6 +114,8 @@ export function PortefolioProvider({ children }) {
       setRender,
       fetchProject,
       projectsList,
+      fileName,
+      setFileName,
     }),
     [
       logUser,
@@ -126,6 +129,8 @@ export function PortefolioProvider({ children }) {
       setRender,
       fetchProject,
       projectsList,
+      fileName,
+      setFileName,
     ]
   );
 

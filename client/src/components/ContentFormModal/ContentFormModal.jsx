@@ -4,7 +4,7 @@ import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
 import { usePortefolio } from "../../context/PortefolioContext";
 
-function ContentFormModal({ stepChecked, projectId }) {
+function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
   const { render, setRender } = usePortefolio();
   const [project, setProject] = useState(null);
   const [projectSkills, setProjectSkills] = useState(null);
@@ -53,8 +53,10 @@ function ContentFormModal({ stepChecked, projectId }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId, render]);
 
-  if (!project) {
-    return <p>Chargement du projet...</p>;
+  if (isProject) {
+    if (!project) {
+      return <p>Chargement du projet...</p>;
+    }
   }
 
   if (stepChecked === 2 || stepChecked === 3 || stepChecked === 4) {
@@ -140,6 +142,9 @@ function ContentFormModal({ stepChecked, projectId }) {
   }
 
   if (stepChecked === 6) {
+    if (!project) {
+      return <p>Chargement du projet...</p>;
+    }
     return (
       <>
         <section className="recap-project-display">
@@ -195,6 +200,14 @@ function ContentFormModal({ stepChecked, projectId }) {
           ))}
         </section>
       </>
+    );
+  }
+  if (stepChecked === "modify-avatar") {
+    return (
+      <article className="avatar-image content-box">
+        <h3>Avatar :</h3>
+        <img src={`${import.meta.env.VITE_API_URL}/${avatar}`} alt="Avatar" />
+      </article>
     );
   }
 

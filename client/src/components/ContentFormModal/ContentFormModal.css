@@ -93,3 +93,16 @@
   padding: 1rem;
   margin: 1rem auto;
 }
+
+.avatar-image {
+  width: calc(60% + 2rem);
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 30%;
+    text-align: center;
+  }
+}
