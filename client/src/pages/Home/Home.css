@@ -33,17 +33,23 @@
       margin: 0 1rem;
       outline: 2px solid var(--background-color);
     }
-    .presentation-title {
-      font-size: var(--secondary-title-size);
+    .presentation-personal-information {
+      margin: 0 6% 0 0;
+      .presentation-title {
+        font-size: var(--secondary-title-size);
+      }
     }
     .presentation-button {
       background: var(--main-color-opacity);
       background-size: cover;
       border: none;
       border-radius: var(--main-border-radius);
-      height: clamp(13rem, 20vw, 17rem);
-      position: relative;
-      width: 10%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 5%;
       margin: 0;
       color: rgba(137, 96, 142, 0);
       cursor: pointer;
@@ -73,27 +79,29 @@
     .presentation {
       flex-direction: column;
       position: relative;
-      height: 30rem;
+      min-height: 30rem;
       img {
         margin: 1rem 0 0 0;
       }
       .presentation-personal-information {
-        margin: 1rem;
+        margin: 0 1rem 3rem 1rem;
       }
       .presentation-button {
-        height: 4rem;
+        height: 2rem;
         width: 100%;
         border-radius: var(--main-border-radius);
         box-shadow: -1px -3px 5px 0px rgba(0, 0, 0, 0.68);
         transition: all 0.3s ease;
+        top: auto;
+        bottom: 0;
         color: var(--background-color-opacity);
         &:hover,
         &:active {
           width: 100%;
           background-color: var(--main-color);
           border-radius: var(--main-border-radius);
-          position: absolute;
           height: 6rem;
+          position: absolute;
           right: 0;
           left: 0;
           bottom: 0;
