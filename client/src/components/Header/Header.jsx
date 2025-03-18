@@ -25,6 +25,9 @@ function Header({ css, css2 }) {
           <Link className="navigation" to="messages">
             Messagerie
           </Link>
+          <Link className="navigation" to="administration">
+            Administration
+          </Link>
           <Link className="navigation" to="/">
             Accueil
           </Link>

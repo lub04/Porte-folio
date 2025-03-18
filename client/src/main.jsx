@@ -8,6 +8,7 @@ import ProjectDetail from "./pages/ProjectDetail/ProjectDetail";
 import Home from "./pages/Home/Home";
 import Connexion from "./pages/Connexion/Connexion";
 import Messagerie from "./pages/Messagerie/Messagerie";
+import Admin from "./pages/Admin/Admin";
 import ConnectedLayout from "./layout/ConnectedLayout";
 
 import connexion from "./services/connexion";
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
             throw new Error(error);
           }
         },
+      },
+      {
+        path: "administration",
+        element: <Admin />,
       },
     ],
   },

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
 import { usePortefolio } from "../../context/PortefolioContext";
+import ButtonDelete from "../ButtonDelete/ButtonDelete";
 
 function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
   const { render, setRender } = usePortefolio();
@@ -126,14 +127,12 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
           <div key={category} className="skill-by-category">
             <h3>{category} :</h3>
             {skills.map((skill) => (
-              <button
-                className="skill-button"
+              <ButtonDelete
                 key={skill.skill_id}
-                type="button"
-                onClick={() => handleDeleteSkill(skill.skill_id)}
-              >
-                {skill.skill_name} x
-              </button>
+                id={skill.skill_id}
+                handleDelete={handleDeleteSkill}
+                name={skill.skill_name}
+              />
             ))}
           </div>
         ))}

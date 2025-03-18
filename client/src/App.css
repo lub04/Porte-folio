@@ -338,22 +338,6 @@ form {
   }
 }
 
-.skill-button {
-  cursor: pointer;
-  padding: 0.3rem 0.5rem;
-  background-color: var(--background-color-home);
-  border-radius: 100px;
-  border: var(--main-border);
-  box-shadow: 2px 2px 10px -5px black;
-  &:hover,
-  &:active {
-    transform: scale(0.95);
-    background-color: var(--main-color-opacity);
-    border: var(--secondary-border);
-    color: var(--background-color-opacity);
-  }
-}
-
 .Toastify__toast-theme--light {
   background: url(./assets/images/scott-webb-OxHPDs4WV8Y-unsplash.jpg) !important;
   background-size: cover !important;
