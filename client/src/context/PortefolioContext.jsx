@@ -34,8 +34,21 @@ export function PortefolioProvider({ children }) {
   const [render, setRender] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
   const [fileName, setFileName] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [status, setStatus] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
+  const [allStatus, setAllStatus] = useState([]);
+  const [modalType, setModalType] = useState(null);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = useCallback((title, content) => {
+    setModalTitle(title);
+    setModalType(content);
+    setModalIsOpen(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalIsOpen(false);
+  }, []);
 
   const fetchProject = useCallback(async () => {
     const response = await connexion.get("/api/projects");
@@ -45,7 +58,7 @@ export function PortefolioProvider({ children }) {
   const fetchCategories = useCallback(async () => {
     try {
       const response = await connexion.get("/api/category");
-      setCategories(response.data);
+      setAllCategories(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +67,7 @@ export function PortefolioProvider({ children }) {
   const fetchStatus = useCallback(async () => {
     try {
       const response = await connexion.get("/api/status");
-      setStatus(response.data);
+      setAllStatus(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -138,8 +151,13 @@ export function PortefolioProvider({ children }) {
       setFileName,
       fetchCategories,
       fetchStatus,
-      status,
-      categories,
+      allStatus,
+      allCategories,
+      modalIsOpen,
+      modalTitle,
+      modalType,
+      openModal,
+      closeModal,
     }),
     [
       logUser,
@@ -157,8 +175,13 @@ export function PortefolioProvider({ children }) {
       setFileName,
       fetchCategories,
       fetchStatus,
-      status,
-      categories,
+      allStatus,
+      allCategories,
+      modalIsOpen,
+      modalTitle,
+      modalType,
+      openModal,
+      closeModal,
     ]
   );
 

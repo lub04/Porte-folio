@@ -12,8 +12,8 @@ class QuoteRepository extends AbstractRepository {
   async create(quote) {
     // Execute the SQL INSERT query to add a new quote to the "quote" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, user_id) values (?, ?)`,
-      [quote.title, quote.user_id]
+      `insert into ${this.table} (quote, author) values (?, ?)`,
+      [quote.quote, quote.author]
     );
 
     // Return the ID of the newly inserted quote
@@ -33,11 +33,19 @@ class QuoteRepository extends AbstractRepository {
     return rows[0];
   }
 
-  async readAll() {
+  async readAllRandLimit() {
     // Execute the SQL SELECT query to retrieve all quotes from the "quote" table
     const [rows] = await this.database.query(
       `select * from ${this.table} order by rand() limit 1`
     );
+
+    // Return the array of quotes
+    return rows;
+  }
+
+  async readAll() {
+    // Execute the SQL SELECT query to retrieve all quotes from the "quote" table
+    const [rows] = await this.database.query(`select * from ${this.table}`);
 
     // Return the array of quotes
     return rows;

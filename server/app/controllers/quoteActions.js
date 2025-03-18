@@ -5,10 +5,16 @@ const tables = require("../../database/tables");
 const browse = async (req, res, next) => {
   try {
     // Fetch all quotes from the database
-    const quotes = await tables.quote.readAll();
+    if (req.query.purpose === "random") {
+      const quotes = await tables.quote.readAllRandLimit();
+      res.json(quotes[0]);
+    }
+    if (req.query.purpose === "all") {
+      const quotes = await tables.quote.readAll();
+      res.json(quotes);
+    }
 
     // Respond with the quotes in JSON format
-    res.json(quotes[0]);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);

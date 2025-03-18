@@ -12,8 +12,8 @@ class StatusRepository extends AbstractRepository {
   async create(status) {
     // Execute the SQL INSERT query to add a new status to the "status" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, user_id) values (?, ?)`,
-      [status.title, status.user_id]
+      `insert into ${this.table} (status) values (?)`,
+      [status.status]
     );
 
     // Return the ID of the newly inserted status

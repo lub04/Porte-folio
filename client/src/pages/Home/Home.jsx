@@ -28,16 +28,22 @@ function Home() {
   const home = useLoaderData();
   const inputRefAvatar = useRef();
 
-  const { logUser, projectsList, fetchProject } = usePortefolio();
+  const {
+    logUser,
+    projectsList,
+    fetchProject,
+    modalTitle,
+    modalType,
+    openModal,
+    closeModal,
+    modalIsOpen,
+  } = usePortefolio();
   const navigate = useNavigate();
 
   const [colorLinkedin, setColorLinkedin] = useState(linkedin);
   const [colorGithub, setColorGithub] = useState(github);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [cvModalIsOpen, setCvModalIsOpen] = useState(false);
-  const [modalType, setModalType] = useState(null);
   const [user, setUser] = useState(null);
-  const [modalTitle, setModalTitle] = useState("");
   const [welcome, setWelcome] = useState(home.welcome);
   const [presentation, setPresentation] = useState(home.presentation);
 
@@ -45,14 +51,12 @@ function Home() {
     const response = await connexion.get("/api/user/1");
     setUser(response.data);
   };
+
   useEffect(() => {
     fetchProject();
     fetchUser();
   }, [fetchProject]);
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
   const closeCvModal = () => {
     setCvModalIsOpen(false);
   };
@@ -66,6 +70,7 @@ function Home() {
       setPresentation(value);
     }
   };
+
   const handleSubmitModifyHomePageText = async (event) => {
     event.preventDefault();
     try {
@@ -93,14 +98,11 @@ function Home() {
       console.error(error);
     }
   };
-  const openModal = (title, content) => {
-    setModalTitle(title);
-    setModalType(content);
-    setModalIsOpen(true);
-  };
+
   const openCvModal = () => {
     setCvModalIsOpen(true);
   };
+
   return (
     <>
       <h2 className="title-home">Entrez dans mon univers ...</h2>
@@ -212,6 +214,7 @@ function Home() {
           <TextAreaForm
             handleSubmit={handleSubmitModifyHomePageText}
             handleModify={handleModifyHomePageText}
+            label="Texte de bienvenue :"
             name="welcome"
             value={welcome}
           />
@@ -220,6 +223,7 @@ function Home() {
           <TextAreaForm
             handleSubmit={handleSubmitModifyHomePageText}
             handleModify={handleModifyHomePageText}
+            label="Texte de présentation :"
             name="presentation"
             value={presentation}
           />

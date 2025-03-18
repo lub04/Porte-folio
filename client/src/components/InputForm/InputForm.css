@@ -1,0 +1,13 @@
+.input-form {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--main-border-radius);
+  border: var(--main-border);
+  padding: 2rem;
+  label {
+    width: 70%;
+  }
+}

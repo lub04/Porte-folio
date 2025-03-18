@@ -9,8 +9,8 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
     setNewProject,
     fetchCategories,
     fetchStatus,
-    categories,
-    status,
+    allCategories,
+    allStatus,
   } = usePortefolio();
   const [isDeployed, setIsDeployed] = useState(false);
 
@@ -79,7 +79,7 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
           name="project_category_id"
         >
           <option value="0">-- Choisissez une categorie --</option>
-          {categories.map((category) => (
+          {allCategories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.category}
             </option>
@@ -125,7 +125,7 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
           onChange={handleCreateProject}
         >
           <option value="">--- Choisissez un statut ---</option>
-          {status.map((state) => (
+          {allStatus.map((state) => (
             <option key={state.id} value={state.id}>
               {state.status}
             </option>

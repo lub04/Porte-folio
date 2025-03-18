@@ -1,12 +1,13 @@
-import "./TextAreaForm.css";
+import "./InputForm.css";
 
-function TextAreaForm({ handleSubmit, handleModify, name, value, label }) {
+function InputForm({ handleSubmit, handleModify, name, value, label }) {
   return (
-    <form onSubmit={handleSubmit} className="text-area-form">
+    <form onSubmit={handleSubmit} className="input-form">
       <label>
         {label}
-        <textarea
-          className="modal-textarea"
+        <input
+          type="text"
+          className="large-text-input"
           value={value}
           name={name}
           onChange={handleModify}
@@ -20,4 +21,4 @@ function TextAreaForm({ handleSubmit, handleModify, name, value, label }) {
   );
 }
 
-export default TextAreaForm;
+export default InputForm;

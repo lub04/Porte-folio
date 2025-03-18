@@ -12,8 +12,8 @@ class CategoryRepository extends AbstractRepository {
   async create(category) {
     // Execute the SQL INSERT query to add a new category to the "category" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, user_id) values (?, ?)`,
-      [category.title, category.user_id]
+      `insert into ${this.table} (category) values (?)`,
+      [category.category]
     );
 
     // Return the ID of the newly inserted category

@@ -8,7 +8,7 @@ function Footer() {
 
   const fetchQuote = async () => {
     try {
-      const response = await connexion.get("/api/quote");
+      const response = await connexion.get("/api/quote?purpose=random");
       setQuote(response.data);
     } catch (error) {
       console.error(error);

@@ -41,10 +41,9 @@ const read = async (req, res, next) => {
 const add = async (req, res, next) => {
   // Extract the statu data from the request body
   const status = req.body;
-
   try {
     // Insert the statu into the database
-    const insertId = await tables.statu.create(status);
+    const insertId = await tables.status.create(status);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted statu
     res.status(201).json({ insertId });
