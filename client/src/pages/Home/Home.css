@@ -23,7 +23,7 @@
     position: relative;
     img {
       display: block;
-      width: 12rem;
+      width: clamp(10rem 15vw 12rem);
       height: 12rem;
       border-radius: var(--round-border-radius);
       border: var(--main-border);
@@ -55,11 +55,11 @@
       cursor: pointer;
       box-shadow: -7px 0px 7px -2px rgba(0, 0, 0, 0.68);
       text-decoration: underline;
-      transition: all 1s ease;
+      transition: all 0.7s ease;
       font-size: var(--paragraph-size);
       &:hover,
       &:active {
-        width: 30%;
+        width: 15%;
         position: absolute;
         background-color: var(--main-color);
         right: 0;
@@ -68,12 +68,82 @@
         box-shadow: -7px 0px 7px -2px rgba(0, 0, 0, 0.68);
       }
     }
+    .home-avatar-admin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 50%;
+    }
   }
   .title-home {
     margin: 20rem auto 2rem auto;
   }
 }
 
+.about {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  .about-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-basis: 200;
+    gap: 2rem;
+    width: 20%;
+    .about-info-avatar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      .avatar-picture {
+        display: block;
+        width: 80%;
+        border-radius: var(--round-border-radius);
+        border: var(--main-border);
+        box-shadow: 8px -2px 37px -17px #000000;
+        float: left;
+        shape-outside: circle(50%);
+        margin: 0 1rem;
+        outline: 2px solid var(--background-color);
+      }
+    }
+    .about-info-contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      gap: 1rem;
+      button {
+        width: 100%;
+      }
+      .social-network {
+        display: flex;
+        gap: 2rem;
+        a {
+          transition: transform 0.5s ease;
+          img {
+            width: 2rem;
+          }
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+  }
+  .about-description {
+    flex-grow: 2;
+    flex-basis: 400;
+    width: 75%;
+  }
+}
+
+/* Smartphone */
 @media (max-width: 576px) {
   .home-welcome {
     .presentation {
@@ -110,11 +180,38 @@
       }
     }
   }
+  .about {
+    .about-info {
+      flex-direction: column;
+      .about-info-avatar {
+        img {
+          width: 50%;
+        }
+      }
+    }
+  }
 }
-.home-avatar-admin {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  width: 50%;
+
+/* Tablette */
+@media (min-width: 577px) and (max-width: 914px) {
+  .about {
+    .about-info {
+      flex-wrap: wrap;
+      flex-direction: row;
+      .about-info-avatar {
+        flex-grow: 2;
+        width: 40%;
+        img {
+          width: 55%;
+        }
+      }
+      .about-info-contact {
+        flex-grow: 2;
+        width: 40%;
+      }
+    }
+    .about-description {
+      width: 100%;
+    }
+  }
 }

@@ -31,6 +31,7 @@ function About() {
             <img
               src={`${import.meta.env.VITE_API_URL}/${user.avatar}`}
               alt="avatar de Lubin"
+              className="avatar-picture"
             />
             <p>
               {user.first_name} {user.last_name}
@@ -42,7 +43,7 @@ function About() {
             <div className="social-network">
               <a target="blank" href={user.github}>
                 <img
-                  onMouseOver={() => setColorGithub(githubHover)} // Change la couleur à l'état hover
+                  onMouseOver={() => setColorGithub(githubHover)}
                   onFocus={() => setColorGithub(githubHover)}
                   onMouseOut={() => setColorGithub(github)}
                   onBlur={() => setColorGithub(github)}

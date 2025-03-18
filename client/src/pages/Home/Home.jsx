@@ -19,6 +19,10 @@ import errorToast from "../../components/Toast/errorToast";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import TextAreaForm from "../../components/TextAreaForm/TextAreaForm";
 import ImageForm from "../../components/ImageForm/ImageForm";
+import github from "../../assets/images/icons/github.svg";
+import githubHover from "../../assets/images/icons/github(2).svg";
+import linkedin from "../../assets/images/icons/linkedin(1).svg";
+import linkedinHover from "../../assets/images/icons/linkedin(2).svg";
 
 function Home() {
   const home = useLoaderData();
@@ -27,18 +31,30 @@ function Home() {
   const { logUser, projectsList, fetchProject } = usePortefolio();
   const navigate = useNavigate();
 
+  const [colorLinkedin, setColorLinkedin] = useState(linkedin);
+  const [colorGithub, setColorGithub] = useState(github);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [cvModalIsOpen, setCvModalIsOpen] = useState(false);
   const [modalType, setModalType] = useState(null);
+  const [user, setUser] = useState(null);
   const [modalTitle, setModalTitle] = useState("");
   const [welcome, setWelcome] = useState(home.welcome);
   const [presentation, setPresentation] = useState(home.presentation);
 
+  const fetchUser = async () => {
+    const response = await connexion.get("/api/user/1");
+    setUser(response.data);
+  };
   useEffect(() => {
     fetchProject();
+    fetchUser();
   }, [fetchProject]);
 
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+  const closeCvModal = () => {
+    setCvModalIsOpen(false);
   };
 
   const handleModifyHomePageText = (event) => {
@@ -82,7 +98,9 @@ function Home() {
     setModalType(content);
     setModalIsOpen(true);
   };
-
+  const openCvModal = () => {
+    setCvModalIsOpen(true);
+  };
   return (
     <>
       <h2 className="title-home">Entrez dans mon univers ...</h2>
@@ -144,7 +162,11 @@ function Home() {
               </button>
             )}
           </div>
-          <button type="button" className="presentation-button">
+          <button
+            type="button"
+            className="presentation-button"
+            onClick={() => openModal("", "learn-more")}
+          >
             En savoir plus !
           </button>
         </article>
@@ -212,6 +234,55 @@ function Home() {
             avatar={home.img}
           />
         )}
+        {modalType === "learn-more" && (
+          <div className="about">
+            <section className="about-info">
+              <article className="box about-info-avatar">
+                <img
+                  src={`${import.meta.env.VITE_API_URL}/${home.img}`}
+                  alt="avatar de Lubin"
+                  className="avatar-picture"
+                />
+                <p>
+                  {user.first_name} {user.last_name}
+                </p>
+              </article>
+              <article className="box about-info-contact">
+                <p>{user.phone}</p>
+                <p>{user.email}</p>
+                <div className="social-network">
+                  <a target="blank" href={user.github}>
+                    <img
+                      onMouseOver={() => setColorGithub(githubHover)} // Change la couleur à l'état hover
+                      onFocus={() => setColorGithub(githubHover)}
+                      onMouseOut={() => setColorGithub(github)}
+                      onBlur={() => setColorGithub(github)}
+                      src={colorGithub}
+                      alt="github"
+                    />
+                  </a>
+                  <a target="blank" href={user.linkedin}>
+                    <img
+                      onMouseOver={() => setColorLinkedin(linkedinHover)}
+                      onFocus={() => setColorLinkedin(linkedinHover)}
+                      onMouseOut={() => setColorLinkedin(linkedin)}
+                      onBlur={() => setColorLinkedin(linkedin)}
+                      src={colorLinkedin}
+                      alt="linkedin"
+                    />
+                  </a>
+                </div>
+                <button className="button" type="button" onClick={openCvModal}>
+                  Mon CV !
+                </button>
+              </article>
+            </section>
+            <section className="box about-description">
+              <h3>Découvrez mon parcours !</h3>
+              <p style={{ whiteSpace: "pre-line" }}>{user.description}</p>
+            </section>
+          </div>
+        )}
         <button
           type="button"
           className="button-close-modal"
@@ -220,6 +291,32 @@ function Home() {
           X
         </button>
       </Modal>
+      {cvModalIsOpen && user && (
+        <Modal
+          isOpen={cvModalIsOpen}
+          onRequestClose={closeCvModal}
+          contentLabel="CV Modal"
+          className="modal-small"
+          appElement={document.getElementById("root")}
+        >
+          <iframe
+            src={`${import.meta.env.VITE_API_URL}/${user.resume}`}
+            width="100%"
+            height="500px"
+            style={{ border: "none" }}
+            title="PDF Viewer"
+          >
+            Votre navigateur ne peut pas lire le PDF, changez de navigateur !
+          </iframe>
+          <button
+            type="button"
+            className="button-close-modal"
+            onClick={closeCvModal}
+          >
+            X
+          </button>
+        </Modal>
+      )}
       <ToastContainer />
     </>
   );
