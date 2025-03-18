@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 
 import { usePortefolio } from "../../context/PortefolioContext";
-import connexion from "../../services/connexion";
 import "./FormProject.css";
 
 function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
-  const { newProject, setNewProject } = usePortefolio();
+  const {
+    newProject,
+    setNewProject,
+    fetchCategories,
+    fetchStatus,
+    categories,
+    status,
+  } = usePortefolio();
   const [isDeployed, setIsDeployed] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [status, setStatus] = useState([]);
 
   const checkProjectDeployed = () => {
     setIsDeployed(!isDeployed);
@@ -21,25 +25,9 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
   };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await connexion.get("/api/category");
-        setCategories(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    const fetchStatus = async () => {
-      try {
-        const response = await connexion.get("/api/status");
-        setStatus(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchStatus();
     fetchCategories();
-  }, []);
+  }, [fetchCategories, fetchStatus]);
 
   const handleCreateProject = (event) => {
     const { name, value } = event.target;

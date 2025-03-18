@@ -34,10 +34,30 @@ export function PortefolioProvider({ children }) {
   const [render, setRender] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
   const [fileName, setFileName] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [status, setStatus] = useState([]);
 
   const fetchProject = useCallback(async () => {
     const response = await connexion.get("/api/projects");
     setProjectsList(response.data);
+  }, []);
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await connexion.get("/api/category");
+      setCategories(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const fetchStatus = useCallback(async () => {
+    try {
+      const response = await connexion.get("/api/status");
+      setStatus(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   const handleModifyProject = useCallback(
@@ -116,6 +136,10 @@ export function PortefolioProvider({ children }) {
       projectsList,
       fileName,
       setFileName,
+      fetchCategories,
+      fetchStatus,
+      status,
+      categories,
     }),
     [
       logUser,
@@ -131,6 +155,10 @@ export function PortefolioProvider({ children }) {
       projectsList,
       fileName,
       setFileName,
+      fetchCategories,
+      fetchStatus,
+      status,
+      categories,
     ]
   );
 
