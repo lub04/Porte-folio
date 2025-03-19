@@ -13,18 +13,19 @@ const {
   add,
   destroy,
 } = require("../../../controllers/skillActions");
+const { checkUser } = require("../../../services/verification/cookies");
 
 // Route to get a list of skills
-router.get("/", browse);
+router.get("/", checkUser, browse);
 
 // Route to get a specific skill by ID
 router.get("/:id", read);
 
 // Route to add a new skill
-router.post("/", add);
+router.post("/", checkUser, add);
 
 // Route to delete a skill
-router.delete("/:id", destroy);
+router.delete("/:id", checkUser, destroy);
 /* ************************************************************************* */
 
 module.exports = router;

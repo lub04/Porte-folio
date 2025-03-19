@@ -13,18 +13,19 @@ const {
   add,
   destroy,
 } = require("../../../controllers/skillCategoryActions");
+const { checkUser } = require("../../../services/verification/cookies");
 
 // Route to get a list of skillCategories
-router.get("/", browse);
+router.get("/", checkUser, browse);
 
 // Route to get a specific skillCategory by ID
 router.get("/:id", read);
 
 // Route to add a new skillCategory
-router.post("/", add);
+router.post("/", checkUser, add);
 
 // Route to delete a skillCategory
-router.delete("/:id", destroy);
+router.delete("/:id", checkUser, destroy);
 
 /* ************************************************************************* */
 

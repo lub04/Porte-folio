@@ -13,6 +13,7 @@ const {
   add,
   destroy,
 } = require("../../../controllers/quoteActions");
+const { checkUser } = require("../../../services/verification/cookies");
 
 // Route to get a list of quotes
 router.get("/", browse);
@@ -21,10 +22,10 @@ router.get("/", browse);
 router.get("/:id", read);
 
 // Route to add a new quote
-router.post("/", add);
+router.post("/", checkUser, add);
 
 // Route to delete a quote
-router.delete("/:id", destroy);
+router.delete("/:id", checkUser, destroy);
 /* ************************************************************************* */
 
 module.exports = router;
