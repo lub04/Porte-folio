@@ -146,7 +146,7 @@ function Home() {
           )}
           <div className="presentation-personal-information">
             <h3 className="presentation-title">
-              Lubin chauvreau - Développeur web fullstack
+              Lubin Chauvreau - Développeur web fullstack
             </h3>
             <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
             {logUser && (
