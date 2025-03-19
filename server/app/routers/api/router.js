@@ -28,15 +28,15 @@ const messagesRouter = require("./messages/router");
 
 router.use("/messages", messagesRouter);
 
-const userRouter = require("./user/rooter");
+const userRouter = require("./user/router");
 
 router.use("/user", userRouter);
 
-const categoryRouter = require("./category/rooter");
+const categoryRouter = require("./category/router");
 
 router.use("/category", categoryRouter);
 
-const imageRouter = require("./image/rooter");
+const imageRouter = require("./image/router");
 
 router.use("/image", imageRouter);
 
@@ -51,6 +51,10 @@ router.use("/skill", skillRouter);
 const statusRouter = require("./status/router");
 
 router.use("/status", statusRouter);
+
+const skillCategoryRouter = require("./skillCategory/router");
+
+router.use("/skillCategory", skillCategoryRouter);
 /* ************************************************************************* */
 
 module.exports = router;

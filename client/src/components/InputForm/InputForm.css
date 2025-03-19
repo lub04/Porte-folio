@@ -8,6 +8,6 @@
   border: var(--main-border);
   padding: 2rem;
   label {
-    width: 70%;
+    width: 100%;
   }
 }

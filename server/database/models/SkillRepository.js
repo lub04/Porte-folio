@@ -12,8 +12,8 @@ class SkillRepository extends AbstractRepository {
   async create(skill) {
     // Execute the SQL INSERT query to add a new skill to the "skill" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, user_id) values (?, ?)`,
-      [skill.title, skill.user_id]
+      `insert into ${this.table} (name, category_id, user_id) values (?, ?, 1)`,
+      [skill.name, skill.category_id]
     );
 
     // Return the ID of the newly inserted skill

@@ -10,6 +10,7 @@ const PictureRepository = require("./models/PictureRepository");
 const ProjectSkillRepository = require("./models/ProjectSkillRepository");
 const SkillRepository = require("./models/SkillRepository");
 const StatusRepository = require("./models/StatusRepository");
+const SkillCategoryRepository = require("./models/SkillCategoryRepository");
 
 // Create an empty object to hold data repositories for different tables
 const tables = {};
@@ -30,6 +31,7 @@ tables.picture = new PictureRepository();
 tables.project_skill = new ProjectSkillRepository();
 tables.skill = new SkillRepository();
 tables.status = new StatusRepository();
+tables.skill_category = new SkillCategoryRepository();
 
 /* ************************************************************************* */
 

@@ -1,3 +1,7 @@
+.admin-selector {
+  display: flex;
+  flex-grow: 1;
+}
 .admin-box {
   margin-top: 2rem;
   .admin-section {
