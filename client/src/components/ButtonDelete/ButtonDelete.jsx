@@ -8,6 +8,7 @@ function ButtonDelete({ id, handleDelete, name }) {
   return (
     <>
       <button
+        title="Supprimer"
         className="delete-button"
         type="button"
         onClick={() => setValidationDeleteIsOpen(true)}
@@ -22,7 +23,7 @@ function ButtonDelete({ id, handleDelete, name }) {
         reinitializeState={null}
         closeModal={null}
         text1={`Êtes vous sure de vouloir supprimer "${name}" de la liste`}
-        text2="Toute suppression e la base de donées est définitive !"
+        text2="Toute suppression de la base de donées est définitive !"
       />
     </>
   );

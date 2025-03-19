@@ -36,7 +36,6 @@ function ValidationModal({
       appElement={document.getElementById("root")}
     >
       <p>{text1}</p>
-      <p>{text2}</p>
       <article>
         <button type="button" className="button" onClick={handleValidate}>
           Oui
@@ -45,6 +44,7 @@ function ValidationModal({
           Non
         </button>
       </article>
+      <p>{text2}</p>
     </Modal>
   );
 }
