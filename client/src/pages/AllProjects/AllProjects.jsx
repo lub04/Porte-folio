@@ -29,6 +29,7 @@ function AllProjects() {
     fetchProject,
     projectsList,
     setFileName,
+    handleDeleteProject,
   } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
@@ -421,6 +422,7 @@ function AllProjects() {
         render={render}
         text1="Êtes-vous sûre de vouloir quitter ?"
         text2="Attention, les données ne seront pas sauvegardées !"
+        handleDelete={handleDeleteProject}
       />
       <ToastContainer />
     </>

@@ -7,7 +7,7 @@ import { usePortefolio } from "../../context/PortefolioContext";
 import "./ProjectCard.css";
 
 function ProjectCard({ project, css, projectListLength, carousel }) {
-  const { logUser } = usePortefolio();
+  const { logUser, handleDeleteProject } = usePortefolio();
   const [validationDeleteModal, setValidationDeleteModal] = useState(false);
   return (
     <div
@@ -39,6 +39,7 @@ function ProjectCard({ project, css, projectListLength, carousel }) {
         closeModal={null}
         text1="Êtes-vous sûre de vouloir supprimer ce projet ?"
         text2="Toute suppression de la base de donnée est définitive !"
+        handleDelete={handleDeleteProject}
       />
     </div>
   );

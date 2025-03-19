@@ -10,8 +10,9 @@ function ValidationModal({
   closeModal,
   text1,
   text2,
+  handleDelete,
 }) {
-  const { handleDeleteProject, setRender, render } = usePortefolio();
+  const { setRender, render } = usePortefolio();
   const closeValidationModal = () => {
     setValidationModalIsOpen(false);
   };
@@ -19,7 +20,7 @@ function ValidationModal({
     if (reinitializeState) {
       reinitializeState();
     }
-    await handleDeleteProject(id);
+    await handleDelete(id);
     closeValidationModal();
     if (closeModal) {
       closeModal();
