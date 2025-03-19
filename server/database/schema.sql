@@ -22,7 +22,7 @@ CREATE TABLE skill (
   name VARCHAR(255) UNIQUE,
   category_id INT,
   user_id INT,
-  FOREIGN KEY (category_id) REFERENCES skill_category(id),
+  FOREIGN KEY (category_id) REFERENCES skill_category(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
@@ -49,8 +49,8 @@ CREATE TABLE project (
   description LONGTEXT,
   project_category_id INT,
   status_id INT,
-  FOREIGN KEY (project_category_id) REFERENCES project_category(id),
-  FOREIGN KEY (status_id) REFERENCES status(id)
+  FOREIGN KEY (project_category_id) REFERENCES project_category(id) ON DELETE SET NULL,
+  FOREIGN KEY (status_id) REFERENCES status(id) ON DELETE SET NULL
 );
 
 CREATE TABLE picture (
@@ -63,7 +63,7 @@ CREATE TABLE picture (
 CREATE TABLE project_skill (
   skill_id INT,
   project_id INT,
-  FOREIGN KEY (skill_id) REFERENCES skill(id),
+  FOREIGN KEY (skill_id) REFERENCES skill(id) ON DELETE CASCADE,
   FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE,
   PRIMARY KEY (skill_id, project_id)
 );
@@ -87,7 +87,7 @@ CREATE TABLE comment (
   user_first_name VARCHAR(255),
   comment LONGTEXT,
   project_id INT,
-  FOREIGN KEY (project_id) REFERENCES project(id)
+  FOREIGN KEY (project_id) REFERENCES project(id) ON DELETE CASCADE
 );
 
 CREATE TABLE homepage (

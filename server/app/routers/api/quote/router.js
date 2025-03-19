@@ -7,7 +7,12 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import quote-related actions
-const { browse, read, add } = require("../../../controllers/quoteActions");
+const {
+  browse,
+  read,
+  add,
+  destroy,
+} = require("../../../controllers/quoteActions");
 
 // Route to get a list of quotes
 router.get("/", browse);
@@ -18,6 +23,8 @@ router.get("/:id", read);
 // Route to add a new quote
 router.post("/", add);
 
+// Route to delete a quote
+router.delete("/:id", destroy);
 /* ************************************************************************* */
 
 module.exports = router;

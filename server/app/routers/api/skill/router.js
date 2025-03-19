@@ -7,7 +7,12 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import skill-related actions
-const { browse, read, add } = require("../../../controllers/skillActions");
+const {
+  browse,
+  read,
+  add,
+  destroy,
+} = require("../../../controllers/skillActions");
 
 // Route to get a list of skills
 router.get("/", browse);
@@ -18,6 +23,8 @@ router.get("/:id", read);
 // Route to add a new skill
 router.post("/", add);
 
+// Route to delete a skill
+router.delete("/:id", destroy);
 /* ************************************************************************* */
 
 module.exports = router;

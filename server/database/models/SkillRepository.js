@@ -50,10 +50,16 @@ class SkillRepository extends AbstractRepository {
 
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an skill by its ID
+  async delete(skill) {
+    // Execute the SQL DELETE query to delete a specific user
+    const [result] = await this.database.query(
+      `delete from ${this.table} where id = ?`,
+      [skill.id]
+    );
 
-  // async delete(id) {
-  //   ...
-  // }
+    // Return how many rows were affected
+    return result.affectedRows;
+  }
 }
 
 module.exports = SkillRepository;

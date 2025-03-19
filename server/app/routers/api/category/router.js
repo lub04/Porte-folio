@@ -7,7 +7,12 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import category-related actions
-const { browse, read, add } = require("../../../controllers/categoryActions");
+const {
+  browse,
+  read,
+  add,
+  destroy,
+} = require("../../../controllers/categoryActions");
 const { checkUser } = require("../../../services/verification/cookies");
 
 // Route to get a list of categorys
@@ -19,6 +24,8 @@ router.get("/:id", checkUser, read);
 // Route to add a new category
 router.post("/", checkUser, add);
 
+// Route to delete a category
+router.delete("/:id", destroy);
 /* ************************************************************************* */
 
 module.exports = router;
