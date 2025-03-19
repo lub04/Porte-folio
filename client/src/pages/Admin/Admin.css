@@ -4,10 +4,4 @@
 }
 .admin-box {
   margin-top: 2rem;
-  .admin-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 1rem 0;
-  }
 }

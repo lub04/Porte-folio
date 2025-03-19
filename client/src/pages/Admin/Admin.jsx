@@ -120,6 +120,30 @@ function Admin() {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      if (selected === "Statuts de projet") {
+        await connexion.delete(`/api/status/${id}`);
+      }
+      if (selected === "Catégories de projets") {
+        await connexion.delete(`/api/category/${id}`);
+      }
+      if (selected === "Catégories de compétences") {
+        await connexion.delete(`/api/skillCategory/${id}`);
+      }
+      if (selected === "Compétences utilisateur") {
+        await connexion.delete(`/api/skill/${id}`);
+      }
+      if (selected === "Citations de développeurs") {
+        await connexion.delete(`/api/quote/${id}`);
+      }
+      successToast(`${selected} supprimée avec succès !`);
+      setRender(!render);
+    } catch (error) {
+      console.error();
+    }
+  };
+
   const fetchSkills = async () => {
     try {
       const response = await connexion.get("/api/skill");
@@ -155,14 +179,6 @@ function Admin() {
     fetchSkillsCategories();
   }, [fetchCategories, fetchStatus, render]);
 
-  const handleDeleteStatus = async (id) => {
-    try {
-      console.error("hello world", id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
       <h2>Administration</h2>;
@@ -181,7 +197,7 @@ function Admin() {
       <AdminSection
         array={allStatus}
         nameKey="status"
-        handleDelete={handleDeleteStatus}
+        handleDelete={handleDelete}
         title="Statuts de projet"
         buttonTitle="Ajouter un statut :"
         selected={selected}
@@ -190,7 +206,7 @@ function Admin() {
       <AdminSection
         array={allCategories}
         nameKey="category"
-        handleDelete={handleDeleteStatus}
+        handleDelete={handleDelete}
         buttonTitle="Ajouter une categorie :"
         title="Catégories de projets"
         selected={selected}
@@ -199,7 +215,7 @@ function Admin() {
       <AdminSection
         array={allSkills}
         nameKey="name"
-        handleDelete={handleDeleteStatus}
+        handleDelete={handleDelete}
         buttonTitle="Ajouter une compétence :"
         title="Compétences utilisateur"
         selected={selected}
@@ -208,7 +224,7 @@ function Admin() {
       <AdminSection
         array={allSkillsCategories}
         nameKey="category"
-        handleDelete={handleDeleteStatus}
+        handleDelete={handleDelete}
         buttonTitle="Ajouter une catégorie :"
         title="Catégories de compétences"
         selected={selected}
@@ -217,7 +233,7 @@ function Admin() {
       <AdminSection
         array={allQuotes}
         nameKey="quote"
-        handleDelete={handleDeleteStatus}
+        handleDelete={handleDelete}
         buttonTitle="Ajouter une citation :"
         title="Citations de développeurs"
         selected={selected}

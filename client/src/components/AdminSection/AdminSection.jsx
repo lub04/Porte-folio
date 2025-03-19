@@ -17,7 +17,7 @@ function AdminSection({
   if (selected === title) {
     return (
       <section className="page-display box admin-box">
-        <h3>{title}</h3>
+        <h3 className="admin-title">{title}</h3>
         <article className="admin-section">
           {array.map((element) => (
             <ButtonDelete
@@ -34,7 +34,7 @@ function AdminSection({
         </article>
         <button
           type="button"
-          className="button"
+          className="button add-button"
           onClick={() => openModal(buttonTitle, section)}
         >
           Ajouter{" "}
