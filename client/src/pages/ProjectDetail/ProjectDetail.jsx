@@ -1,33 +1,93 @@
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
-import { useState } from "react";
 
 import ExpandableSection from "../../components/ExpandableSection/ExpandableSection";
+import DotsLoader from "../../components/DotsLoader/DotsLoader";
+import FormProject from "../../components/FormProject/FormProject";
 
 import github from "../../assets/images/icons/github.svg";
 import users from "../../assets/images/icons/users.svg";
 import user from "../../assets/images/icons/user.svg";
 import cpu from "../../assets/images/icons/cpu.svg";
 import link from "../../assets/images/icons/link.svg";
+import connexion from "../../services/connexion";
+import { usePortefolio } from "../../context/PortefolioContext";
 import "./ProjectDetail.css";
 
 function ProjectDetail() {
-  const project = useLoaderData();
+  const {
+    logUser,
+    modalType,
+    modalTitle,
+    openModal,
+    closeModal,
+    modalIsOpen,
+    handleModifyProject,
+    setNewProject,
+    initialProject,
+    render,
+    setRender,
+  } = usePortefolio();
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { id } = useParams();
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(null);
-  const openModal = (image) => {
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const response = await connexion.get(`/api/projects/${id}`);
+        setProject(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+    if (id) {
+      fetchProject();
+    }
+  }, [setProject, id, render]);
+
+  const openModalImage = (image) => {
     setActiveImage(image);
-    setModalIsOpen(true);
+    openModal("", "image");
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const closeModalImage = () => {
+    closeModal();
     setActiveImage(null);
   };
+  const closeAdminModal = () => {
+    setNewProject(initialProject);
+    closeModal();
+  };
+
+  const handleModifyProjectActive = async (e) => {
+    e.preventDefault();
+    await handleModifyProject(project.id);
+    closeModal();
+    setRender(!render);
+  };
+
+  if (loading) {
+    return <DotsLoader />;
+  }
   return (
     <>
       <h2>{project.name}</h2>
+      {logUser && (
+        <button
+          type="button"
+          className="button"
+          onClick={() => openModal("Modifiez le projet", "modify project")}
+        >
+          Modifier le projet
+        </button>
+      )}
       <section className="page-display">
         <section className="project-demo">
           <img
@@ -124,12 +184,16 @@ function ProjectDetail() {
                 className={modalIsOpen ? "no-hover" : "button-example-img"}
                 type="button"
                 onClick={() =>
-                  openModal(`${import.meta.env.VITE_API_URL}/${screenshot}`)
+                  openModalImage(
+                    `${import.meta.env.VITE_API_URL}/${screenshot}`
+                  )
                 }
                 tabIndex="0"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
-                    openModal(`${import.meta.env.VITE_API_URL}/${screenshot}`);
+                    openModalImage(
+                      `${import.meta.env.VITE_API_URL}/${screenshot}`
+                    );
                   }
                 }}
               >
@@ -145,7 +209,7 @@ function ProjectDetail() {
 
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={activeImage ? closeModalImage : closeAdminModal}
         contentLabel="Image Modal"
         className="Modal"
         appElement={document.getElementById("root")}
@@ -157,14 +221,26 @@ function ProjectDetail() {
             alt="exemple du site"
           />
         )}
+        {modalType === "modify project" && (
+          <>
+            <h3>{modalTitle}</h3>
+            <FormProject
+              project={project}
+              isCreated
+              detail
+              handleSubmitProject={handleModifyProjectActive}
+            />
+          </>
+        )}
         <button
           type="button"
           className="button-close-modal"
-          onClick={closeModal}
+          onClick={closeAdminModal}
         >
           X
         </button>
       </Modal>
+      <ToastContainer />
     </>
   );
 }

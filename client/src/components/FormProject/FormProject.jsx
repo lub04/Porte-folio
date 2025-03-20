@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { usePortefolio } from "../../context/PortefolioContext";
 import "./FormProject.css";
 
-function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
+function FormProject({
+  handleSubmitProject,
+  stepChecked,
+  step,
+  isCreated,
+  detail,
+  project,
+}) {
   const {
     newProject,
     setNewProject,
@@ -27,7 +34,28 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
   useEffect(() => {
     fetchStatus();
     fetchCategories();
-  }, [fetchCategories, fetchStatus]);
+    if (detail && project) {
+      setNewProject({
+        name: project.name,
+        github_link: project.github_link,
+        website_link: project.website_link,
+        team: project.team,
+        main_technologies: project.main_technologies,
+        organization: project.organization,
+        description: project.description,
+        project_category_id: project.project_category_id,
+        status_id: project.status_id,
+      });
+      setIsDeployed(!!project.website_link); // Mise à jour de `isDeployed`
+    }
+  }, [
+    detail,
+    fetchCategories,
+    fetchStatus,
+    newProject.website_link,
+    project,
+    setNewProject,
+  ]);
 
   const handleCreateProject = (event) => {
     const { name, value } = event.target;
@@ -46,7 +74,7 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
     }
   };
 
-  if (stepChecked !== step) return null;
+  if (step && stepChecked !== step) return null;
 
   return (
     <form onSubmit={handleSubmitProject}>
@@ -104,6 +132,7 @@ function FormProject({ handleSubmitProject, stepChecked, step, isCreated }) {
           type="checkbox"
           onChange={checkProjectDeployed}
           className="checkbox"
+          checked={isDeployed}
         />
         {isDeployed && (
           <label className="large-text-input">

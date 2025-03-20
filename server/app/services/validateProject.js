@@ -6,7 +6,7 @@ const validateProject = (req, res, next) => {
     github_link: Joi.string().required(),
     project_category_id: Joi.number().required(),
     team: Joi.string().allow("").optional(),
-    website_link: Joi.string().allow("").optional(),
+    website_link: Joi.string().allow(null, "").optional(),
     status_id: Joi.number().required(),
     main_technologies: Joi.string().max(255).required(),
     description: Joi.string().required(),
