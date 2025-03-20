@@ -30,7 +30,6 @@ function FormProject({
       }));
     }
   };
-
   useEffect(() => {
     fetchStatus();
     fetchCategories();
@@ -48,14 +47,7 @@ function FormProject({
       });
       setIsDeployed(!!project.website_link); // Mise à jour de `isDeployed`
     }
-  }, [
-    detail,
-    fetchCategories,
-    fetchStatus,
-    newProject.website_link,
-    project,
-    setNewProject,
-  ]);
+  }, [detail, fetchCategories, fetchStatus, project, setNewProject]);
 
   const handleCreateProject = (event) => {
     const { name, value } = event.target;

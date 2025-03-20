@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
 
 import ExpandableSection from "../../components/ExpandableSection/ExpandableSection";
 import DotsLoader from "../../components/DotsLoader/DotsLoader";
+import ImageForm from "../../components/ImageForm/ImageForm";
 import FormProject from "../../components/FormProject/FormProject";
+import successToast from "../../components/Toast/successToast";
 
 import github from "../../assets/images/icons/github.svg";
 import users from "../../assets/images/icons/users.svg";
@@ -15,6 +17,7 @@ import link from "../../assets/images/icons/link.svg";
 import connexion from "../../services/connexion";
 import { usePortefolio } from "../../context/PortefolioContext";
 import "./ProjectDetail.css";
+import errorToast from "../../components/Toast/errorToast";
 
 function ProjectDetail() {
   const {
@@ -29,7 +32,11 @@ function ProjectDetail() {
     initialProject,
     render,
     setRender,
+    setFileName,
   } = usePortefolio();
+
+  const inputRefLogo = useRef();
+  const inputRefMainImage = useRef();
 
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -63,6 +70,7 @@ function ProjectDetail() {
   };
   const closeAdminModal = () => {
     setNewProject(initialProject);
+    setFileName("");
     closeModal();
   };
 
@@ -71,6 +79,38 @@ function ProjectDetail() {
     await handleModifyProject(project.id);
     closeModal();
     setRender(!render);
+  };
+
+  const handleSubmitModifyImage = async (event) => {
+    event.preventDefault();
+    if (modalType === "modify logo") {
+      try {
+        const formData = new FormData();
+        formData.append("image", inputRefLogo.current.files[0]);
+        await connexion.put(`/api/image/${project.id}?type=logo`, formData);
+        setRender(!render);
+        setFileName("");
+        closeModal();
+        successToast("Logo modifié avec succès");
+      } catch (error) {
+        console.error(error);
+        errorToast("L'application ne supporte pas ce format d'image !");
+      }
+    }
+    if (modalType === "modify main picture") {
+      try {
+        const formData = new FormData();
+        formData.append("image", inputRefMainImage.current.files[0]);
+        await connexion.put(`/api/image/${project.id}?type=main`, formData);
+        setRender(!render);
+        setFileName("");
+        closeModal();
+        successToast("Image principale modifié avec succès");
+      } catch (error) {
+        console.error(error);
+        errorToast("L'application ne supporte pas ce format d'image !");
+      }
+    }
   };
 
   if (loading) {
@@ -90,11 +130,23 @@ function ProjectDetail() {
       )}
       <section className="page-display">
         <section className="project-demo">
+          {logUser && (
+            <button
+              type="button"
+              className="button"
+              onClick={() =>
+                openModal("Modifiez l'image principale", "modify main picture")
+              }
+            >
+              Modifier l'image principale
+            </button>
+          )}
           <img
             className="primary-image box"
             src={`${import.meta.env.VITE_API_URL}/${project.pictures.main}`}
             alt="exemple du site 1"
           />
+
           <article className="technics">
             <section className="badges box">
               <div className="info-badge">
@@ -141,6 +193,22 @@ function ProjectDetail() {
                 )}
               </div>
             </section>
+            {logUser && (
+              <div className="admin-modify-logo ">
+                <img
+                  className="admin-logo-project"
+                  src={`${import.meta.env.VITE_API_URL}/${project.pictures.logo}`}
+                  alt="logo"
+                />
+                <button
+                  type="button"
+                  className="button"
+                  onClick={() => openModal("Modifiez le logo :", "modify logo")}
+                >
+                  Modifier le logo
+                </button>
+              </div>
+            )}
             <section className="project-team-skills box">
               <article>
                 <h3>Statut du projet : </h3>
@@ -229,6 +297,33 @@ function ProjectDetail() {
               isCreated
               detail
               handleSubmitProject={handleModifyProjectActive}
+            />
+          </>
+        )}
+        {modalType === "modify main picture" && (
+          <>
+            <h3>{modalTitle}</h3>
+            <ImageForm
+              avatar={project.pictures.main}
+              label="Séléctionnez une nouvelle image principale"
+              inputRef={inputRefMainImage}
+              isProject={false}
+              step={null}
+              handleSubmit={handleSubmitModifyImage}
+            />
+          </>
+        )}
+        {modalType === "modify logo" && (
+          <>
+            <h3>{modalTitle}</h3>
+            <ImageForm
+              avatar={project.pictures.logo}
+              label="Séléctionnez un nouveau logo"
+              inputRef={inputRefLogo}
+              isProject={false}
+              step={null}
+              handleSubmit={handleSubmitModifyImage}
+              stepChecked="modify-avatar"
             />
           </>
         )}

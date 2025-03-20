@@ -18,7 +18,7 @@ export function PortefolioProvider({ children }) {
     () => ({
       name: "",
       github_link: "",
-      website_link: null,
+      website_link: "",
       team: "",
       main_technologies: "",
       organization: "",

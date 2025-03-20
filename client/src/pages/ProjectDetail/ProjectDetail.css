@@ -101,3 +101,20 @@
     }
   }
 }
+
+.admin-modify-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  border: var(--main-border);
+  border-radius: var(--main-border-radius);
+  padding: 1rem;
+  background-color: var(--background-color);
+  .admin-logo-project {
+    width: 50%;
+    height: 15rem;
+    border-radius: var(--main-border-radius);
+  }
+}

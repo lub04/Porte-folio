@@ -206,8 +206,11 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
   if (stepChecked === "modify-avatar") {
     return (
       <article className="avatar-image content-box">
-        <h3>Avatar :</h3>
-        <img src={`${import.meta.env.VITE_API_URL}/${avatar}`} alt="Avatar" />
+        <h3>Image actuelle :</h3>
+        <img
+          src={`${import.meta.env.VITE_API_URL}/${avatar}`}
+          alt="Aperçu de l'élément à modifier"
+        />
       </article>
     );
   }

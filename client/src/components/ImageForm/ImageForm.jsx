@@ -89,9 +89,8 @@ function ImageForm({
           </span>
         </label>
         <button type="submit" className="button">
-          {stepChecked !== 4 && stepChecked !== 5
-            ? "Prochaine étape"
-            : "Ajouter !"}
+          {stepChecked === 2 && stepChecked === 3 && "Prochaine étape"}
+          {stepChecked === "modify-avatar" && "Valider !"}
         </button>
       </form>
     );
@@ -99,7 +98,7 @@ function ImageForm({
   return (
     <>
       <ContentFormModal
-        stepChecked={isProject ? stepChecked : "modify-avatar"}
+        stepChecked={stepChecked}
         projectId={projectId}
         isProject={isProject}
         avatar={avatar}

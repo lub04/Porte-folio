@@ -71,7 +71,7 @@ function Home() {
     }
   };
 
-  const handleSubmitModifyHomePageText = async (event) => {
+  const handleSubmitModifyHomePage = async (event) => {
     event.preventDefault();
     try {
       if (modalType === "welcome") {
@@ -212,7 +212,7 @@ function Home() {
         <h3>{modalTitle}</h3>
         {modalType === "welcome" && (
           <TextAreaForm
-            handleSubmit={handleSubmitModifyHomePageText}
+            handleSubmit={handleSubmitModifyHomePage}
             handleModify={handleModifyHomePageText}
             label="Texte de bienvenue :"
             name="welcome"
@@ -221,7 +221,7 @@ function Home() {
         )}
         {modalType === "presentation" && (
           <TextAreaForm
-            handleSubmit={handleSubmitModifyHomePageText}
+            handleSubmit={handleSubmitModifyHomePage}
             handleModify={handleModifyHomePageText}
             label="Texte de présentation :"
             name="presentation"
@@ -234,8 +234,9 @@ function Home() {
             isProject={false}
             label="Modifier l'avatar"
             step={null}
-            handleSubmit={handleSubmitModifyHomePageText}
+            handleSubmit={handleSubmitModifyHomePage}
             avatar={home.img}
+            stepChecked="modify-avatar"
           />
         )}
         {modalType === "learn-more" && (
