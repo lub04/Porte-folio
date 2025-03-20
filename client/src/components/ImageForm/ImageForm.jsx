@@ -89,8 +89,11 @@ function ImageForm({
           </span>
         </label>
         <button type="submit" className="button">
-          {stepChecked === 2 && stepChecked === 3 && "Prochaine étape"}
-          {stepChecked === "modify-avatar" && "Valider !"}
+          {typeof stepChecked === "number" &&
+          stepChecked !== 4 &&
+          stepChecked !== 5
+            ? "Prochaine étape"
+            : "Valider !"}
         </button>
       </form>
     );

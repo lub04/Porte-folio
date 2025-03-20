@@ -194,7 +194,7 @@ function ProjectDetail() {
               </div>
             </section>
             {logUser && (
-              <div className="admin-modify-logo ">
+              <div className="admin-modify-logo">
                 <img
                   className="admin-logo-project"
                   src={`${import.meta.env.VITE_API_URL}/${project.pictures.logo}`}
