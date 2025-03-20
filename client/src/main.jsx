@@ -78,14 +78,6 @@ const router = createBrowserRouter([
       {
         path: "messages",
         element: <Messagerie />,
-        loader: async () => {
-          try {
-            const project = await connexion.get("/api/messages");
-            return project.data;
-          } catch (error) {
-            throw new Error(error);
-          }
-        },
       },
       {
         path: "administration",

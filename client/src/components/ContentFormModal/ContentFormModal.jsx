@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
+import ButtonDelete from "../ButtonDelete/ButtonDelete";
+import DotsLoader from "../DotsLoader/DotsLoader";
+
+import { usePortefolio } from "../../context/PortefolioContext";
 import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
-import { usePortefolio } from "../../context/PortefolioContext";
-import ButtonDelete from "../ButtonDelete/ButtonDelete";
 
 function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
   const { render, setRender } = usePortefolio();
@@ -56,7 +58,7 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
 
   if (isProject) {
     if (!project) {
-      return <p>Chargement du projet...</p>;
+      return <DotsLoader />;
     }
   }
 
@@ -109,7 +111,7 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
 
   if (stepChecked === 5) {
     if (!projectSkills) {
-      return <p>Chargement des skills...</p>;
+      return <DotsLoader />;
     }
 
     const groupedSkills = projectSkills.reduce((acc, skill) => {
@@ -142,7 +144,7 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
 
   if (stepChecked === 6) {
     if (!project) {
-      return <p>Chargement du projet...</p>;
+      return <DotsLoader />;
     }
     return (
       <>

@@ -30,6 +30,7 @@ export function PortefolioProvider({ children }) {
   );
 
   const [logUser, setLogUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [newProject, setNewProject] = useState(initialProject);
   const [render, setRender] = useState(false);
   const [projectsList, setProjectsList] = useState([]);
@@ -103,6 +104,8 @@ export function PortefolioProvider({ children }) {
       console.error("Token invalide ou expiré:", error);
       setLogUser(null);
       localStorage.removeItem("LogUser");
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -137,6 +140,7 @@ export function PortefolioProvider({ children }) {
   const value = useMemo(
     () => ({
       logUser,
+      isLoading,
       handleUser,
       newProject,
       setNewProject,
@@ -161,6 +165,7 @@ export function PortefolioProvider({ children }) {
     }),
     [
       logUser,
+      isLoading,
       handleUser,
       newProject,
       setNewProject,
