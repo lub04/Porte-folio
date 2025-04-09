@@ -1,28 +1,31 @@
 /* eslint-disable import/no-unresolved */
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ToastContainer } from "react-toastify";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectCreative } from "swiper/modules";
 
-import "swiper/css";
-import "swiper/css/effect-creative";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-import connexion from "../../services/connexion";
-import { usePortefolio } from "../../context/PortefolioContext";
-import "./Home.css";
+import ModifyUserForm from "../../components/ModifyUserForm/ModifyUserForm";
 import successToast from "../../components/Toast/successToast";
 import errorToast from "../../components/Toast/errorToast";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import TextAreaForm from "../../components/TextAreaForm/TextAreaForm";
 import ImageForm from "../../components/ImageForm/ImageForm";
+
+import connexion from "../../services/connexion";
+import { usePortefolio } from "../../context/PortefolioContext";
 import github from "../../assets/images/icons/github.svg";
 import githubHover from "../../assets/images/icons/github(2).svg";
 import linkedin from "../../assets/images/icons/linkedin(1).svg";
 import linkedinHover from "../../assets/images/icons/linkedin(2).svg";
+import rightArrow from "../../assets/images/icons/chevron-right-white.svg";
+import "./Home.css";
+import "swiper/css";
+import "swiper/css/effect-creative";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import DotsLoader from "../../components/DotsLoader/DotsLoader";
 
 function Home() {
   const home = useLoaderData();
@@ -37,28 +40,36 @@ function Home() {
     openModal,
     closeModal,
     modalIsOpen,
+    render,
+    setRender,
   } = usePortefolio();
   const navigate = useNavigate();
 
   const [colorLinkedin, setColorLinkedin] = useState(linkedin);
   const [colorGithub, setColorGithub] = useState(github);
   const [cvModalIsOpen, setCvModalIsOpen] = useState(false);
+  const [modifyUserModalIsOpen, setModifyUserModalIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [welcome, setWelcome] = useState(home.welcome);
   const [presentation, setPresentation] = useState(home.presentation);
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     const response = await connexion.get("/api/user/1");
     setUser(response.data);
-  };
+  }, []);
 
   useEffect(() => {
     fetchProject();
     fetchUser();
-  }, [fetchProject]);
+  }, [fetchProject, fetchUser, render]);
 
   const closeCvModal = () => {
     setCvModalIsOpen(false);
+  };
+
+  const closeModifyUserModal = () => {
+    setModifyUserModalIsOpen(false);
+    setRender(!render);
   };
 
   const handleModifyHomePageText = (event) => {
@@ -102,7 +113,12 @@ function Home() {
   const openCvModal = () => {
     setCvModalIsOpen(true);
   };
-
+  const openModifyUserModal = () => {
+    setModifyUserModalIsOpen(true);
+  };
+  if (!user) {
+    return <DotsLoader />;
+  }
   return (
     <>
       <h2 className="title-home">Entrez dans mon univers ...</h2>
@@ -145,9 +161,11 @@ function Home() {
             />
           )}
           <div className="presentation-personal-information">
-            <h3 className="presentation-title">
-              Lubin Chauvreau - Développeur web fullstack
-            </h3>
+            {user && (
+              <h3 className="presentation-title">
+                {user.first_name} {user.last_name} - Développeur web fullstack
+              </h3>
+            )}
             <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
             {logUser && (
               <button
@@ -169,7 +187,12 @@ function Home() {
             className="presentation-button"
             onClick={() => openModal("", "learn-more")}
           >
-            En savoir plus !
+            <img
+              src={rightArrow}
+              alt="fléche vers la droite"
+              className="right-arrow"
+            />
+            <p className="button-presentation-text">En savoir plus !</p>
           </button>
         </article>
       </section>
@@ -286,6 +309,15 @@ function Home() {
               <h3>Découvrez mon parcours !</h3>
               <p style={{ whiteSpace: "pre-line" }}>{user.description}</p>
             </section>
+            {logUser && (
+              <button
+                type="button"
+                className="button"
+                onClick={openModifyUserModal}
+              >
+                Modifier le profil
+              </button>
+            )}
           </div>
         )}
         <button
@@ -317,6 +349,28 @@ function Home() {
             type="button"
             className="button-close-modal"
             onClick={closeCvModal}
+          >
+            X
+          </button>
+        </Modal>
+      )}
+      {modifyUserModalIsOpen && user && (
+        <Modal
+          isOpen={modifyUserModalIsOpen}
+          onRequestClose={closeModifyUserModal}
+          contentLabel="CV Modal"
+          className="modal-small"
+          appElement={document.getElementById("root")}
+        >
+          <ModifyUserForm
+            user={user}
+            setUser={setUser}
+            closeModifyUserModal={closeModifyUserModal}
+          />
+          <button
+            type="button"
+            className="button-close-modal"
+            onClick={closeModifyUserModal}
           >
             X
           </button>

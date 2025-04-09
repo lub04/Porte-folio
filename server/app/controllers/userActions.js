@@ -35,7 +35,27 @@ const read = async (req, res, next) => {
 };
 
 // The E of BREAD - Edit (Update) operation
-// This operation is not yet implemented
+const edit = async (req, res, next) => {
+  const { query } = req;
+  const user = { ...req.body, id: req.params.id };
+  if (req.file) {
+    const url = `assets/CV/${req.file.filename}`;
+    user.resume = url;
+  }
+
+  try {
+    if (query.selector === "user-informations") {
+      await tables.user.updateUser(user);
+      res.sendStatus(204);
+    }
+    if (query.selector === "user-resume") {
+      await tables.userPage.updateCV(user);
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
@@ -61,7 +81,7 @@ const add = async (req, res, next) => {
 module.exports = {
   browse,
   read,
-  // edit,
+  edit,
   add,
   // destroy,
 };
