@@ -161,11 +161,9 @@ function Home() {
             />
           )}
           <div className="presentation-personal-information">
-            {user && (
-              <h3 className="presentation-title">
-                {user.first_name} {user.last_name} - Développeur web fullstack
-              </h3>
-            )}
+            <h3 className="presentation-title">
+              {user.first_name} {user.last_name} - Développeur web fullstack
+            </h3>
             <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
             {logUser && (
               <button
@@ -328,7 +326,7 @@ function Home() {
           X
         </button>
       </Modal>
-      {cvModalIsOpen && user && (
+      {cvModalIsOpen && (
         <Modal
           isOpen={cvModalIsOpen}
           onRequestClose={closeCvModal}
@@ -354,7 +352,7 @@ function Home() {
           </button>
         </Modal>
       )}
-      {modifyUserModalIsOpen && user && (
+      {modifyUserModalIsOpen && (
         <Modal
           isOpen={modifyUserModalIsOpen}
           onRequestClose={closeModifyUserModal}
