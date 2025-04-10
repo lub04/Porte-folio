@@ -68,11 +68,13 @@ h3 {
 
 p,
 a,
-label {
+label,
+ul {
   color: var(--text-color);
   font-family: var(--text-font);
 }
-p {
+p,
+ul {
   font-size: var(--paragraph-size);
 }
 

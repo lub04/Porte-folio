@@ -92,7 +92,6 @@ CREATE TABLE comment (
 
 CREATE TABLE homepage (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  welcome LONGTEXT,
   presentation LONGTEXT,
   img VARCHAR(255)
 );
@@ -185,9 +184,8 @@ INSERT INTO project_category (category) VALUES
 ('Hackathon');
 
 -- Insert data into homepage
-INSERT INTO homepage (welcome, presentation, img) VALUES
-(
-    'Bienvenue sur ce portfolio, conçu par mes soins, où vous découvrirez l’ensemble de mes projets. Vous aurez également l\'occasion d’en apprendre un peu plus sur moi et mon monde. Et si l’envie vous prend – que dis-je, quand l’envie vous prendra – vous y trouverez toutes les informations nécessaires pour me contacter.', 
+INSERT INTO homepage ( presentation, img) VALUES
+( 
     "Dans mon atelier, j'expérimente et je construis. Du backend (CRUD, sécurité, Multer, etc.) au frontend (React, Sass, etc.), chaque projet est un défi. Je navigue dans l’univers de Git, Figma, ou Docker, et j’adopte les méthodologies Agile et Scrum, en quête de toujours plus d’efficacité. 
     Mon objectif ? Évoluer sans cesse, apprendre, et créer des solutions toujours plus performantes et innovantes.",
     'assets/images/avatar/lubin.jpg'

@@ -1,0 +1,22 @@
+.about-portfolio {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .about-portfolio-description-article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    ul {
+      list-style: circle;
+      margin-left: 4rem;
+      li {
+        margin: 0.5rem;
+      }
+    }
+  }
+  .about-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

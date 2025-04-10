@@ -1,100 +1,76 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
-import Modal from "react-modal";
-
-import github from "../../assets/images/icons/github.svg";
-import githubHover from "../../assets/images/icons/github(2).svg";
-import linkedin from "../../assets/images/icons/linkedin(1).svg";
-import linkedinHover from "../../assets/images/icons/linkedin(2).svg";
 import "./About.css";
 
 function About() {
-  const user = useLoaderData();
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [colorLinkedin, setColorLinkedin] = useState(linkedin);
-  const [colorGithub, setColorGithub] = useState(github);
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
   return (
     <>
-      <h2>À Propos</h2>
-      <div className="page-display about">
-        <section className="about-info">
-          <article className="box about-info-avatar">
-            <img
-              src={`${import.meta.env.VITE_API_URL}/${user.avatar}`}
-              alt="avatar de Lubin"
-              className="avatar-picture"
-            />
-            <p>
-              {user.first_name} {user.last_name}
-            </p>
-          </article>
-          <article className="box about-info-contact">
-            <p>{user.phone}</p>
-            <p>{user.email}</p>
-            <div className="social-network">
-              <a target="blank" href={user.github}>
-                <img
-                  onMouseOver={() => setColorGithub(githubHover)}
-                  onFocus={() => setColorGithub(githubHover)}
-                  onMouseOut={() => setColorGithub(github)}
-                  onBlur={() => setColorGithub(github)}
-                  src={colorGithub}
-                  alt="github"
-                />
-              </a>
-              <a target="blank" href={user.linkedin}>
-                <img
-                  onMouseOver={() => setColorLinkedin(linkedinHover)}
-                  onFocus={() => setColorLinkedin(linkedinHover)}
-                  onMouseOut={() => setColorLinkedin(linkedin)}
-                  onBlur={() => setColorLinkedin(linkedin)}
-                  src={colorLinkedin}
-                  alt="linkedin"
-                />
-              </a>
-            </div>
-            <button className="button" type="button" onClick={openModal}>
-              Mon CV !
-            </button>
-          </article>
-        </section>
-        <section className="box about-description">
-          <h3>Découvrez mon parcours !</h3>
-          <p style={{ whiteSpace: "pre-line" }}>{user.description}</p>
-        </section>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          contentLabel="Image Modal"
-          className="Modal"
-        >
-          <iframe
-            src={`${import.meta.env.VITE_API_URL}/${user.resume}`}
-            width="100%"
-            height="500px"
-            style={{ border: "none" }}
-            title="PDF Viewer"
-          >
-            Votre navigateur ne peux pas lire le pdf changez de navigateur !
-          </iframe>
-          <button
-            type="button"
-            className="button-close-modal"
-            onClick={closeModal}
-          >
-            X
-          </button>
-        </Modal>
-      </div>
+      <h2>À Propos de ce portfolio :</h2>
+      <section className="page-display box about-portfolio">
+        <article className="about-portfolio-description-article">
+          <h3>Vue d'ensemble</h3>
+          <p>
+            Ce portfolio a été pensé comme un véritable site vitrine permettant
+            de présenter mes projets, mes compétences et mon parcours de manière
+            claire, interactive et personnalisable. Dès le départ, j’ai souhaité
+            concevoir une interface dynamique et évolutive. Pour cela, j’ai
+            utilisé React côté front-end, afin de proposer une navigation fluide
+            et une expérience utilisateur agréable.
+          </p>
+          <p>
+            Le site est entièrement connecté à une API REST que j’ai développée,
+            intégrant toutes les opérations CRUD (Create, Read, Update, Delete)
+            en utilisant Express.js, ce qui me permet de modifier les contenus
+            directement via une interface d’administration, sans avoir à toucher
+            au code.
+          </p>
+          <p>
+            Avant le développement, j’ai réalisé le maquettage complet sur
+            Figma, afin de structurer visuellement l’ensemble du site et de
+            garantir une cohérence graphique sur chaque page. Côté base de
+            données, j’ai utilisé dbdiagram.io pour modéliser la structure,
+            organiser les données efficacement et anticiper les relations entre
+            les différentes entités.
+          </p>
+          <p>
+            Ce projet m’a permis de progresser sur de nombreux aspects
+            techniques :
+          </p>
+          <ul>
+            <li>
+              La mise en œuvre de fonctionnalités CSS avancées pour améliorer
+              l’expérience utilisateur
+            </li>
+            <li>Une gestion optimisée des requêtes en base de données,</li>
+            <li>L’intégration de modales interactives et dynamiques</li>
+            <li>
+              L’exploration de nouvelles librairies pour enrichir l’interface
+            </li>
+            <li>
+              Un vrai travail de fond sur l’authentification sécurisée (tokens,
+              hash, middleware) et l’upload de fichiers via des formulaires
+              gérés côté front et back.
+            </li>
+          </ul>
+          <p>
+            Ce portfolio représente à la fois une vitrine de mes compétences
+            actuelles et un terrain d’expérimentation pour aller plus loin dans
+            ma pratique du développement web.
+          </p>
+        </article>
+        <article className="about-skills">
+          <h3>Compétences utilisées :</h3>
+          <p>Front : HTML, CSS, SaSS, SCSS, React.js, Javascript</p>
+          <p>
+            Librairies front : axios, prop-types, react-modal, react-router-dom,
+            react-toastify, swiper{" "}
+          </p>
+          <p>Back : Node.js, Express.js, MySQL</p>
+          <p>
+            Librairies back : argon2, cookie-parser, cors, dotenv, express, joi,
+            jsonwebtoken, multer, mysql2{" "}
+          </p>
+          <p>Outils: Figma, dbdiagram.io, VScode, déploiement cloud</p>
+        </article>
+      </section>
     </>
   );
 }

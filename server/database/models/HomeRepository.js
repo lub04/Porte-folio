@@ -13,14 +13,6 @@ class HomePageRepository extends AbstractRepository {
     return rows[0];
   }
 
-  async updateWelcome(homepage) {
-    const [result] = await this.database.query(
-      `UPDATE ${this.table} SET welcome = ? WHERE id = ?`,
-      [homepage.welcome, homepage.id]
-    );
-    return result.affectedRows;
-  }
-
   async updatePresentation(homepage) {
     const [result] = await this.database.query(
       `UPDATE ${this.table} SET presentation = ? WHERE id = ?`,

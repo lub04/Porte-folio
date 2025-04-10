@@ -22,10 +22,6 @@ const edit = async (req, res, next) => {
   }
 
   try {
-    if (query.selector === "welcome") {
-      await tables.homePage.updateWelcome(home);
-      res.sendStatus(204);
-    }
     if (query.selector === "presentation") {
       await tables.homePage.updatePresentation(home);
       res.sendStatus(204);

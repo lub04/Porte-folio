@@ -50,7 +50,6 @@ function Home() {
   const [cvModalIsOpen, setCvModalIsOpen] = useState(false);
   const [modifyUserModalIsOpen, setModifyUserModalIsOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [welcome, setWelcome] = useState(home.welcome);
   const [presentation, setPresentation] = useState(home.presentation);
 
   const fetchUser = useCallback(async () => {
@@ -74,9 +73,7 @@ function Home() {
 
   const handleModifyHomePageText = (event) => {
     const { value } = event.target;
-    if (modalType === "welcome") {
-      setWelcome(value);
-    }
+
     if (modalType === "presentation") {
       setPresentation(value);
     }
@@ -85,9 +82,6 @@ function Home() {
   const handleSubmitModifyHomePage = async (event) => {
     event.preventDefault();
     try {
-      if (modalType === "welcome") {
-        await connexion.put("api/home/1?selector=welcome", { welcome });
-      }
       closeModal();
       if (modalType === "presentation") {
         await connexion.put("api/home/1?selector=presentation", {
@@ -123,22 +117,6 @@ function Home() {
     <>
       <h2 className="title-home">Entrez dans mon univers ...</h2>
       <section className="home-welcome page-display">
-        {logUser ? (
-          <article className="box welcome">
-            <p className="welcome-admin">{home.welcome}</p>
-            <button
-              type="button"
-              className="button modify-button"
-              onClick={() =>
-                openModal("Modifier le texte de bienvenue :", "welcome")
-              }
-            >
-              Modifier le texte
-            </button>
-          </article>
-        ) : (
-          <p className="welcome box">{home.welcome}</p>
-        )}
         <article className="presentation box-without-padding">
           {logUser ? (
             <div className="home-avatar-admin">
@@ -231,15 +209,6 @@ function Home() {
         appElement={document.getElementById("root")}
       >
         <h3>{modalTitle}</h3>
-        {modalType === "welcome" && (
-          <TextAreaForm
-            handleSubmit={handleSubmitModifyHomePage}
-            handleModify={handleModifyHomePageText}
-            label="Texte de bienvenue :"
-            name="welcome"
-            value={welcome}
-          />
-        )}
         {modalType === "presentation" && (
           <TextAreaForm
             handleSubmit={handleSubmitModifyHomePage}
