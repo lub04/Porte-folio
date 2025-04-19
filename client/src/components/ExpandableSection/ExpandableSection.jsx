@@ -58,14 +58,16 @@ function ExpandableSection({ title, content, message, isRead }) {
         {isExpanded && (
           <p className="message-content" style={{ whiteSpace: "pre-line" }}>
             {content}{" "}
-            <button
-              type="button"
-              className="button button-delete-admin-message"
-              title="Supprimer le message"
-              onClick={openValidationDeleteMessageModal}
-            >
-              <img src={trash} alt="supprimer" />
-            </button>
+            {message && (
+              <button
+                type="button"
+                className="button button-delete-admin-message"
+                title="Supprimer le message"
+                onClick={openValidationDeleteMessageModal}
+              >
+                <img src={trash} alt="supprimer" />
+              </button>
+            )}
           </p>
         )}
       </article>
