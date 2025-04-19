@@ -12,6 +12,7 @@ import errorToast from "../../components/Toast/errorToast";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import TextAreaForm from "../../components/TextAreaForm/TextAreaForm";
 import ImageForm from "../../components/ImageForm/ImageForm";
+import DotsLoader from "../../components/DotsLoader/DotsLoader";
 
 import connexion from "../../services/connexion";
 import { usePortefolio } from "../../context/PortefolioContext";
@@ -25,7 +26,6 @@ import "swiper/css";
 import "swiper/css/effect-creative";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import DotsLoader from "../../components/DotsLoader/DotsLoader";
 
 function Home() {
   const home = useLoaderData();

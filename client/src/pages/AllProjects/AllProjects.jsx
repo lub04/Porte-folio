@@ -3,17 +3,17 @@ import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
 
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
-
-import { usePortefolio } from "../../context/PortefolioContext";
-import connexion from "../../services/connexion";
-import successToast from "../../components/Toast/successToast";
-import "./AllProjects.css";
 import ImageForm from "../../components/ImageForm/ImageForm";
 import FormProject from "../../components/FormProject/FormProject";
 import SkillForm from "../../components/SkillForm/SkillForm";
 import ContentFormModal from "../../components/ContentFormModal/ContentFormModal";
 import ValidationModal from "../../components/ValidationModal/ValidationModal";
 import errorToast from "../../components/Toast/errorToast";
+import successToast from "../../components/Toast/successToast";
+
+import { usePortefolio } from "../../context/PortefolioContext";
+import connexion from "../../services/connexion";
+import "./AllProjects.css";
 
 const stepUi = [1, 2, 3, 4, 5, 6];
 

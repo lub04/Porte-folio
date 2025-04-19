@@ -8,16 +8,16 @@ import DotsLoader from "../../components/DotsLoader/DotsLoader";
 import ImageForm from "../../components/ImageForm/ImageForm";
 import FormProject from "../../components/FormProject/FormProject";
 import successToast from "../../components/Toast/successToast";
+import errorToast from "../../components/Toast/errorToast";
 
+import connexion from "../../services/connexion";
+import { usePortefolio } from "../../context/PortefolioContext";
 import github from "../../assets/images/icons/github.svg";
 import users from "../../assets/images/icons/users.svg";
 import user from "../../assets/images/icons/user.svg";
 import cpu from "../../assets/images/icons/cpu.svg";
 import link from "../../assets/images/icons/link.svg";
-import connexion from "../../services/connexion";
-import { usePortefolio } from "../../context/PortefolioContext";
 import "./ProjectDetail.css";
-import errorToast from "../../components/Toast/errorToast";
 
 function ProjectDetail() {
   const {

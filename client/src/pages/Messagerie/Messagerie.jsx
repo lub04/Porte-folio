@@ -1,17 +1,18 @@
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
 
 import ExpandableSection from "../../components/ExpandableSection/ExpandableSection";
-
-import "./Messagerie.css";
-import { usePortefolio } from "../../context/PortefolioContext";
 import DotsLoader from "../../components/DotsLoader/DotsLoader";
 
+import { usePortefolio } from "../../context/PortefolioContext";
+import "./Messagerie.css";
+
 function Messagerie() {
-  const { messages, fetchMessages, notReadMessages } = usePortefolio();
+  const { messages, fetchMessages, notReadMessages, render } = usePortefolio();
 
   useEffect(() => {
     fetchMessages();
-  }, [fetchMessages]);
+  }, [fetchMessages, render]);
   if (!messages) {
     return <DotsLoader />;
   }
@@ -37,6 +38,7 @@ function Messagerie() {
           <h3>Vous n'avez aucun message !</h3>
         )}
       </div>
+      <ToastContainer />
     </>
   );
 }

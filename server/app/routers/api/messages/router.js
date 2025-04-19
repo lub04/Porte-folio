@@ -12,6 +12,7 @@ const {
   read,
   add,
   edit,
+  destroy,
 } = require("../../../controllers/messageActions");
 const validateMessage = require("../../../services/validateMessage");
 const { checkCookie } = require("../../../services/verification/cookies");
@@ -26,6 +27,9 @@ router.get("/:id", checkCookie, read);
 router.post("/", validateMessage, add);
 
 router.put("/:id", checkCookie, edit);
+
+router.delete("/:id", checkCookie, destroy);
+
 /* ************************************************************************* */
 
 module.exports = router;

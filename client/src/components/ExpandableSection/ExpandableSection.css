@@ -46,3 +46,12 @@
     color: white;
   }
 }
+.message-content {
+  position: relative;
+  .button-delete-admin-message {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 3rem;
+  }
+}
