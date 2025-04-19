@@ -4,7 +4,7 @@ import { usePortefolio } from "../../context/PortefolioContext";
 import useAuth from "../../hooks/useAuth";
 
 function Header({ css, css2 }) {
-  const { logUser } = usePortefolio();
+  const { logUser, notReadMessages } = usePortefolio();
   const { handleLogOut } = useAuth();
 
   return (
@@ -22,9 +22,16 @@ function Header({ css, css2 }) {
       </nav>
       {logUser ? (
         <nav className="admin-nav">
-          <Link className="navigation" to="messages">
-            Messagerie
-          </Link>
+          {notReadMessages.length > 0 ? (
+            <Link className="navigation new-message-notif" to="messages">
+              Messagerie
+              <p>{notReadMessages.length}</p>
+            </Link>
+          ) : (
+            <Link className="navigation" to="messages">
+              Messagerie
+            </Link>
+          )}
           <Link className="navigation" to="administration">
             Administration
           </Link>

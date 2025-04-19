@@ -12,7 +12,6 @@
 }
 
 .not-deploy {
-  margin-bottom: 2rem;
   box-shadow: 6px 8px 15px -7px #000000;
   border: var(--main-border);
   transition: 1s ease;
@@ -31,7 +30,7 @@
   border-style: solid;
   border-color: var(--main-color);
   box-shadow: 6px 8px 15px -7px #000000;
-  margin-bottom: 2rem;
+
   p {
     padding: 1rem;
   }

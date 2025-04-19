@@ -40,6 +40,39 @@ export function PortefolioProvider({ children }) {
   const [modalType, setModalType] = useState(null);
   const [modalTitle, setModalTitle] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+
+  const fetchMessages = useCallback(async () => {
+    try {
+      const response = await connexion.get("/api/messages");
+      setMessages(response.data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }, []);
+
+  const notReadMessages = (messages || []).filter(
+    (message) => message.is_read === 0
+  );
+
+  const markMessageAsRead = useCallback(async (id) => {
+    try {
+      // Envoyer la requête à ton API pour marquer comme lu
+      await connexion.put(`/api/messages/${id}`, { is_read: 1 });
+
+      // Mettre à jour localement le message dans le state
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) =>
+          msg.id === id ? { ...msg, is_read: 1 } : msg
+        )
+      );
+    } catch (error) {
+      console.error(
+        "Erreur lors de la mise à jour du message comme lu:",
+        error
+      );
+    }
+  }, []);
 
   const openModal = useCallback((title, content) => {
     setModalTitle(title);
@@ -162,6 +195,10 @@ export function PortefolioProvider({ children }) {
       modalType,
       openModal,
       closeModal,
+      messages,
+      fetchMessages,
+      notReadMessages,
+      markMessageAsRead,
     }),
     [
       logUser,
@@ -187,6 +224,10 @@ export function PortefolioProvider({ children }) {
       modalType,
       openModal,
       closeModal,
+      messages,
+      fetchMessages,
+      notReadMessages,
+      markMessageAsRead,
     ]
   );
 

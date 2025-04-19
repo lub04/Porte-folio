@@ -1,27 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import ExpandableSection from "../../components/ExpandableSection/ExpandableSection";
 
-import connexion from "../../services/connexion";
 import "./Messagerie.css";
+import { usePortefolio } from "../../context/PortefolioContext";
+import DotsLoader from "../../components/DotsLoader/DotsLoader";
 
 function Messagerie() {
-  const [messages, setMessages] = useState([]);
-
-  const fetchMessages = async () => {
-    try {
-      const response = await connexion.get("/api/messages");
-      setMessages(response.data);
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+  const { messages, fetchMessages, notReadMessages } = usePortefolio();
 
   useEffect(() => {
     fetchMessages();
-  }, []);
-
-  const notReadMessages = messages.filter((message) => message.is_read === 0);
+  }, [fetchMessages]);
+  if (!messages) {
+    return <DotsLoader />;
+  }
 
   return (
     <>
@@ -30,7 +23,7 @@ function Messagerie() {
         {notReadMessages.length > 1 ? " messages non lus" : " message non lu"})
       </h2>
 
-      <div className="page-display box">
+      <div className="page-display box message-list-admin">
         {messages.length > 0 ? (
           messages.map((message) => (
             <ExpandableSection

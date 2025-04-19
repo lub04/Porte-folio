@@ -99,7 +99,7 @@ main {
 }
 
 .page-display-form {
-  width: 50%;
+  width: 60%;
   margin: auto;
 }
 
@@ -439,5 +439,19 @@ form {
   }
   .page-display-form {
     width: 65%;
+  }
+}
+@media screen and (min-width: 1550px) {
+  h2 {
+    margin: 10rem auto 6rem auto;
+  }
+  .page-display {
+    width: 60%;
+  }
+  .page-display-form {
+    width: 35%;
+  }
+  .Modal {
+    bottom: 20%;
   }
 }

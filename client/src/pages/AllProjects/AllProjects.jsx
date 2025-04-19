@@ -273,7 +273,7 @@ function AllProjects() {
 
   return (
     <>
-      <h2>Mes projets</h2>
+      <h2 className="all-project-title">Mes projets</h2>
       {logUser ? (
         <button className="button" type="button" onClick={openModalAddProject}>
           Nouveau projet +

@@ -1,17 +1,4 @@
 .home-welcome {
-  .welcome {
-    margin: 3rem 0 5rem 0;
-    font-size: var(--paragraph-size-big);
-    text-align: center;
-    .modify-button {
-      width: 20%;
-      margin-left: 40%;
-    }
-  }
-  .welcome-admin {
-    font-size: var(--paragraph-size-big);
-    margin: 1rem 0;
-  }
   .presentation {
     display: flex;
     align-items: center;
@@ -23,19 +10,18 @@
     position: relative;
     img {
       display: block;
-      width: clamp(10rem 15vw 12rem);
-      height: 12rem;
+      width: 11rem;
+      height: 10rem;
       border-radius: var(--round-border-radius);
       border: var(--main-border);
       box-shadow: 8px -2px 37px -17px #000000;
-      float: left;
-      shape-outside: circle(50%);
       margin: 0 1rem;
       outline: 2px solid var(--background-color);
     }
     .presentation-personal-information {
       margin: 0 6% 0 0;
       .presentation-title {
+        margin-bottom: 1rem;
         font-size: var(--secondary-title-size);
       }
     }
@@ -53,6 +39,9 @@
       cursor: pointer;
       box-shadow: -7px 0px 7px -2px rgba(0, 0, 0, 0.68);
       transition: all 0.7s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .button-presentation-text {
         font-size: var(--paragraph-size-big);
         color: rgb(229, 239, 248);
@@ -63,7 +52,9 @@
       .right-arrow {
         margin: 0;
         padding: 0.5rem;
-        width: 100%;
+        width: 2rem;
+        height: 2rem;
+        position: absolute;
         box-shadow: none;
         outline: none;
         border: none;
@@ -164,6 +155,16 @@
   }
 }
 
+@media (min-width: 577px) and (max-width: 914px) {
+  .home-welcome {
+    .presentation {
+      img {
+        width: 8rem;
+        height: 8rem;
+      }
+    }
+  }
+}
 /* Smartphone */
 @media (max-width: 576px) {
   .home-welcome {
@@ -186,11 +187,10 @@
         top: auto;
         bottom: 0;
         color: var(--background-color-opacity);
+        justify-content: center;
+        text-align: center;
         .right-arrow {
-          margin: 0;
-          align-content: center;
-          height: 100%;
-          width: 100%;
+          height: 3rem;
         }
         &:hover,
         &:active {
@@ -239,6 +239,19 @@
     }
     .about-description {
       width: 100%;
+    }
+  }
+}
+@media screen and (min-width: 1550px) {
+  .home-welcome {
+    margin-bottom: 6rem;
+    .presentation {
+      .presentation-button {
+        .right-arrow {
+          width: 3rem;
+          height: 3rem;
+        }
+      }
     }
   }
 }

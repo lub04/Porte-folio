@@ -30,7 +30,7 @@ import DotsLoader from "../../components/DotsLoader/DotsLoader";
 function Home() {
   const home = useLoaderData();
   const inputRefAvatar = useRef();
-
+  const inputRefCv = useRef();
   const {
     logUser,
     projectsList,
@@ -110,6 +110,23 @@ function Home() {
   const openModifyUserModal = () => {
     setModifyUserModalIsOpen(true);
   };
+
+  const handleSubmitCv = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("CV", inputRefCv.current.files[0]);
+      await connexion.put("/api/user/1?selector=user-resume", formData);
+      setRender(!render);
+      successToast("CV mis à jour avec succès !");
+    } catch (error) {
+      console.error(error);
+      errorToast(
+        "Un problème est survenu lors de la mise à jour de votre CV !"
+      );
+    }
+  };
+
   if (!user) {
     return <DotsLoader />;
   }
@@ -140,7 +157,7 @@ function Home() {
           )}
           <div className="presentation-personal-information">
             <h3 className="presentation-title">
-              {user.first_name} {user.last_name} - Développeur web fullstack
+              {user.first_name} {user.last_name} - Développeur web full stack
             </h3>
             <p style={{ whiteSpace: "pre-line" }}>{home.presentation}</p>
             {logUser && (
@@ -303,6 +320,13 @@ function Home() {
           className="modal-small"
           appElement={document.getElementById("root")}
         >
+          {logUser && (
+            <ImageForm
+              handleSubmit={handleSubmitCv}
+              inputRef={inputRefCv}
+              label="Modifiez votre CV :"
+            />
+          )}
           <iframe
             src={`${import.meta.env.VITE_API_URL}/${user.resume}`}
             width="100%"

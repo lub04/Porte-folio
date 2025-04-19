@@ -49,7 +49,7 @@ const edit = async (req, res, next) => {
       res.sendStatus(204);
     }
     if (query.selector === "user-resume") {
-      await tables.userPage.updateCV(user);
+      await tables.user.updateCV(user);
       res.sendStatus(204);
     }
   } catch (err) {

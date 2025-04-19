@@ -40,6 +40,23 @@
 .none {
   display: none;
 }
+.new-message-notif {
+  position: relative;
+  width: 10rem;
+  p {
+    color: var(--background-color-opacity);
+    font-size: 0.7rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--main-color);
+    width: 1.2rem;
+    height: 1.2rem;
+    text-align: center;
+    border-radius: var(--round-border-radius);
+    align-content: center;
+  }
+}
 .navigation {
   font-size: var(--link-size);
   z-index: 1;
