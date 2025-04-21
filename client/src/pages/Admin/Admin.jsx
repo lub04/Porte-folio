@@ -91,7 +91,7 @@ function Admin() {
     event.preventDefault();
     try {
       if (modalType === "statut") {
-        await connexion.post("/api/status", { newStatus });
+        await connexion.post("/api/status", { status: newStatus });
       }
       if (modalType === "catégorie") {
         await connexion.post("/api/category", { category: newCategory });
