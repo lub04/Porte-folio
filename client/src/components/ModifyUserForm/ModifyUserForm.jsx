@@ -46,7 +46,7 @@ function ModifyUserForm({ user, setUser, closeModifyUserModal }) {
         <input
           type="text"
           value={user.first_name}
-          name="first_name "
+          name="first_name"
           onChange={handleModifyUser}
         />
       </label>
