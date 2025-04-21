@@ -130,6 +130,37 @@ export function PortefolioProvider({ children }) {
     },
     [newProject]
   );
+
+  const uploadProjectImage = useCallback(async (file, projectId, type) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("project_id", projectId);
+      formData.append("type", type);
+
+      await connexion.post(`/api/image`, formData);
+      return { success: true };
+    } catch (error) {
+      console.error("Erreur lors de l'upload de l'image :", error);
+      return { success: false, error };
+    }
+  }, []);
+
+  const uploadModifyProjectImage = useCallback(
+    async (file, projectId, type) => {
+      try {
+        const formData = new FormData();
+        formData.append("image", file);
+        await connexion.put(`/api/image/${projectId}?type=${type}`, formData);
+        return { success: true };
+      } catch (error) {
+        console.error("Erreur lors de l'upload de l'image :", error);
+        return { success: false, error };
+      }
+    },
+    []
+  );
+
   const handleDeleteProject = useCallback(
     async (id) => {
       try {
@@ -212,6 +243,8 @@ export function PortefolioProvider({ children }) {
       notReadMessages,
       markMessageAsRead,
       handleDeleteImage,
+      uploadProjectImage,
+      uploadModifyProjectImage,
     }),
     [
       logUser,
@@ -242,6 +275,8 @@ export function PortefolioProvider({ children }) {
       notReadMessages,
       markMessageAsRead,
       handleDeleteImage,
+      uploadProjectImage,
+      uploadModifyProjectImage,
     ]
   );
 

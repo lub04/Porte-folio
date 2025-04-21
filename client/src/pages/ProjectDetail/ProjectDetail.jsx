@@ -36,10 +36,13 @@ function ProjectDetail() {
     setRender,
     setFileName,
     handleDeleteImage,
+    uploadModifyProjectImage,
+    uploadProjectImage,
   } = usePortefolio();
 
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
+  const inputRefScreenshot = useRef();
 
   const { id } = useParams();
   const [project, setProject] = useState(null);
@@ -60,7 +63,7 @@ function ProjectDetail() {
     if (id) {
       fetchProject();
     }
-  }, [setProject, id, render]);
+  }, [id, render]);
 
   const openModalImage = (image) => {
     setActiveImage(image);
@@ -86,33 +89,42 @@ function ProjectDetail() {
 
   const handleSubmitModifyImage = async (event) => {
     event.preventDefault();
-    if (modalType === "modify logo") {
-      try {
-        const formData = new FormData();
-        formData.append("image", inputRefLogo.current.files[0]);
-        await connexion.put(`/api/image/${project.id}?type=logo`, formData);
-        setRender(!render);
-        setFileName("");
-        closeModal();
+    try {
+      if (modalType === "modify logo") {
+        await uploadModifyProjectImage(
+          inputRefLogo.current.files[0],
+          project.id,
+          "logo"
+        );
         successToast("Logo modifié avec succès");
-      } catch (error) {
-        console.error(error);
-        errorToast("L'application ne supporte pas ce format d'image !");
       }
-    }
-    if (modalType === "modify main picture") {
-      try {
-        const formData = new FormData();
-        formData.append("image", inputRefMainImage.current.files[0]);
-        await connexion.put(`/api/image/${project.id}?type=main`, formData);
-        setRender(!render);
-        setFileName("");
-        closeModal();
+      if (modalType === "modify main picture") {
+        await uploadModifyProjectImage(
+          inputRefMainImage.current.files[0],
+          project.id,
+          "main"
+        );
         successToast("Image principale modifié avec succès");
-      } catch (error) {
-        console.error(error);
-        errorToast("L'application ne supporte pas ce format d'image !");
       }
+      setRender(!render);
+      setFileName("");
+    } catch (error) {
+      console.error(error);
+      errorToast("L'application ne supporte pas ce format d'image !");
+    }
+  };
+
+  const handleSubmitAddScreenshots = async (event) => {
+    event.preventDefault();
+    try {
+      await uploadProjectImage(
+        inputRefScreenshot.current.files[0],
+        project.id,
+        "screenshot"
+      );
+      setRender(!render);
+    } catch (error) {
+      console.error(error);
     }
   };
   if (loading) {
@@ -266,7 +278,13 @@ function ProjectDetail() {
                 />
               )
             )}
-            {logUser && <ImageForm label="Ajoutez des screenshots :" />}
+            {logUser && (
+              <ImageForm
+                label="Ajoutez un screenshot :"
+                handleSubmit={handleSubmitAddScreenshots}
+                inputRef={inputRefScreenshot}
+              />
+            )}
           </article>
         </section>
       </section>
@@ -306,6 +324,7 @@ function ProjectDetail() {
               isProject={false}
               step={null}
               handleSubmit={handleSubmitModifyImage}
+              stepChecked="modify-avatar"
             />
           </>
         )}

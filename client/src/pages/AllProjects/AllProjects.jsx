@@ -30,6 +30,8 @@ function AllProjects() {
     projectsList,
     setFileName,
     handleDeleteProject,
+    uploadProjectImage,
+    uploadModifyProjectImage,
   } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
@@ -202,11 +204,7 @@ function AllProjects() {
     event.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append("image", inputRef.current.files[0]);
-      formData.append("project_id", idNewProject);
-      formData.append("type", type);
-      await connexion.post(`/api/image`, formData);
+      await uploadProjectImage(inputRef.current.files[0], idNewProject, type);
       if (stepChecked === 2 && !isLogoChoosen) {
         setIsLogoChoosen(true);
         setSuccess(true);
@@ -222,12 +220,11 @@ function AllProjects() {
       console.error(error);
     }
   };
+
   const handleSubmitModifyPicture = async (event, inputRef, type) => {
     event.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("image", inputRef.current.files[0]);
-      await connexion.put(`/api/image/${idNewProject}?type=${type}`, formData);
+      uploadModifyProjectImage(inputRef.current.files[0], idNewProject, type);
       setRender(!render);
       setFileName("");
       goToNextStep();
