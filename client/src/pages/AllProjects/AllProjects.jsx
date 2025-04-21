@@ -66,6 +66,7 @@ function AllProjects() {
     project_id: idNewProject,
     skill_id: null,
   });
+
   const openValidationModal = () => {
     setValidationModalIsOpen(true);
   };
@@ -80,11 +81,22 @@ function AllProjects() {
   };
 
   const goToNextStep = () => {
+    if (stepChecked === 2 && !isLogoChoosen) {
+      errorToast("Vous devez ajouter un logo avant de continuer !");
+      return;
+    }
+
+    if (stepChecked === 3 && !isMainPictureChoosen) {
+      errorToast(
+        "Vous devez ajouter une image principale avant de continuer !"
+      );
+      return;
+    }
+
     if (stepChecked === 4) {
       const currentProject = projectsList.find(
         (proj) => proj.id === idNewProject
       );
-
       const screenshots = currentProject
         ? currentProject.pictures.filter((pic) => pic.type === "screenshot")
         : [];
@@ -96,59 +108,6 @@ function AllProjects() {
       }
     }
 
-    if (stepChecked === 2 && !isLogoChoosen) {
-      errorToast("Vous devez ajouter un logo avant de continuer !");
-      return;
-    }
-
-    if (stepChecked === 3 && !isMainPictureChoosen) {
-      errorToast(
-        "Vous devez ajouter une image principale avant de continuer !"
-      );
-      return;
-    }
-    if (
-      stepChecked === 5 &&
-      (!projectSkill.skill_id || projectSkill.skill_id.length === 0)
-    ) {
-      errorToast("Vous devez ajouter une compétence avant de continuer !");
-      return;
-    }
-    if (stepChecked === 2 && !isLogoChoosen) {
-      errorToast("Vous devez ajouter un logo avant de continuer !");
-      return;
-    }
-
-    // Etape 3 = Image principale
-    if (stepChecked === 3 && !isMainPictureChoosen) {
-      errorToast(
-        "Vous devez ajouter une image principale avant de continuer !"
-      );
-      return;
-    }
-
-    // Etape 5 = Skills
-    if (
-      stepChecked === 5 &&
-      (!projectSkill.skill_id || projectSkill.skill_id.length === 0)
-    ) {
-      errorToast("Vous devez ajouter une compétence avant de continuer !");
-      return;
-    }
-    if (stepChecked === 2 && !isLogoChoosen) {
-      errorToast("Vous devez ajouter un logo avant de continuer !");
-      return;
-    }
-
-    // Etape 3 = Image principale
-    if (stepChecked === 3 && !isMainPictureChoosen) {
-      errorToast(
-        "Vous devez ajouter une image principale avant de continuer !"
-      );
-      return;
-    }
-
-    // Etape 5 = Skills
     if (
       stepChecked === 5 &&
       (!projectSkill.skill_id || projectSkill.skill_id.length === 0)
@@ -157,6 +116,7 @@ function AllProjects() {
       return;
     }
     setStepChecked(stepChecked + 1);
+
     if (stepChecked === 2 || stepChecked === 3 || stepChecked === 4) {
       setFileName("");
     }
@@ -173,10 +133,10 @@ function AllProjects() {
   const handleSubmitProject = async () => {
     try {
       const response = await connexion.post("/api/projects", newProject);
-      setSuccess(true);
-      setIsCreated(true);
       const projectId = response.data.insertId;
       setIdNewProject(projectId);
+      setSuccess(true);
+      setIsCreated(true);
       successToast("Votre projet à bien été créé !");
     } catch (error) {
       setSuccess(false);
@@ -224,10 +184,13 @@ function AllProjects() {
   const handleSubmitModifyPicture = async (event, inputRef, type) => {
     event.preventDefault();
     try {
-      uploadModifyProjectImage(inputRef.current.files[0], idNewProject, type);
+      await uploadModifyProjectImage(
+        inputRef.current.files[0],
+        idNewProject,
+        type
+      );
       setRender(!render);
       setFileName("");
-      goToNextStep();
     } catch (error) {
       console.error(error);
     }
