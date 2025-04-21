@@ -87,18 +87,6 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
                   url={screenshot.url}
                   index={index}
                 />
-                // <button
-                //   className="no-button button-image"
-                //   type="button"
-                //   onClick={() => handleDeleteImage(screenshot.id)}
-                //   title="Supprimer l'image"
-                // >
-                //   <img
-                //     src={`${import.meta.env.VITE_API_URL}/${screenshot.url}`}
-                //     alt={`Exemple du projet ${index + 1}`}
-                //   />
-                //   <div className="delete-hover">X</div>
-                // </button>
               ))}
             </div>
           </article>
@@ -183,8 +171,8 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
               {project.pictures.screenshots.map((screenshot, index) => (
                 <img
                   className="recap-image"
-                  key={screenshot}
-                  src={`${import.meta.env.VITE_API_URL}/${screenshot}`}
+                  key={screenshot.id}
+                  src={`${import.meta.env.VITE_API_URL}/${screenshot.url}`}
                   alt={`exemple ${index + 1} du projet`}
                 />
               ))}

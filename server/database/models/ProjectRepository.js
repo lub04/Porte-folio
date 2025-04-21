@@ -122,10 +122,12 @@ class ProjectRepository extends AbstractRepository {
     // Execute the SQL SELECT query to retrieve all projects and their logos
     const [rows] = await this.database.query(`
       SELECT
-        p.*,
-        (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1) AS logo
-      FROM
-        project AS p;
+  p.*,
+  (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1) AS logo,
+  (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', pic.id, 'url', pic.url, 'type', pic.type))
+  FROM picture AS pic WHERE pic.project_id = p.id) AS pictures
+FROM
+  project AS p;
     `);
 
     // Return the array of projects with logos

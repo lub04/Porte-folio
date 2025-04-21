@@ -68,7 +68,7 @@ function ImageForm({
             </span>
           </label>
           <button type="submit" className="button">
-            Modifier l'mage principale'
+            Modifier l'image principale'
           </button>
         </form>
       );
@@ -89,11 +89,7 @@ function ImageForm({
           </span>
         </label>
         <button type="submit" className="button">
-          {typeof stepChecked === "number" &&
-          stepChecked !== 4 &&
-          stepChecked !== 5
-            ? "Prochaine étape"
-            : "Valider !"}
+          Valider !
         </button>
       </form>
     );

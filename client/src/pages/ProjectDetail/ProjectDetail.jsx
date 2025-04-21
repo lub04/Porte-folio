@@ -266,6 +266,7 @@ function ProjectDetail() {
                 />
               )
             )}
+            {logUser && <ImageForm label="Ajoutez des screenshots :" />}
           </article>
         </section>
       </section>

@@ -20,7 +20,10 @@
     background-color: var(--main-color);
   }
 }
-
+.modal-separation-ui {
+  margin: 1rem 0;
+  border-bottom: var(--main-border);
+}
 @media screen and (min-width: 1550px) {
   .projects-list {
     align-items: center;

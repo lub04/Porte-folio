@@ -71,7 +71,8 @@ a,
 label,
 ul,
 textarea,
-input {
+input,
+select {
   color: var(--text-color);
   font-family: var(--text-font);
 }
