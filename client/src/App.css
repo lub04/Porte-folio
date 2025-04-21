@@ -69,7 +69,9 @@ h3 {
 p,
 a,
 label,
-ul {
+ul,
+textarea,
+input {
   color: var(--text-color);
   font-family: var(--text-font);
 }

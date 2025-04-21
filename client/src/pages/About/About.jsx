@@ -50,11 +50,6 @@ function About() {
               gérés côté front et back.
             </li>
           </ul>
-          <p>
-            Ce portfolio représente à la fois une vitrine de mes compétences
-            actuelles et un terrain d’expérimentation pour aller plus loin dans
-            ma pratique du développement web.
-          </p>
         </article>
         <article className="about-skills">
           <h3>Compétences utilisées :</h3>
