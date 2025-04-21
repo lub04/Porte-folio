@@ -236,7 +236,7 @@ function AllProjects() {
   const handleSubmitSkill = async (event) => {
     event.preventDefault();
     try {
-      await connexion.post("api/projectSkill", projectSkill);
+      await connexion.post("/api/projectSkill", projectSkill);
       setRender(!render);
       successToast("Compétence ajoutée avec succès !");
     } catch (error) {
