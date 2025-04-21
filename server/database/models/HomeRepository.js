@@ -28,13 +28,6 @@ class HomePageRepository extends AbstractRepository {
     );
     return result.affectedRows;
   }
-
-  // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an homePage by its ID
-
-  // async delete(id) {
-  //   ...
-  // }
 }
 
 module.exports = HomePageRepository;

@@ -3,9 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const { optionalAuth } = require("../../services/verification/cookies");
-/* ************************************************************************* */
-// Import And Use Routers Here
-/* ************************************************************************* */
+
 router.use(optionalAuth);
 
 const itemsRouter = require("./items/router");
@@ -55,6 +53,5 @@ router.use("/status", statusRouter);
 const skillCategoryRouter = require("./skillCategory/router");
 
 router.use("/skillCategory", skillCategoryRouter);
-/* ************************************************************************* */
 
 module.exports = router;
