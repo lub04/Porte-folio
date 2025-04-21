@@ -18,6 +18,8 @@ import user from "../../assets/images/icons/user.svg";
 import cpu from "../../assets/images/icons/cpu.svg";
 import link from "../../assets/images/icons/link.svg";
 import "./ProjectDetail.css";
+import ButtonDeleteImage from "../../components/ButtonDeleteImage/ButtonDeleteImage";
+import ButtonImageModal from "../../components/ButtonImageModal/ButtonImageModal";
 
 function ProjectDetail() {
   const {
@@ -33,6 +35,7 @@ function ProjectDetail() {
     render,
     setRender,
     setFileName,
+    handleDeleteImage,
   } = usePortefolio();
 
   const inputRefLogo = useRef();
@@ -112,7 +115,6 @@ function ProjectDetail() {
       }
     }
   };
-
   if (loading) {
     return <DotsLoader />;
   }
@@ -246,31 +248,24 @@ function ProjectDetail() {
             isRead
           />
           <article className="project-images">
-            {project.pictures.screenshots.map((screenshot) => (
-              <button
-                key={screenshot}
-                className={modalIsOpen ? "no-hover" : "button-example-img"}
-                type="button"
-                onClick={() =>
-                  openModalImage(
-                    `${import.meta.env.VITE_API_URL}/${screenshot}`
-                  )
-                }
-                tabIndex="0"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    openModalImage(
-                      `${import.meta.env.VITE_API_URL}/${screenshot}`
-                    );
-                  }
-                }}
-              >
-                <img
-                  src={`${import.meta.env.VITE_API_URL}/${screenshot}`}
-                  alt="exemple du site 2"
+            {project.pictures.screenshots.map((screenshot, index) =>
+              logUser ? (
+                <ButtonDeleteImage
+                  key={screenshot.id}
+                  handleDelete={handleDeleteImage}
+                  id={screenshot.id}
+                  url={screenshot.url}
+                  index={index}
                 />
-              </button>
-            ))}
+              ) : (
+                <ButtonImageModal
+                  key={screenshot.id}
+                  modalIsOpen={modalIsOpen}
+                  openModalImage={openModalImage}
+                  url={screenshot.url}
+                />
+              )
+            )}
           </article>
         </section>
       </section>

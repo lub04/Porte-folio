@@ -6,9 +6,10 @@ import DotsLoader from "../DotsLoader/DotsLoader";
 import { usePortefolio } from "../../context/PortefolioContext";
 import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
+import ButtonDeleteImage from "../ButtonDeleteImage/ButtonDeleteImage";
 
 function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
-  const { render, setRender } = usePortefolio();
+  const { render, setRender, handleDeleteImage } = usePortefolio();
   const [project, setProject] = useState(null);
   const [projectSkills, setProjectSkills] = useState(null);
   const [pictures, setPictures] = useState(null);
@@ -16,15 +17,6 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
   const handleDeleteSkill = async (skillId) => {
     try {
       await connexion.delete(`/api/projectSkill/${projectId}/skill/${skillId}`);
-      setRender(!render);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeleteImage = async (imageId) => {
-    try {
-      await connexion.delete(`api/image/${imageId}`);
       setRender(!render);
     } catch (error) {
       console.error(error);
@@ -88,19 +80,25 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
             <h3>Screenshots :</h3>
             <div className="screenshots">
               {pictures.screenshots.map((screenshot, index) => (
-                <button
-                  className="no-button button-image"
-                  type="button"
+                <ButtonDeleteImage
                   key={screenshot.id}
-                  onClick={() => handleDeleteImage(screenshot.id)}
-                  title="Supprimer l'image"
-                >
-                  <img
-                    src={`${import.meta.env.VITE_API_URL}/${screenshot.url}`}
-                    alt={`Exemple du projet ${index + 1}`}
-                  />
-                  <div className="delete-hover">X</div>
-                </button>
+                  handleDelete={handleDeleteImage}
+                  id={screenshot.id}
+                  url={screenshot.url}
+                  index={index}
+                />
+                // <button
+                //   className="no-button button-image"
+                //   type="button"
+                //   onClick={() => handleDeleteImage(screenshot.id)}
+                //   title="Supprimer l'image"
+                // >
+                //   <img
+                //     src={`${import.meta.env.VITE_API_URL}/${screenshot.url}`}
+                //     alt={`Exemple du projet ${index + 1}`}
+                //   />
+                //   <div className="delete-hover">X</div>
+                // </button>
               ))}
             </div>
           </article>

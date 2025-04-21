@@ -74,6 +74,18 @@ export function PortefolioProvider({ children }) {
     }
   }, []);
 
+  const handleDeleteImage = useCallback(
+    async (imageId) => {
+      try {
+        await connexion.delete(`api/image/${imageId}`);
+        setRender(!render);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [render]
+  );
+
   const openModal = useCallback((title, content) => {
     setModalTitle(title);
     setModalType(content);
@@ -199,6 +211,7 @@ export function PortefolioProvider({ children }) {
       fetchMessages,
       notReadMessages,
       markMessageAsRead,
+      handleDeleteImage,
     }),
     [
       logUser,
@@ -228,6 +241,7 @@ export function PortefolioProvider({ children }) {
       fetchMessages,
       notReadMessages,
       markMessageAsRead,
+      handleDeleteImage,
     ]
   );
 

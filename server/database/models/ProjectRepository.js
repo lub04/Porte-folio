@@ -42,7 +42,10 @@ class ProjectRepository extends AbstractRepository {
         JSON_OBJECT(
           'logo', (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1),
           'main', (SELECT url FROM picture WHERE project_id = p.id AND type = 'main' LIMIT 1),
-          'screenshots', (SELECT JSON_ARRAYAGG(url) FROM picture WHERE project_id = p.id AND type = 'screenshot')
+          'screenshots', (SELECT JSON_ARRAYAGG( JSON_OBJECT(
+              'id', picture.id,
+              'url', picture.url
+            )) FROM picture WHERE project_id = p.id AND type = 'screenshot')
         ) AS pictures,
         -- Retrieve all skills by category, using GROUP_CONCAT to join skills for each category
         GROUP_CONCAT(DISTINCT CASE
