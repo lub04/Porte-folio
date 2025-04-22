@@ -11,9 +11,11 @@ function SkillForm({
   projectId,
   handleSubmit,
   setProjectSkill,
+  setSkillList,
 }) {
   const { render } = usePortefolio();
   const [skills, setSkills] = useState([]);
+  const [selectedSkill, setSelectedSkill] = useState("");
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -29,21 +31,30 @@ function SkillForm({
 
   const handleAddSkill = (event) => {
     const { name, value } = event.target;
+    setSelectedSkill(value);
     setProjectSkill({
       project_id: projectId,
       [name]: value,
     });
   };
-
   if (stepChecked !== step) return null;
 
   return (
     <>
-      <ContentFormModal stepChecked={stepChecked} projectId={projectId} />
+      <ContentFormModal
+        stepChecked={stepChecked}
+        projectId={projectId}
+        setSkillList={setSkillList}
+        setSelectedSkill={setSelectedSkill}
+      />
       <form onSubmit={handleSubmit} className="skill-form">
         <label className="large-select">
           Ajouter une compétence :
-          <select name="skill_id" onChange={handleAddSkill}>
+          <select
+            name="skill_id"
+            onChange={handleAddSkill}
+            value={selectedSkill}
+          >
             <option value="">
               ---- Selectionnez les compétences utilisés sur ce projet ----
             </option>

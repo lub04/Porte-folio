@@ -8,20 +8,18 @@ import connexion from "../../services/connexion";
 import "./ContentFormModal.css";
 import ButtonDeleteImage from "../ButtonDeleteImage/ButtonDeleteImage";
 
-function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
-  const { render, setRender, handleDeleteImage } = usePortefolio();
+function ContentFormModal({
+  stepChecked,
+  projectId,
+  isProject,
+  avatar,
+  setSkillList,
+  setSelectedSkill,
+}) {
+  const { render, handleDeleteImage } = usePortefolio();
   const [project, setProject] = useState(null);
-  const [projectSkills, setProjectSkills] = useState(null);
+  const [projectSkills, setProjectSkills] = useState([]);
   const [pictures, setPictures] = useState(null);
-
-  const handleDeleteSkill = async (skillId) => {
-    try {
-      await connexion.delete(`/api/projectSkill/${projectId}/skill/${skillId}`);
-      setRender(!render);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const fetchData = async () => {
     try {
@@ -47,6 +45,33 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId, render]);
+
+  const handleDeleteSkill = async (skillId) => {
+    try {
+      // On supprime sur le serveur
+      await connexion.delete(`/api/projectSkill/${projectId}/skill/${skillId}`);
+
+      // Ensuite, on met à jour directement localement la liste sans attendre fetchData
+      setProjectSkills((prevSkills) => {
+        const updatedSkills = prevSkills.filter(
+          (skill) => skill.skill_id !== skillId
+        );
+
+        // Si après suppression il n'y a plus de skill, reset skillList
+        if (updatedSkills.length === 0) {
+          setSkillList({
+            project_id: projectId,
+            skill_id: null,
+          });
+          setSelectedSkill("");
+        }
+
+        return updatedSkills;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (isProject) {
     if (!project) {
@@ -138,7 +163,7 @@ function ContentFormModal({ stepChecked, projectId, isProject, avatar }) {
           <p>Titre du projet : {project.name}</p>
           <p>Liens github : {project.github_link}</p>
           <p>
-            Lien du site :{" "}
+            Lien du site :
             {project.website_link
               ? project.website_link
               : "Le site n'est pas déployé"}
