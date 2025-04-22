@@ -20,6 +20,8 @@ import link from "../../assets/images/icons/link.svg";
 import "./ProjectDetail.css";
 import ButtonDeleteImage from "../../components/ButtonDeleteImage/ButtonDeleteImage";
 import ButtonImageModal from "../../components/ButtonImageModal/ButtonImageModal";
+import ButtonDelete from "../../components/ButtonDelete/ButtonDelete";
+import SkillForm from "../../components/SkillForm/SkillForm";
 
 function ProjectDetail() {
   const {
@@ -38,6 +40,8 @@ function ProjectDetail() {
     handleDeleteImage,
     uploadModifyProjectImage,
     uploadProjectImage,
+    handleDeleteSkill,
+    addSkillData,
   } = usePortefolio();
 
   const inputRefLogo = useRef();
@@ -64,6 +68,11 @@ function ProjectDetail() {
       fetchProject();
     }
   }, [id, render]);
+
+  const [projectSkill, setProjectSkill] = useState({
+    project_id: null,
+    skill_id: null,
+  });
 
   const openModalImage = (image) => {
     setActiveImage(image);
@@ -127,6 +136,19 @@ function ProjectDetail() {
       console.error(error);
     }
   };
+
+  const handleSubmitNewSkill = async (event) => {
+    event.preventDefault();
+    try {
+      await addSkillData(projectSkill);
+      setRender(!render);
+      successToast("Compétence ajoutée avec succès !");
+    } catch (error) {
+      console.error(error);
+      errorToast("Vous ne pouvez pas ajouter deux fois la même compétence !");
+    }
+  };
+
   if (loading) {
     return <DotsLoader />;
   }
@@ -224,24 +246,67 @@ function ProjectDetail() {
               </div>
             )}
             <section className="project-team-skills box">
-              <article>
+              <article className="project-team-skills-article">
                 <h3>Statut du projet : </h3>
                 <p>{project.project_status}</p>
               </article>
-              <article>
+              <article className="project-team-skills-article">
                 <h3>L'équipe :</h3>
                 {project.team ? <p>{project.team}</p> : <p>Lubin Chauvreau</p>}
               </article>
-              <article>
+              <article className="project-team-skills-article">
                 <h3>Compétences utilisées :</h3>
-
-                {project.categorized_skills.map((skillList) => (
-                  <p key={skillList.skills[0]}>
-                    {skillList.skills.length !== 0
-                      ? `${skillList.category}: ${skillList.skills.join(", ")}`
-                      : ""}
-                  </p>
-                ))}
+                <ul className="skill-category-list">
+                  {logUser &&
+                    project.categorizedSkills.map((category) => (
+                      <li key={category.category}>
+                        <p className="skill-category">
+                          {category.skillsList.length !== 0
+                            ? `${category.category}:`
+                            : ""}
+                        </p>
+                        <article className="one-project-skill-list">
+                          {category.skillsList.map((skill) => (
+                            <ButtonDelete
+                              key={skill.id}
+                              name={skill.name}
+                              id={skill.id}
+                              handleDelete={() =>
+                                handleDeleteSkill(project.id, skill.id)
+                              }
+                            />
+                          ))}
+                        </article>
+                      </li>
+                    ))}
+                  {!logUser &&
+                    project.categorizedSkills.map((category) => (
+                      <li key={category.category}>
+                        <p className="skill-category">
+                          {category.skillsList.length !== 0
+                            ? `${category.category}:`
+                            : ""}
+                        </p>
+                        <article className="one-project-skill-list">
+                          {category.skillsList.map((skill, index) => (
+                            <p key={skill.id}>
+                              {skill.name}
+                              {index !== category.skillsList.length - 1
+                                ? ", "
+                                : "."}
+                            </p>
+                          ))}
+                        </article>
+                      </li>
+                    ))}
+                </ul>
+                {logUser && (
+                  <SkillForm
+                    handleSubmit={handleSubmitNewSkill}
+                    projectId={project.id}
+                    setProjectSkill={setProjectSkill}
+                  />
+                )}
               </article>
             </section>
           </article>

@@ -34,10 +34,22 @@
       }
     }
     .project-team-skills {
-      article {
-        margin: 0 0 1rem 0;
-        p {
-          margin: 0 0 0.8rem 0;
+      .project-team-skills-article {
+        margin: 1rem 0;
+        .skill-category-list {
+          list-style: circle;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin: 1rem 0 1rem 1rem;
+          .skill-category {
+            margin: 0 0 0.2rem 0;
+          }
+          .one-project-skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+          }
         }
       }
     }

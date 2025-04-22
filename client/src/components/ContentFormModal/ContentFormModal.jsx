@@ -16,7 +16,7 @@ function ContentFormModal({
   setSkillList,
   setSelectedSkill,
 }) {
-  const { render, handleDeleteImage } = usePortefolio();
+  const { render, handleDeleteImage, handleDeleteSkill } = usePortefolio();
   const [project, setProject] = useState(null);
   const [projectSkills, setProjectSkills] = useState([]);
   const [pictures, setPictures] = useState(null);
@@ -46,12 +46,9 @@ function ContentFormModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId, render]);
 
-  const handleDeleteSkill = async (skillId) => {
+  const handleDeleteSkillProject = async (skillId) => {
     try {
-      // On supprime sur le serveur
-      await connexion.delete(`/api/projectSkill/${projectId}/skill/${skillId}`);
-
-      // Ensuite, on met à jour directement localement la liste sans attendre fetchData
+      await handleDeleteSkill(projectId, skillId);
       setProjectSkills((prevSkills) => {
         const updatedSkills = prevSkills.filter(
           (skill) => skill.skill_id !== skillId
@@ -143,7 +140,7 @@ function ContentFormModal({
               <ButtonDelete
                 key={skill.skill_id}
                 id={skill.skill_id}
-                handleDelete={handleDeleteSkill}
+                handleDelete={handleDeleteSkillProject}
                 name={skill.skill_name}
               />
             ))}
@@ -205,9 +202,10 @@ function ContentFormModal({
           </article>
         </section>
         <section className="recap-project-display">
-          {project.categorized_skills.map((skillList) => (
-            <p key={skillList.skills[0]}>
-              {skillList.category} : {skillList.skills.join(", ")}
+          {project.categorizedSkills.map((category) => (
+            <p key={category.category}>
+              {category.category} :{" "}
+              {category.skillsList.map((skill) => skill.name).join(", ")}
             </p>
           ))}
         </section>

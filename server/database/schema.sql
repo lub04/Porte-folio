@@ -117,8 +117,8 @@ Ce qui me motive dans le développement, c’est le plaisir de créer, de voir d
 
 -- Insert data into skill_category
 INSERT INTO skill_category (category) VALUES
-('Frontend'),
-('Backend'),
+('Front-end'),
+('Back-end'),
 ('Découvertes'),
 ('Outils'),
 ('Librairies');

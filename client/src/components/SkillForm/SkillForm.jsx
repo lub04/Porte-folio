@@ -12,6 +12,7 @@ function SkillForm({
   handleSubmit,
   setProjectSkill,
   setSkillList,
+  isProject,
 }) {
   const { render } = usePortefolio();
   const [skills, setSkills] = useState([]);
@@ -41,12 +42,14 @@ function SkillForm({
 
   return (
     <>
-      <ContentFormModal
-        stepChecked={stepChecked}
-        projectId={projectId}
-        setSkillList={setSkillList}
-        setSelectedSkill={setSelectedSkill}
-      />
+      {isProject && (
+        <ContentFormModal
+          stepChecked={stepChecked}
+          projectId={projectId}
+          setSkillList={setSkillList}
+          setSelectedSkill={setSelectedSkill}
+        />
+      )}
       <form onSubmit={handleSubmit} className="skill-form">
         <label className="large-select">
           Ajouter une compétence :

@@ -24,7 +24,7 @@ class ProjectRepository extends AbstractRepository {
   }
 
   async read(id) {
-    const [rows] = await this.database.query(
+    const [[project]] = await this.database.query(
       `SELECT
         p.*,
         pc.category AS project_category,
@@ -32,76 +32,66 @@ class ProjectRepository extends AbstractRepository {
         JSON_OBJECT(
           'logo', (SELECT url FROM picture WHERE project_id = p.id AND type = 'logo' LIMIT 1),
           'main', (SELECT url FROM picture WHERE project_id = p.id AND type = 'main' LIMIT 1),
-          'screenshots', (SELECT JSON_ARRAYAGG( JSON_OBJECT(
-              'id', picture.id,
-              'url', picture.url
-            )) FROM picture WHERE project_id = p.id AND type = 'screenshot')
-        ) AS pictures,
-        -- Retrieve all skills by category, using GROUP_CONCAT to join skills for each category
-        GROUP_CONCAT(DISTINCT CASE
-            WHEN s.category_id = 1 THEN CONCAT(s.name) END ORDER BY s.name) AS frontend_skills,
-        GROUP_CONCAT(DISTINCT CASE
-            WHEN s.category_id = 2 THEN CONCAT(s.name) END ORDER BY s.name) AS backend_skills,
-        GROUP_CONCAT(DISTINCT CASE
-            WHEN s.category_id = 3 THEN CONCAT(s.name) END ORDER BY s.name) AS discovered_skills,
-        GROUP_CONCAT(DISTINCT CASE
-            WHEN s.category_id = 4 THEN CONCAT(s.name) END ORDER BY s.name) AS tools_skills,
-        GROUP_CONCAT(DISTINCT CASE
-            WHEN s.category_id = 5 THEN CONCAT(s.name) END ORDER BY s.name) AS libraries_skills
+          'screenshots', (SELECT JSON_ARRAYAGG(JSON_OBJECT(
+              'id', pic.id,
+              'url', pic.url
+            )) FROM picture pic WHERE project_id = p.id AND type = 'screenshot')
+        ) AS pictures
       FROM
         project AS p
-      INNER JOIN project_category AS pc ON p.project_category_id = pc.id
-      LEFT JOIN status AS st ON p.status_id = st.id
-      LEFT JOIN project_skill AS ps ON p.id = ps.project_id
-      LEFT JOIN skill AS s ON ps.skill_id = s.id
+      INNER JOIN project_category pc ON p.project_category_id = pc.id
+      LEFT JOIN status st ON p.status_id = st.id
       WHERE p.id = ?
-      GROUP BY p.id`,
+      `,
       [id]
     );
 
-    if (rows.length > 0) {
-      const project = rows[0];
-      project.categorized_skills = [
-        {
-          category: "Frontend",
-          skills: project.frontend_skills
-            ? project.frontend_skills.split(",")
-            : [],
-        },
-        {
-          category: "Backend",
-          skills: project.backend_skills
-            ? project.backend_skills.split(",")
-            : [],
-        },
-        {
-          category: "Découvertes",
-          skills: project.discovered_skills
-            ? project.discovered_skills.split(",")
-            : [],
-        },
-        {
-          category: "Outils",
-          skills: project.tools_skills ? project.tools_skills.split(",") : [],
-        },
-        {
-          category: "Librairies",
-          skills: project.libraries_skills
-            ? project.libraries_skills.split(",")
-            : [],
-        },
-      ];
+    if (!project) return null;
 
-      delete project.frontend_skills;
-      delete project.backend_skills;
-      delete project.discovered_skills;
-      delete project.tools_skills;
-      delete project.libraries_skills;
+    // Récupère aussi les skills
+    const [skills] = await this.database.query(
+      `SELECT
+        s.id AS skill_id,
+        s.name AS skill_name,
+        c.category AS category_name
+      FROM
+        project_skill ps
+      INNER JOIN skill s ON ps.skill_id = s.id
+      INNER JOIN skill_category c ON s.category_id = c.id
+      WHERE
+        ps.project_id = ?
+      ORDER BY 
+      CASE 
+        WHEN c.category = 'Frontend' THEN 0
+        WHEN c.category = 'Backend' THEN 0
+        WHEN c.category = 'Découvertes' THEN 2
+        ELSE 1
+    END,
+    c.category, s.name`,
+      [id]
+    );
 
-      return project;
-    }
+    // Regrouper par catégorie
+    const categorizedSkills = skills.reduce((acc, skill) => {
+      if (!acc[skill.category_name]) {
+        acc[skill.category_name] = [];
+      }
+      acc[skill.category_name].push({
+        id: skill.skill_id,
+        name: skill.skill_name,
+      });
+      return acc;
+    }, {});
 
-    return null;
+    // Convertir en tableau [{ category, skills }]
+    project.categorizedSkills = Object.entries(categorizedSkills).map(
+      ([category, skillsList]) => ({
+        category,
+        skillsList,
+      })
+    );
+
+    return project;
   }
 
   async readAll() {

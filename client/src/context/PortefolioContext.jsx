@@ -86,6 +86,23 @@ export function PortefolioProvider({ children }) {
     [render]
   );
 
+  const handleDeleteSkill = useCallback(async (projectId, skillId) => {
+    try {
+      await connexion.delete(`/api/projectSkill/${projectId}/skill/${skillId}`);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const addSkillData = useCallback(async (projectSkill) => {
+    try {
+      await connexion.post("/api/projectSkill", projectSkill);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }, []);
+
   const openModal = useCallback((title, content) => {
     setModalTitle(title);
     setModalType(content);
@@ -245,6 +262,8 @@ export function PortefolioProvider({ children }) {
       handleDeleteImage,
       uploadProjectImage,
       uploadModifyProjectImage,
+      handleDeleteSkill,
+      addSkillData,
     }),
     [
       logUser,
@@ -277,6 +296,8 @@ export function PortefolioProvider({ children }) {
       handleDeleteImage,
       uploadProjectImage,
       uploadModifyProjectImage,
+      handleDeleteSkill,
+      addSkillData,
     ]
   );
 

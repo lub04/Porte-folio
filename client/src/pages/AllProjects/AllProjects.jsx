@@ -368,6 +368,7 @@ function AllProjects() {
           render={render}
           setRender={setRender}
           setSkillList={setProjectSkill}
+          isProject
         />
 
         {stepperConfig[stepChecked - 1].hasNext && (
