@@ -75,6 +75,7 @@ input,
 select {
   color: var(--text-color);
   font-family: var(--text-font);
+  font-size: var(--paragraph-size);
 }
 p,
 ul {
@@ -382,10 +383,11 @@ form {
 }
 .Modal {
   position: fixed;
-  top: 12%;
-  left: 8%;
-  right: 8%;
-  bottom: 6%;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  height: 75%;
+  transform: translate(-50%, -50%);
   background-color: var(--background-color-opacity);
   padding: 2rem;
   border-radius: var(--main-border-radius);
@@ -449,12 +451,22 @@ form {
     margin: 10rem auto 6rem auto;
   }
   .page-display {
-    width: 60%;
+    width: 50%;
   }
   .page-display-form {
     width: 35%;
   }
   .Modal {
-    bottom: 20%;
+    bottom: 15%;
+  }
+  .normal-text-input {
+    textarea {
+      height: 20rem;
+    }
+  }
+  .large-text-input {
+    textarea {
+      height: 30rem;
+    }
   }
 }

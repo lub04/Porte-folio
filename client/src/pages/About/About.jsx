@@ -7,6 +7,7 @@ function About() {
       <section className="page-display box about-portfolio">
         <article className="about-portfolio-description-article">
           <h3>Vue d'ensemble</h3>
+
           <p>
             Ce portfolio a été pensé comme un véritable site vitrine permettant
             de présenter mes projets, mes compétences et mon parcours de manière
@@ -50,6 +51,14 @@ function About() {
               gérés côté front et back.
             </li>
           </ul>
+
+          <a
+            className="github-link-about"
+            href="https://github.com/lub04/Porte-folio"
+            target="blank"
+          >
+            Cliquez ici pour aller sur le repo Github !
+          </a>
         </article>
         <article className="about-skills">
           <h3>Compétences utilisées :</h3>

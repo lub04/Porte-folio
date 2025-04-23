@@ -28,72 +28,33 @@ function ImageForm({
     }
   };
 
-  const formImage = () => {
-    if (isLogoChoosen && stepChecked === 2) {
-      return (
-        <form onSubmit={handleSubmitModifyPicture} className="image-form">
-          <label className="upload-input">
-            {label}
-            <input
-              required
-              type="file"
-              ref={inputRef}
-              aria-hidden="true"
-              onChange={handleFileChange}
-            />
-            <span className="file-name">
-              {fileName || "Aucun fichier sélectionné"}
-            </span>
-          </label>
-          <button type="submit" className="button">
-            Modifier le logo
-          </button>
-        </form>
-      );
-    }
-    if (isMainPictureChoosen && stepChecked === 3) {
-      return (
-        <form onSubmit={handleSubmitModifyPicture} className="image-form">
-          <label className="upload-input">
-            {label}
-            <input
-              required
-              type="file"
-              ref={inputRef}
-              aria-hidden="true"
-              onChange={handleFileChange}
-            />
-            <span className="file-name">
-              {fileName || "Aucun fichier sélectionné"}
-            </span>
-          </label>
-          <button type="submit" className="button">
-            Modifier l'image principale'
-          </button>
-        </form>
-      );
-    }
-    return (
-      <form onSubmit={handleSubmit} className="image-form">
-        <label className="upload-input">
-          {label}
-          <input
-            required
-            type="file"
-            ref={inputRef}
-            aria-hidden="true"
-            onChange={handleFileChange}
-          />
-          <span className="file-name">
-            {fileName || "Aucun fichier sélectionné"}
-          </span>
-        </label>
-        <button type="submit" className="button">
-          Valider !
-        </button>
-      </form>
-    );
-  };
+  const isModificationMode =
+    (isLogoChoosen && stepChecked === 2) ||
+    (isMainPictureChoosen && stepChecked === 3);
+
+  const formImage = () => (
+    <form
+      onSubmit={isModificationMode ? handleSubmitModifyPicture : handleSubmit}
+      className="image-form"
+    >
+      <label className="upload-input">
+        {label}
+        <input
+          required
+          type="file"
+          ref={inputRef}
+          aria-hidden="true"
+          onChange={handleFileChange}
+        />
+        <span className="file-name">
+          {fileName || "Aucun fichier sélectionné"}
+        </span>
+      </label>
+      <button type="submit" className="button">
+        {isModificationMode ? "Modifier" : "Ajouter"}
+      </button>
+    </form>
+  );
   return (
     <>
       <ContentFormModal

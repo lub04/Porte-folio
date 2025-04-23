@@ -2,16 +2,10 @@ import "./TextAreaForm.css";
 
 function TextAreaForm({ handleSubmit, handleModify, name, value, label }) {
   return (
-    <form onSubmit={handleSubmit} className="text-area-form">
-      <label>
+    <form onSubmit={handleSubmit} className="">
+      <label className="large-text-input">
         {label}
-        <textarea
-          className="modal-textarea"
-          value={value}
-          name={name}
-          onChange={handleModify}
-          required
-        />
+        <textarea value={value} name={name} onChange={handleModify} required />
       </label>
       <button type="submit" className="button">
         Valider

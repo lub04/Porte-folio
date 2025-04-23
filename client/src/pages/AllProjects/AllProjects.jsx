@@ -271,8 +271,7 @@ function AllProjects() {
             key={project.id}
             project={project}
             css={
-              projectsList.length % 2 === 0 ||
-              (projectsList.length - 1) % 6 === 0
+              projectsList.length % 2 === 0
                 ? "project-card pair-width"
                 : "project-card impair-width"
             }

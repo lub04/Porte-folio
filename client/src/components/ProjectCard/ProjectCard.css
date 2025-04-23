@@ -4,7 +4,6 @@
   border-radius: 5px;
   background-color: white;
   border: 1px solid var(--secondary-color);
-  margin-bottom: 1rem;
   transition:
     transform 1s ease,
     opacity 1s ease,
@@ -54,9 +53,12 @@
 }
 .pair-width {
   width: 45%;
+  margin: auto;
 }
 .impair-width {
+  margin: auto;
   min-width: 25%;
+  max-width: 50%;
   flex-grow: 1;
   flex-basis: 15rem;
 }
@@ -73,5 +75,12 @@
   }
   .swiper-card {
     width: 80%;
+  }
+}
+
+@media screen and (min-width: 1550px) {
+  .pair-width,
+  .impair-width {
+    height: 15rem;
   }
 }
