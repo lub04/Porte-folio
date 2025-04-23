@@ -8,7 +8,7 @@
   &:hover,
   &.active {
     background-color: var(--main-color);
-    color: var(--background-color-opacity);
+    color: var(--secondary-color);
     transform: scale(0.98);
   }
 }

@@ -11,6 +11,6 @@
     transform: scale(1.1);
     background-color: var(--main-color-opacity);
     border: var(--secondary-border);
-    color: var(--background-color-opacity);
+    color: var(--secondary-color);
   }
 }

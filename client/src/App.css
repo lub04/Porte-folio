@@ -12,16 +12,14 @@
   box-sizing: border-box;
   /* colors */
   --main-color: #89608e;
+  --secondary-color: white;
   --main-color-opacity: rgba(137, 96, 142, 0.7);
-  --secondary-color: #89608e;
   --background-color: rgba(229, 239, 248, 0.6);
   --background-color-home: rgba(229, 239, 248, 0.8);
-  --background-color-opacity: white;
   --text-color: #2c0703;
   --toastify-color-success: var(--main-color-opacity) !important;
   --toastify-color-progress-success: var(--main-color-opacity) !important;
   --toastify-text-color-light: var(--text-color) !important;
-
   /* fonts */
   --title-font: "IBMPlex";
   --text-font: "Comforta";
@@ -33,8 +31,8 @@
   --paragraph-size-big: clamp(0.8rem, 1.25vw, 1.3rem);
   --home-header-title-size: clamp(2rem, 3vw, 3rem);
   /* borders */
-  --main-border: 1px solid var(--secondary-color);
-  --secondary-border: 1px solid white;
+  --main-border: 1px solid var(--main-color);
+  --secondary-border: 1px solid var(--secondary-color);
   --main-border-radius: 5px;
   --round-border-radius: 100%;
   /* shadows */
@@ -224,7 +222,7 @@ form {
     border-radius: 3px;
     height: 1.5rem;
     color: var(--main-color);
-    background-color: white;
+    background-color: var(--secondary-color);
   }
 }
 
@@ -239,7 +237,7 @@ form {
     border-radius: 3px;
     height: 1.5rem;
     color: var(--main-color);
-    background-color: white;
+    background-color: var(--secondary-color);
   }
 }
 .normal-text-input {
@@ -310,7 +308,7 @@ form {
   transition: transform 0.5s;
   &:hover,
   &:active {
-    background-color: var(--background-color-opacity);
+    background-color: var(--secondary-color);
     transform: scale(0.95);
   }
   input {
@@ -344,7 +342,7 @@ form {
     transform: scale(1.1);
     background-color: var(--main-color-opacity);
     border: var(--secondary-border);
-    color: var(--background-color-opacity);
+    color: var(--secondary-color);
   }
 }
 
@@ -369,7 +367,7 @@ form {
   left: 15%;
   right: 15%;
   bottom: 15%;
-  background-color: var(--background-color-opacity);
+  background-color: var(--secondary-color);
   padding: 2rem;
   border-radius: var(--main-border-radius);
   border: var(--main-border);
@@ -388,7 +386,7 @@ form {
   width: 80%;
   height: 75%;
   transform: translate(-50%, -50%);
-  background-color: var(--background-color-opacity);
+  background-color: var(--secondary-color);
   padding: 2rem;
   border-radius: var(--main-border-radius);
   border: var(--main-border);

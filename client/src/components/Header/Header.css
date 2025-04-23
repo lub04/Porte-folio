@@ -44,7 +44,7 @@
   position: relative;
   width: 10rem;
   p {
-    color: var(--background-color-opacity);
+    color: var(--secondary-color);
     font-size: 0.7rem;
     position: absolute;
     top: 0;

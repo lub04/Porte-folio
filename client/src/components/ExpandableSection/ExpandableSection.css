@@ -38,12 +38,12 @@
 
 .message-not-read {
   background-color: var(--main-color-opacity);
-  color: white;
+  color: var(--secondary-color);
   p {
-    color: white;
+    color: var(--secondary-color);
   }
   h3 {
-    color: white;
+    color: var(--secondary-color);
   }
 }
 .message-content {
