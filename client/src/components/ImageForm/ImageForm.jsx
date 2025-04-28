@@ -15,6 +15,7 @@ function ImageForm({
   handleSubmitModifyPicture,
   isProject,
   avatar,
+  modify,
 }) {
   const { fileName, setFileName } = usePortefolio();
   if (isProject) {
@@ -30,12 +31,14 @@ function ImageForm({
 
   const isModificationMode =
     (isLogoChoosen && stepChecked === 2) ||
-    (isMainPictureChoosen && stepChecked === 3);
+    (isMainPictureChoosen && stepChecked === 3) ||
+    modify;
 
   const formImage = () => (
     <form
       onSubmit={isModificationMode ? handleSubmitModifyPicture : handleSubmit}
       className="image-form"
+      encType="multipart/form-data"
     >
       <label className="upload-input">
         {label}

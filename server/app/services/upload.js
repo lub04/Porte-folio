@@ -43,15 +43,8 @@ const fileFilter = (req, file, cb) => {
   if (!allowedTypes.includes(file.mimetype)) {
     return cb(new Error("Format de fichier non supporté !"), false);
   }
-
   // Vérifier le type MIME
 
-  // Si c'est une image, vérifier la taille
-  if (file.size > 5 * 1024 * 1024) {
-    return cb(new Error("Le fichier ne doit pas dépasser 5 Mo."), false);
-  }
-
-  // Sinon, accepter le fichier
   return cb(null, true);
 };
 
@@ -59,7 +52,6 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Taille maximale du fichier 5 Mo
 });
 
 module.exports = upload;

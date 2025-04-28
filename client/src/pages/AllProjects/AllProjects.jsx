@@ -32,6 +32,7 @@ function AllProjects() {
     handleDeleteProject,
     uploadProjectImage,
     uploadModifyProjectImage,
+    validateFileType,
   } = usePortefolio();
   const inputRefLogo = useRef();
   const inputRefMainImage = useRef();
@@ -162,9 +163,10 @@ function AllProjects() {
 
   const handleSubmitImage = async (event, inputRef, type) => {
     event.preventDefault();
-
+    const file = inputRef.current.files[0];
+    if (!validateFileType(file, "image")) return;
     try {
-      await uploadProjectImage(inputRef.current.files[0], idNewProject, type);
+      await uploadProjectImage(file, idNewProject, type);
       if (stepChecked === 2 && !isLogoChoosen) {
         setIsLogoChoosen(true);
         setSuccess(true);
@@ -183,12 +185,11 @@ function AllProjects() {
 
   const handleSubmitModifyPicture = async (event, inputRef, type) => {
     event.preventDefault();
+    const file = inputRef.current.files[0];
+    if (!validateFileType(file, "image")) return;
+
     try {
-      await uploadModifyProjectImage(
-        inputRef.current.files[0],
-        idNewProject,
-        type
-      );
+      await uploadModifyProjectImage(file, idNewProject, type);
       setRender(!render);
       setFileName("");
     } catch (error) {

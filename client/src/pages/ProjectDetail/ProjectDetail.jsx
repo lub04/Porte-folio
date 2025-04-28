@@ -42,6 +42,7 @@ function ProjectDetail() {
     uploadProjectImage,
     handleDeleteSkill,
     addSkillData,
+    validateFileType,
   } = usePortefolio();
 
   const inputRefLogo = useRef();
@@ -98,21 +99,22 @@ function ProjectDetail() {
 
   const handleSubmitModifyImage = async (event) => {
     event.preventDefault();
+    const file =
+      modalType === "modify logo"
+        ? inputRefLogo.current.files[0]
+        : inputRefMainImage.current.files[0];
+    if (!file) {
+      errorToast("Veuillez sélectionner un fichier.");
+      return;
+    }
+    if (!validateFileType(file, "image")) return;
     try {
       if (modalType === "modify logo") {
-        await uploadModifyProjectImage(
-          inputRefLogo.current.files[0],
-          project.id,
-          "logo"
-        );
+        await uploadModifyProjectImage(file, project.id, "logo");
         successToast("Logo modifié avec succès");
       }
       if (modalType === "modify main picture") {
-        await uploadModifyProjectImage(
-          inputRefMainImage.current.files[0],
-          project.id,
-          "main"
-        );
+        await uploadModifyProjectImage(file, project.id, "main");
         successToast("Image principale modifié avec succès");
       }
       setRender(!render);
@@ -125,12 +127,10 @@ function ProjectDetail() {
 
   const handleSubmitAddScreenshots = async (event) => {
     event.preventDefault();
+    const file = inputRefScreenshot.current.files[0];
+    if (!validateFileType(file, "image")) return;
     try {
-      await uploadProjectImage(
-        inputRefScreenshot.current.files[0],
-        project.id,
-        "screenshot"
-      );
+      await uploadProjectImage(file, project.id, "screenshot");
       setRender(!render);
     } catch (error) {
       console.error(error);
@@ -388,8 +388,9 @@ function ProjectDetail() {
               inputRef={inputRefMainImage}
               isProject={false}
               step={null}
-              handleSubmit={handleSubmitModifyImage}
+              handleSubmitModifyPicture={handleSubmitModifyImage}
               stepChecked="modify-avatar"
+              modify
             />
           </>
         )}
@@ -402,8 +403,9 @@ function ProjectDetail() {
               inputRef={inputRefLogo}
               isProject={false}
               step={null}
-              handleSubmit={handleSubmitModifyImage}
+              handleSubmitModifyPicture={handleSubmitModifyImage}
               stepChecked="modify-avatar"
+              modify
             />
           </>
         )}

@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 
 import connexion from "../services/connexion";
 import successToast from "../components/Toast/successToast";
+import errorToast from "../components/Toast/errorToast";
 
 const PortefolioContext = createContext();
 
@@ -212,6 +213,32 @@ export function PortefolioProvider({ children }) {
     }
   }, []);
 
+  const validateFileType = useCallback((file, type) => {
+    let allowedTypes = [];
+
+    // Validation des types selon le type de fichier (image ou CV)
+    if (type === "image") {
+      allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+      ];
+    } else if (type === "CV") {
+      allowedTypes = ["application/pdf"];
+    }
+
+    // Vérification du type de fichier
+    if (!allowedTypes.includes(file.type)) {
+      errorToast(
+        `Format de fichier non supporté ! Seul le format ${allowedTypes.join(", ")} est autorisé.`
+      );
+      return false;
+    }
+    return true;
+  }, []);
+
   useEffect(() => {
     const savedUser = localStorage.getItem("LogUser");
     if (savedUser) {
@@ -264,6 +291,7 @@ export function PortefolioProvider({ children }) {
       uploadModifyProjectImage,
       handleDeleteSkill,
       addSkillData,
+      validateFileType,
     }),
     [
       logUser,
@@ -298,6 +326,7 @@ export function PortefolioProvider({ children }) {
       uploadModifyProjectImage,
       handleDeleteSkill,
       addSkillData,
+      validateFileType,
     ]
   );
 

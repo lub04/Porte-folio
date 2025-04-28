@@ -42,6 +42,7 @@ function Home() {
     modalIsOpen,
     render,
     setRender,
+    validateFileType,
   } = usePortefolio();
   const navigate = useNavigate();
 
@@ -113,9 +114,13 @@ function Home() {
 
   const handleSubmitCv = async (event) => {
     event.preventDefault();
+    const file = inputRefCv.current.files[0];
+
+    if (!validateFileType(file, "CV")) return;
+
     try {
       const formData = new FormData();
-      formData.append("CV", inputRefCv.current.files[0]);
+      formData.append("CV", file);
       await connexion.put("/api/user/1?selector=user-resume", formData);
       setRender(!render);
       successToast("CV mis à jour avec succès !");
